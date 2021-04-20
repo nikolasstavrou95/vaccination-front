@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h3> home </h3>
+  <div class="vaccinations">
+    <h3> vaccinations </h3>
   </div>
 </template>
 
@@ -9,7 +9,6 @@
 
 
 export default {
- 
- 
+  
 }
 </script>
