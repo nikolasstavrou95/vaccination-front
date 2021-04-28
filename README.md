@@ -1,12 +1,17 @@
 # vaccination-front
 Back End Part of the Vaccination Application Project
 
-#install node packages
+##install node packages
+``
 npm install 
+``
 
-#run mongodb locally 
+##run mongodb locally 
 
-#start server
+##start server
+``
 node server.js
+
+``
 
 
