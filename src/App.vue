@@ -94,7 +94,7 @@
                 class="nav-link"
               >
                 <font-awesome-icon icon="user" style="color: #0f7452" />
-                {{ currentUser.name }}
+                {{ currentUser.username }}
               </router-link>
             </li>
             <li class="nav-item mr-1">

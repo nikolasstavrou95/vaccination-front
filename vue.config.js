@@ -3,7 +3,7 @@ module.exports = {
     'vuetify'
   ],
   devServer: {
-    port: 8081
+    port: '8081'
   },
   css: {
     loaderOptions: {

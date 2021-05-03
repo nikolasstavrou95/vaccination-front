@@ -14,15 +14,15 @@
           </h3>
 
           <v-text-field
-            v-model="hospital.email"
-            :error-messages="emailErrors"
-            label="Email"
+            v-model="hospital.username"
+            :error-messages="usernameErrors"
+            label="Username"
             required
             type="text"
             prepend-inner-icon="fas fa-user"
-            name="email"
-            @input="$v.hospital.email.$touch()"
-            @blur="$v.hospital.email.$touch()"
+            name="username"
+            @input="$v.hospital.username.$touch()"
+            @blur="$v.hospital.username.$touch()"
           >
           </v-text-field>
           <v-text-field
@@ -60,14 +60,14 @@
 <script>
 import Hospital from "../models/hospital";
 import { validationMixin } from "vuelidate";
-import { required, email } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "Login",
   mixins: [validationMixin],
   validations: {
     hospital: {
-      email: { required, email },
+      username: { required },
       password: { required },
     },
   },
@@ -84,13 +84,20 @@ export default {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
-    emailErrors() {
+    usernameErrors() {
       const errors = [];
-      if (!this.$v.hospital.email.$dirty) return errors;
-      !this.$v.hospital.email.email && errors.push("Must be valid e-mail");
-      !this.$v.hospital.email.required && errors.push("E-mail is required");
+      if (!this.$v.hospital.username.$dirty) return errors;
+      !this.$v.hospital.username.required &&
+        errors.push("Username is required");
       return errors;
     },
+    // emailErrors() {
+    //   const errors = [];
+    //   if (!this.$v.hospital.email.$dirty) return errors;
+    //   !this.$v.hospital.email.email && errors.push("Must be valid e-mail");
+    //   !this.$v.hospital.email.required && errors.push("E-mail is required");
+    //   return errors;
+    // },
     passwordErrors() {
       const errors = [];
       if (!this.$v.hospital.password.$dirty) return errors;
@@ -114,7 +121,7 @@ export default {
         this.loading = false;
       } else {
         // do your submit logic here
-        if (this.hospital.email && this.hospital.password) {
+        if (this.hospital.username && this.hospital.password) {
           this.$store.dispatch("auth/login", this.hospital).then(
             () => {
               this.$router.push({

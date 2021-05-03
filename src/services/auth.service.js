@@ -6,12 +6,12 @@ class AuthService {
     login(hospital) {
         return axios
             .post(API_URL + 'signin', {
-                email: hospital.email,
+                username: hospital.username,
                 password: hospital.password
             })
             .then(response => {
-                if (response.data.accessToken) {
-                    localStorage.setItem('hospital', JSON.stringify(response.data));
+                if (response.data.token) {
+                    localStorage.setItem('user', JSON.stringify(response.data));
                 }
 
                 return response.data;
@@ -19,7 +19,7 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('hospital');
+        localStorage.removeItem('user');
     }
 
     register(hospital) {

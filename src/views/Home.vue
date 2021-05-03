@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UserService from "../services/user.service";
+import PatientsUserService from "../services/patients.service";
 
 export default {
   name: "Home",
@@ -17,7 +17,7 @@ export default {
     };
   },
   mounted() {
-    UserService.getPublicContent().then(
+    PatientsUserService.getAllPatients().then(
       (response) => {
         this.content = response.data;
       },
