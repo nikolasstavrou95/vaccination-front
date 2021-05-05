@@ -1,0 +1,88 @@
+{
+    "vaccinations": [
+      {
+        "id": 2,
+        "hospital": "Erikos Ntinan",
+        "patient": "Mestra Tatiana",
+        "vaccine": "Pfizer",
+        "date": "17/09/2021",
+        "status": "pending"
+      },
+      {
+        "id": 3,
+        "hospital": "Erikos Ntinan",
+        "patient": "Tati Tatiana",
+        "vaccine": "Pfizer",
+        "date": "17/09/2021",
+        "status": "pending"
+      },
+      {
+        "id": 4,
+        "hospital": "Evagelismos",
+        "patient": "Bab Babinos",
+        "vaccine": "AstraZenece",
+        "date": "26/10/2021",
+        "status": "pending"
+      },
+      {
+        "id": 5,
+        "hospital": "Evagelismos",
+        "patient": "Babis Babinos",
+        "vaccine": "AstraZenece",
+        "date": "26/10/2021",
+        "status": "pending"
+      },
+      {
+        "hospital": "Sismanoglio",
+        "patient": "Bob",
+        "vaccine": "Pfizer",
+        "date": "1e1",
+        "status": "Pending",
+        "id": 6
+      },
+      {
+        "hospital": "Paidwn",
+        "patient": "Giannis ",
+        "vaccine": "AstraZeneca",
+        "date": "16/10/2021",
+        "status": "Pending",
+        "id": 7
+      },
+      {
+        "hospital": "Eruthros",
+        "patient": "Mitsos",
+        "vaccine": "AstraZeneca",
+        "date": "17/09/2021",
+        "status": "Pending",
+        "id": 8
+      },
+      {
+        "hospital": "Eruthros",
+        "patient": "Nikakis",
+        "vaccine": "Pfizer",
+        "date": "09/05/2021",
+        "status": "Completed",
+        "id": 9
+      },
+      {
+        "hospital": "Paidwn",
+        "patient": "giwrgis",
+        "vaccine": "Pfizer",
+        "date": "16/07/2021",
+        "status": "Pending",
+        "id": 10
+      }
+    ],
+    "vaccines": [
+      {
+        "id": 1,
+        "brand": "Pfizer",
+        "doses": "15"
+      },
+      {
+        "id": 2,
+        "brand": "AstraZeneca",
+        "doses": "67"
+      }
+    ]
+  }
