@@ -6,6 +6,7 @@ import Register from '@/views/Register.vue'
 //import Vaccinations from '@/views/Vaccinations.vue'
 //import Patients from '@/views/Patients.vue'
 //import Statistics from '@/views/Statistics.vue'
+import Dashboard from '@/views/Dashboard.vue'
 //import Help from '@/views/Help.vue'
 
 Vue.use(VueRouter)
@@ -41,8 +42,15 @@ export const router = new VueRouter({
       path: '/user',
       name: 'user',
       component: () => import(/* webpackChunkName: "about" */ '../views/User.vue'),
-
+      redirect: '/user/dashboard',
       children: [
+
+        {
+          path: 'dashboard',
+          name: 'dashboard',
+          component: Dashboard
+
+        },
         {
 
           path: 'patients',
@@ -73,12 +81,7 @@ export const router = new VueRouter({
           component: () => import(/* webpackChunkName: "about" */ '../views/Help.vue')
 
         },
-        {
 
-          path: 'profile',
-          component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
-
-        },
 
 
       ]

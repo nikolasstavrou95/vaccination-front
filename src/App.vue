@@ -6,7 +6,6 @@
           v-if="currentUser"
           v-model="drawer"
           app
-          dark
           class="cyan white--text"
         >
           <v-list-item>
@@ -21,7 +20,12 @@
           <v-divider></v-divider>
 
           <v-list dense nav>
-            <v-list-item v-for="item in items" :key="item.title" :to="item.to">
+            <v-list-item
+              v-for="item in items"
+              :key="item.title"
+              :to="item.to"
+              @click="currentView = item.title"
+            >
               <v-list-item-icon>
                 <v-icon class="pl-6">{{ item.icon }}</v-icon>
               </v-list-item-icon>
@@ -39,10 +43,10 @@
             @click="drawer = !drawer"
           ></v-app-bar-nav-icon>
           <v-toolbar-title v-if="!currentUser">Vaccination-app</v-toolbar-title>
-          <v-toolbar-title v-else>Dashboard</v-toolbar-title>
+          <v-toolbar-title v-else>{{ currentView }}</v-toolbar-title>
           <div class="navbar-nav mr-auto mr-4">
             <li class="nav-item mr-1 ml-2">
-              <router-link
+              <!-- <router-link
                 v-if="!currentUser"
                 to="home"
                 class="nav-link"
@@ -53,7 +57,7 @@
                   icon="home"
                   style="color: #0f7452"
                 />Home</router-link
-              >
+              > -->
             </li>
           </div>
           <div v-if="!currentUser" class="navbar-nav ml-auto">
@@ -120,11 +124,11 @@
 export default {
   data: () => ({
     drawer: null,
-    currentView: "",
+    currentView: "Dashboard",
     selectItem: null,
 
     items: [
-      { title: "Hospital View", icon: "mdi-home", to: "/user/profile" },
+      { title: "Dashboard", icon: "mdi-home", to: "/user/dashboard" },
       { title: "Patients", icon: "mdi-account-multiple", to: "/user/patients" },
       {
         title: "Vaccinations",
