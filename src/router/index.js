@@ -63,6 +63,15 @@ export const router = new VueRouter({
         },
         {
 
+          path: 'vaccines',
+          component: () => import(/* webpackChunkName: "about" */ '../views/Vaccines.vue'),
+          meta: {
+            title: 'Vaccines'
+          }
+
+        },
+        {
+
           path: 'statistics',
           component: () => import(/* webpackChunkName: "about" */ '../views/Statistics.vue')
 
