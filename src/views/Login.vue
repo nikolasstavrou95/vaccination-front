@@ -46,11 +46,6 @@
               >click here to sign up 🔑</router-link
             >
           </div>
-          <!-- <div class="form-group">
-            <div v-if="message" class="alert alert-danger" role="alert">
-              {{ message }}
-            </div>
-          </div> -->
         </form>
       </div>
     </div>
@@ -124,15 +119,17 @@ export default {
         if (this.hospital.username && this.hospital.password) {
           this.$store.dispatch("auth/login", this.hospital).then(
             () => {
-              this.$router.push({
-                name: "user",
-              });
+              this.$router.push({ path: "user" });
 
               this.cleanLogin();
             },
-            (error) => {
+            (errors) => {
               this.loading = false;
-              this.submitStatus = `💥${error.response.data.message}`;
+
+              this.submitStatus =
+                errors.response.data.status === 401
+                  ? `💥 Wrong username or password, try again`
+                  : ``;
               // (error.response && error.response.data) ||
               // error.message ||
               // error.toString();

@@ -34,24 +34,54 @@
             ></v-text-field>
             <v-text-field
               class="pt-4"
-              v-model="hospital.phone"
+              v-model="hospital.city"
+              :error-messages="cityErrors"
+              label="City"
+              required
+              prepend-inner-icon="fas fa-map-marker-alt"
+              @input="$v.hospital.city.$touch()"
+              @blur="$v.hospital.city.$touch()"
+            ></v-text-field>
+            <v-text-field
+              class="pt-4"
+              v-model="hospital.country"
+              :error-messages="countryErrors"
+              label="Country"
+              required
+              prepend-inner-icon="fas fa-map-marker-alt"
+              @input="$v.hospital.country.$touch()"
+              @blur="$v.hospital.country.$touch()"
+            ></v-text-field>
+            <v-text-field
+              class="pt-4"
+              v-model="hospital.phone_number"
               :error-messages="phoneErrors"
               label="Phone number"
               required
               prepend-inner-icon="fas fa-phone-alt"
-              @input="$v.hospital.phone.$touch()"
-              @blur="$v.hospital.phone.$touch()"
+              @input="$v.hospital.phone_number.$touch()"
+              @blur="$v.hospital.phone_number.$touch()"
             ></v-text-field>
-            <v-text-field
+            <!-- <v-text-field
               class="pt-4"
-              v-model="hospital.doses"
+              v-model="hospital.available_doses"
               :error-messages="dosesErrors"
               label="Available doses"
               required
               prepend-inner-icon="fas fa-crutch"
               name="doses"
-              @input="$v.hospital.doses.$touch()"
-              @blur="$v.hospital.doses.$touch()"
+              @input="$v.hospital.available_doses.$touch()"
+              @blur="$v.hospital.available_doses.$touch()"
+            ></v-text-field> -->
+            <v-text-field
+              class="pt-4"
+              v-model="hospital.username"
+              :error-messages="usernameErrors"
+              label="Username"
+              required
+              prepend-inner-icon="far fa-user"
+              @input="$v.hospital.username.$touch()"
+              @blur="$v.hospital.username.$touch()"
             ></v-text-field>
             <v-text-field
               class="pt-4"
@@ -94,13 +124,7 @@
 <script>
 import Hospital from "../models/hospital";
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  email,
-  minValue,
-  integer,
-  helpers,
-} from "vuelidate/lib/validators";
+import { required, email, helpers } from "vuelidate/lib/validators";
 const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
 
 export default {
@@ -111,15 +135,18 @@ export default {
     hospital: {
       name: { required },
       address: { required, containNumbers },
-      doses: { required, minValue: minValue(0), integer },
-      phone: { required },
+      city: { required },
+      country: { required },
+      // available_doses: { required, minValue: minValue(0), integer },
+      phone_number: { required },
+      username: { required },
       email: { required, email },
       password: { required },
     },
   },
   data() {
     return {
-      hospital: new Hospital("", "", "", "", "", ""),
+      hospital: new Hospital("", "", "", "", "", "", "", "", ""),
       submitted: false,
       successful: false,
       message: "",
@@ -138,17 +165,38 @@ export default {
         errors.push("Hospital's name is required");
       return errors;
     },
-    dosesErrors() {
+    usernameErrors() {
       const errors = [];
-      if (!this.$v.hospital.doses.$dirty) return errors;
-      !this.$v.hospital.doses.integer &&
-        errors.push("Please give a valid number");
-      !this.$v.hospital.doses.minValue &&
-        errors.push("Please give a positive number");
-      !this.$v.hospital.doses.required &&
-        errors.push("Available doses is required");
+      if (!this.$v.hospital.username.$dirty) return errors;
+
+      !this.$v.hospital.username.required &&
+        errors.push("Username is required");
       return errors;
     },
+    cityErrors() {
+      const errors = [];
+      if (!this.$v.hospital.city.$dirty) return errors;
+
+      !this.$v.hospital.city.required && errors.push("City is required");
+      return errors;
+    },
+    countryErrors() {
+      const errors = [];
+      if (!this.$v.hospital.country.$dirty) return errors;
+
+      !this.$v.hospital.country.required && errors.push("Country is required");
+      return errors;
+    },
+    // dosesErrors() {
+    //   const errors = [];
+    //   if (!this.$v.hospital.available_doses.$dirty) return errors;
+    //   !this.$v.hospital.available_doses.integer &&
+    //     errors.push("Please give a valid number");
+    //   !this.$v.hospital.available_doses.minValue &&
+    //     errors.push("Please give a positive number");
+    //   !this.$v.hospital.available_doses.required &&
+    //     errors.push("Available doses is required");
+    //   return errors;
 
     emailErrors() {
       const errors = [];
@@ -178,15 +226,16 @@ export default {
     },
     phoneErrors() {
       const errors = [];
-      if (!this.$v.hospital.phone.$dirty) return errors;
+      if (!this.$v.hospital.phone_number.$dirty) return errors;
 
-      !this.$v.hospital.phone.required && errors.push("Phone is required.");
+      !this.$v.hospital.phone_number.required &&
+        errors.push("Phone is required.");
       return errors;
     },
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      this.$router.push("/login");
     }
   },
   methods: {

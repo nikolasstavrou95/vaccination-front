@@ -26,8 +26,11 @@ class AuthService {
         return axios.post(API_URL + 'signup', {
             name: hospital.name,
             address: hospital.address,
-            phone: hospital.phone,
-            doses: hospital.doses,
+            city: hospital.city,
+            country: hospital.country,
+            phone_number: hospital.phone_number,
+            available_doses: hospital.available_doses,
+            username: hospital.username,
             email: hospital.email,
             password: hospital.password
         });

@@ -4,7 +4,6 @@
       v-if="currentUser"
       v-model="drawer"
       app
-      dark
       class="cyan white--text"
     >
       <v-list-item>

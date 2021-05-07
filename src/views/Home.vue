@@ -1,33 +1,12 @@
 <template>
-  <div class="container">
-    <header class="jumbotron">
-      <h3>{{ content }}</h3>
-    </header>
+  <div>
+    <h3>Home</h3>
   </div>
 </template>
 
 <script>
-import PatientsUserService from "../services/patients.service";
+// @ is an alias to /src
 
-export default {
-  name: "Home",
-  data() {
-    return {
-      content: "",
-    };
-  },
-  mounted() {
-    PatientsUserService.getAllPatients().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
-  },
-};
+export default {};
 </script>
+
