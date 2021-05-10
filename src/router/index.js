@@ -81,6 +81,12 @@ export const router = new VueRouter({
           component: () => import(/* webpackChunkName: "about" */ '../views/Help.vue')
 
         },
+        {
+
+          path: 'profile',
+          component: () => import(/* webpackChunkName: "about" */ '../views/HospitalProfile.vue')
+
+        },
 
 
 
