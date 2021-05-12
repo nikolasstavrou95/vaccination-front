@@ -1,6 +1,7 @@
 <template>
   <v-card loading outlined class="container">
     <div class="col-left">
+      <img class="side_wave" src="/wave.png" />
       <div class="image">
         <img src="/icons8-rod-of-asclepius-100.png" />
       </div>
@@ -54,7 +55,7 @@
         <v-btn color="success" dark small @click="updateHospital">
           Update Hospital
         </v-btn>
-        <p class="mt-3">{{ message }}</p>
+        <p class="mt-3" v-if="error">{{ error }}</p>
       </div>
     </div>
   </v-card>
@@ -88,7 +89,6 @@ export default {
       hospital: null,
 
       error: "",
-      message: "",
     };
   },
   // computed: {
@@ -188,12 +188,20 @@ export default {
     },
   },
   mounted() {
-    this.message = "";
+    this.error = "";
     this.getHospital();
   },
 };
 </script>
 <style  scoped>
+.side_wave {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  z-index: -1;
+  transform: rotate(-90deg) translateX(-40%);
+}
 .container {
   max-width: 980px;
   margin: 30px auto;
