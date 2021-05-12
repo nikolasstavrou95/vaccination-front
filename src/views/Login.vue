@@ -23,6 +23,7 @@
             name="username"
             @input="$v.hospital.username.$touch()"
             @blur="$v.hospital.username.$touch()"
+            @click="cleanStatus"
           >
           </v-text-field>
           <v-text-field
@@ -34,6 +35,7 @@
             name="password"
             @input="$v.hospital.password.$touch()"
             @blur="$v.hospital.password.$touch()"
+            @click="cleanStatus"
           >
           </v-text-field>
 
@@ -102,11 +104,11 @@ export default {
       return errors;
     },
   },
-  // created() {
-  //   if (this.loggedIn) {
-  //     this.$router.push("/profile");
-  //   }
-  // },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push({ path: "profile" });
+    }
+  },
   methods: {
     handleLogin() {
       this.loading = true;
@@ -122,6 +124,7 @@ export default {
               this.$router.push({ path: "user" });
 
               this.cleanLogin();
+              this.cleanStatus();
             },
             (errors) => {
               this.loading = false;
@@ -130,9 +133,6 @@ export default {
                 errors.response.data.status === 401
                   ? `💥 Wrong username or password, try again`
                   : ``;
-              // (error.response && error.response.data) ||
-              // error.message ||
-              // error.toString();
             }
           );
         }
@@ -141,6 +141,8 @@ export default {
     cleanLogin() {
       this.hospital.email = "";
       this.hospital.password = "";
+    },
+    cleanStatus() {
       this.submitStatus = "";
     },
   },
