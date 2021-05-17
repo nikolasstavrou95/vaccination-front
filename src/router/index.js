@@ -47,13 +47,14 @@ export const router = new VueRouter({
 
         {
           path: 'dashboard',
-          name: 'dashboard',
+          name: 'Dashboard',
           component: Dashboard
 
         },
         {
 
           path: 'patients',
+          name: 'Patients',
           component: () => import(/* webpackChunkName: "about" */ '../views/Patients.vue'),
           meta: {
             title: 'Patients'
@@ -63,6 +64,7 @@ export const router = new VueRouter({
         {
 
           path: 'vaccinations',
+          name: 'Vaccinations',
           component: () => import(/* webpackChunkName: "about" */ '../views/Vaccinations.vue'),
           meta: {
             title: 'Vaccinations'
@@ -71,19 +73,32 @@ export const router = new VueRouter({
         },
         {
 
+          path: 'vaccines',
+          name: 'Vaccines',
+          component: () => import(/* webpackChunkName: "about" */ '../views/Vaccines.vue'),
+          meta: {
+            title: 'Vaccines'
+          }
+
+        },
+        {
+
           path: 'statistics',
+          name: 'Statistics',
           component: () => import(/* webpackChunkName: "about" */ '../views/Statistics.vue')
 
         },
         {
 
           path: 'help',
+          name: 'Help',
           component: () => import(/* webpackChunkName: "about" */ '../views/Help.vue')
 
         },
         {
 
           path: 'profile',
+          name: 'Hospital Profile',
           component: () => import(/* webpackChunkName: "about" */ '../views/HospitalProfile.vue')
 
         },
