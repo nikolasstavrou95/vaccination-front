@@ -7,7 +7,7 @@
       </div>
       <div class="login">
         <form action="index.html">
-          <img src="icons8-rod-of-asclepius-100.png" />
+          <img src="logo2.png" />
           <h2 class="title">Welcome</h2>
           <h3 class="message" v-if="submitStatus">
             {{ submitStatus }}
