@@ -22,13 +22,13 @@ import {
 
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faLock, faUserEdit);
-Vue.use(VeeValidate);
+
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Navbar', Navbar)
 Vue.component('Patients', Patients)
 
 Vue.config.productionTip = false
-//Vue.use(Chart);
+
 
 new Vue({
   router,
