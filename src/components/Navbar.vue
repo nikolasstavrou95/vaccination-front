@@ -5,7 +5,7 @@
         v-if="currentUser"
         v-model="drawer"
         app
-        class="cyan white--text"
+        color="primary"
       >
         <v-list-item>
           <v-list-item-content class="pa-6 justify-center">
@@ -16,15 +16,9 @@
                 max-width="120"
                 height="120"
                 class="m-auto"
+                :elevation="25"
               />
             </v-list-item-subtitle>
-            <!-- <div>
-              <p>{{ hospital.name }}</p>
-              <p>{{ hospital.email }}</p>
-              <p>{{ hospital.address }}</p>
-              <p>{{ hospital.phone_number }}</p>
-              <font-awesome-icon icon="user-edit" style="color: #0f7452" />
-            </div> -->
           </v-list-item-content>
         </v-list-item>
 
@@ -54,23 +48,8 @@
           @click="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <v-toolbar-title v-if="!currentUser">Vaccination-app</v-toolbar-title>
-        <v-toolbar-title v-else>{{ currentView }}</v-toolbar-title>
-        <div class="navbar-nav mr-auto mr-4">
-          <li class="nav-item mr-1 ml-2">
-            <!-- <router-link
-                v-if="!currentUser"
-                to="home"
-                class="nav-link"
-                active-class="active"
-                exact
-              >
-                <font-awesome-icon
-                  icon="home"
-                  style="color: #0f7452"
-                />Home</router-link
-              > -->
-          </li>
-        </div>
+        <v-toolbar-title v-else>{{ currentRouteName }}</v-toolbar-title>
+
         <div v-if="!currentUser" class="navbar-nav ml-auto">
           <li class="nav-item mr-2">
             <router-link
@@ -101,7 +80,7 @@
         <div v-if="currentUser" class="navbar-nav ml-auto">
           <li class="nav-item mr-1">
             <router-link
-              to="profile"
+              to="/user/profile"
               active-class="active"
               exact
               class="nav-link"
@@ -144,6 +123,7 @@ export default {
         icon: "mdi-chart-areaspline",
         to: "/user/statistics",
       },
+
       { title: "Help", icon: "mdi-help-box", to: "/user/help" },
       { title: "Hospital View", icon: "mdi-home", to: "/user/profile" },
     ],
@@ -152,6 +132,11 @@ export default {
     currentUser() {
       return this.$store.state.auth.hospital;
     },
+  
+    currentRouteName() {
+        return this.$route.name;
+    },
+
   },
   methods: {
     logOut() {
