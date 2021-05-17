@@ -9,6 +9,7 @@ import VeeValidate from 'vee-validate';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Navbar from '@/components/Navbar.vue'
+import Patients from '@/views/Patients.vue'
 import {
   faHome,
   faUser,
@@ -24,7 +25,10 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faLock, faUse
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Navbar', Navbar)
+Vue.component('Patients', Patients)
+
 Vue.config.productionTip = false
+//Vue.use(Chart);
 
 new Vue({
   router,
