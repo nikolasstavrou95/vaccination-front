@@ -24,6 +24,10 @@
           </v-card-text>
           <v-footer>
             <v-btn
+            color="light-blue"
+            small
+            outlined
+              rounded
               ><router-link to="/user/vaccinations"
                 >Add more</router-link
               ></v-btn
@@ -54,6 +58,10 @@
           </v-card-text>
           <v-footer>
             <v-btn
+             color="light-blue"
+            small
+            outlined
+              rounded
               ><router-link to="/user/vaccinations">see all</router-link></v-btn
             >
           </v-footer>
@@ -81,15 +89,22 @@
             </div>
           </v-card-text>
           <v-footer>
-            <v-btn
+            <v-btn 
+             color="light-blue"
+            small
+            outlined
+              rounded
               ><router-link to="/user/vaccinations">see all</router-link></v-btn
             >
           </v-footer>
         </v-card>
       </v-col>
       <v-col cols="12" lg="8">
-        <patients></patients>
+      
       </v-col>
+    </v-row>
+    <v-row>
+      <patients></patients>
     </v-row>
   </v-container>
 </template>

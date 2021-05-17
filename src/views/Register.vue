@@ -5,7 +5,7 @@
       <div class="img"><img src="bg-image.svg" /></div>
       <div class="signup">
         <form>
-          <img src="icons8-rod-of-asclepius-100.png" />
+          <img src="logo2.png" />
           <h2 class="title">Welcome to vaccination system</h2>
 
           <p v-if="message">{{ message }}</p>

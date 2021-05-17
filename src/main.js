@@ -5,7 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import VeeValidate from 'vee-validate';
+//import VeeValidate from 'vee-validate';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Navbar from '@/components/Navbar.vue'
@@ -22,7 +22,7 @@ import {
 
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faLock, faUserEdit);
-Vue.use(VeeValidate);
+  //Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Navbar', Navbar)
 Vue.component('Patients', Patients)
