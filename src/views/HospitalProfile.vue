@@ -1,7 +1,6 @@
 <template>
   <v-card loading outlined class="container">
     <div class="col-left">
-      <img class="side_wave" src="/wave.png" />
       <div class="image">
         <img src="/icons8-rod-of-asclepius-100.png" />
       </div>
@@ -194,21 +193,13 @@ export default {
 };
 </script>
 <style  scoped>
-.side_wave {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  z-index: -1;
-  transform: rotate(-90deg) translateX(-40%);
-}
 .container {
   max-width: 980px;
   margin: 30px auto;
   display: flex;
   justify-content: center;
   flex-direction: row;
-  height: 80vh;
+  height: 100vh;
   box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
 }
 .col-left {
