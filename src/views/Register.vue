@@ -1,13 +1,17 @@
 <template>
   <div class="col-md-12">
-    <img class="side_wave" src="wave.png" />
+  
     <div class="container">
       <div class="img"><img src="bg-image.svg" /></div>
       <div class="signup">
         <form>
-          <img src="logo2.png" />
+         
+          <v-img max-height="100"
+           max-width="100" src="logo2.png"></v-img>
+             
+          
           <h2 class="title">Welcome to vaccination system</h2>
-
+          
           <p v-if="message">{{ message }}</p>
           <div v-if="!successful">
             <p>Please fill the registration form</p>
@@ -115,6 +119,7 @@
             </v-btn>
           </div>
           <p class="error mt-2" v-if="errorMessage">{{ errorMessage }}</p>
+          
         </form>
       </div>
     </div>
@@ -271,13 +276,7 @@ export default {
   color: indianred;
   font-size: large;
 }
-.side_wave {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  z-index: -1;
-}
+
 
 .container {
   width: 100vw;

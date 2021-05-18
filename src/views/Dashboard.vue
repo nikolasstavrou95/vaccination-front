@@ -103,6 +103,7 @@
       
       </v-col>
     </v-row>
+   
     <v-row>
       <patients></patients>
     </v-row>
@@ -111,8 +112,12 @@
 
 
 <script>
+
 export default {
   name: "Dashboard",
+components: {
+ 
+},
   data: () => ({}),
 };
 </script>

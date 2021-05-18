@@ -61,7 +61,7 @@ export const  mutations= {
     },
     async editPatient({commit},patient){
       try{
-       let response= await patientsService.editPatient(patient.id,patient)
+       let response= await patientsService.editPatient(patient)
        let editedPatient=response.data.data
         commit('EDIT_PATIENT',editedPatient)
 

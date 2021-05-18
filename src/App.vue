@@ -1,19 +1,19 @@
 <template>
 <v-app>
     <v-main >
-     
+    
     <Navbar />
       <router-view></router-view>
       
-      <v-footer class="mt-8 mb-4" color="white" >
+      
+      
+    </v-main>
+  <v-footer class="mt-8 mb-4" color="white" >
   
     <v-row justify="center">
       {{ new Date().getFullYear() }} — <strong>SKG code -Team Nu11s!</strong>
    </v-row>
   </v-footer>
-       
-    </v-main>
-  
   
 </v-app>
 </template>

@@ -29,7 +29,8 @@ Vue.component('Patients', Patients)
 
 Vue.config.productionTip = false
 //Vue.use(Chart);
-
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 new Vue({
   router,
   store,

@@ -25,9 +25,9 @@ export default {
         const url=API_URL+"deletePatient/"
         return axios.delete(url+patientID, { headers: authHeader() } )
       },
-      editPatient(patientID,patient){
-        const url = API_URL+"updatePatientById/"
-           return axios.post(url+patientID,patient,{ headers: authHeader() })
+      editPatient(patient){
+        const url = API_URL+"updatePatient"
+           return axios.post(url,patient,{ headers: authHeader() })
         }
       
 
