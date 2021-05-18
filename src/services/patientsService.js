@@ -27,8 +27,7 @@ export default {
   },
   editPatient(patient) {
     const url = API_URL + "updatePatient"
-    return axios.put(url,
-      patient, { headers: authHeader() })
+    return axios.post(url, patient, { headers: authHeader() })
   }
 
 

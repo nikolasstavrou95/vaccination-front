@@ -1,4 +1,3 @@
-
 import patientsService from "@/services/patientsService.js";
 
 export const state = {
@@ -70,4 +69,3 @@ export const actions = {
   }
 
 }
-
