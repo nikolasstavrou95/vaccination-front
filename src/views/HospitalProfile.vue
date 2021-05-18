@@ -1,8 +1,8 @@
 <template>
-  <v-card loading outlined class="container">
+  <v-container>
     <div class="col-left">
       <div class="image">
-        <img src="/icons8-rod-of-asclepius-100.png" />
+        <v-img src="/logo2.png" />
       </div>
     </div>
     <div class="col-right">
@@ -51,13 +51,21 @@
           name="address"
         ></v-text-field>
 
-        <v-btn color="success" dark small @click="updateHospital">
+        <v-btn
+          color="light-blue"
+          small
+          outlined
+          rounded
+          class="mt-4"
+          @click="updateHospital"
+        >
           Update Hospital
         </v-btn>
+
         <p class="mt-3" v-if="error">{{ error }}</p>
       </div>
     </div>
-  </v-card>
+  </v-container>
 </template>
 
 
@@ -204,9 +212,6 @@ export default {
 }
 .col-left {
   flex-basis: 40%;
-
-  justify-content: center;
-  align-content: center;
 }
 .col-right {
   flex-basis: 50%;
@@ -215,9 +220,9 @@ export default {
 .image {
   margin: 50px auto;
 }
-.image img {
-  width: 200px;
-  height: 200px;
+.image {
+  width: 210px;
+  height: 210px;
 }
 .hospital-form {
   margin-top: 50px;
