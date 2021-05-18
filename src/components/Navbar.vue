@@ -5,32 +5,46 @@
         v-if="currentUser"
         v-model="drawer"
         app
-        color="primary"
+        dark
+        color= "#2d9277"
       >
         <v-list-item>
           <v-list-item-content class="pa-6 justify-center">
             <!-- <v-list-item-title> Vaccinations </v-list-item-title> -->
             <v-list-item-subtitle>
               <v-img
-                src="/icons8-rod-of-asclepius-100.png"
+                src="/logo2.png"
                 max-width="120"
                 height="120"
                 class="m-auto"
-                :elevation="25"
+               
               />
             </v-list-item-subtitle>
+            
           </v-list-item-content>
         </v-list-item>
-
+         <v-list-item>
+          <v-list-item-content class="justify-center">
+            <v-container>
+              <v-row justify="center">
+              <h5>{{ currentUser.username }} </h5>
+              </v-row>
+              </v-container>
+            </v-list-item-content>
+         </v-list-item>
         <v-divider></v-divider>
 
         <v-list dense nav>
+           <v-container>
+                <v-row justify="center">
           <v-list-item
             v-for="item in items"
             :key="item.title"
             :to="item.to"
             @click="currentView = item.title"
           >
+         
+         
             <v-list-item-icon>
               <v-icon class="pl-6">{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -39,10 +53,12 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          </v-row>
+          </v-container>
         </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar app flat class="blue-grey lighten-3">
+      <v-app-bar app flat  color="#d7eae5">
         <v-app-bar-nav-icon
           v-if="currentUser"
           @click="drawer = !drawer"
@@ -111,7 +127,7 @@ export default {
     selectItem: null,
     hospital: "",
     items: [
-      { title: "Dashboard", icon: "mdi-home", to: "/user/dashboard" },
+      { title: "Dashboard", icon: "mdi-view-dashboard", to: "/user/dashboard" },
       { title: "Patients", icon: "mdi-account-multiple", to: "/user/patients" },
       {
         title: "Vaccinations",
@@ -123,9 +139,9 @@ export default {
         icon: "mdi-chart-areaspline",
         to: "/user/statistics",
       },
-
-      { title: "Help", icon: "mdi-help-box", to: "/user/help" },
-      { title: "Hospital View", icon: "mdi-home", to: "/user/profile" },
+       { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" },
+      { title: "Help", icon: "mdi-help-box", to: "/user/help" }
+      
     ],
   }),
   computed: {
