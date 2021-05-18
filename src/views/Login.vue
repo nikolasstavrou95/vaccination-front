@@ -156,10 +156,10 @@ export default {
 }
 .side_wave {
   position: fixed;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
 }
 
 .container {
@@ -169,11 +169,13 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 7rem;
   padding: 0 2rem;
+  z-index: 1;
 }
 .img {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .login,

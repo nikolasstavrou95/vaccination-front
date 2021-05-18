@@ -1,68 +1,72 @@
 <template>
-  <div class="col-md-12">
-    <img class="side_wave" src="wave.png" />
-    <div class="container">
-      <div class="img"><img src="bg-image.svg" /></div>
-      <div class="signup">
-        <form>
-          <img src="logo2.png" />
-          <h2 class="title">Welcome to vaccination system</h2>
+  <v-container class="d-flex">
+    <v-row>
+      <img class="side_wave" src="wave.png" />
+      <v-col class="d-none d-md-flex">
+        <!-- <div class="container"> -->
+        <div class="img"><img src="bg-image.svg" /></div>
+      </v-col>
+      <v-col>
+        <div class="signup">
+          <form>
+            <img src="logo2.png" />
+            <h2 class="title">Welcome to vaccination system</h2>
 
-          <p v-if="message">{{ message }}</p>
-          <div v-if="!successful">
-            <p>Please fill the registration form</p>
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.name"
-              :error-messages="nameErrors"
-              label="Hospital Name"
-              required
-              prepend-inner-icon="far fa-hospital"
-              @input="$v.hospital.name.$touch()"
-              @blur="$v.hospital.name.$touch()"
-            ></v-text-field>
+            <p v-if="message">{{ message }}</p>
+            <div v-if="!successful">
+              <p>Please fill the registration form</p>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.name"
+                :error-messages="nameErrors"
+                label="Hospital Name"
+                required
+                prepend-inner-icon="far fa-hospital"
+                @input="$v.hospital.name.$touch()"
+                @blur="$v.hospital.name.$touch()"
+              ></v-text-field>
 
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.address"
-              :error-messages="addressErrors"
-              label="Address"
-              required
-              prepend-inner-icon="fas fa-map-marker-alt"
-              @input="$v.hospital.address.$touch()"
-              @blur="$v.hospital.address.$touch()"
-            ></v-text-field>
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.city"
-              :error-messages="cityErrors"
-              label="City"
-              required
-              prepend-inner-icon="fas fa-map-marker-alt"
-              @input="$v.hospital.city.$touch()"
-              @blur="$v.hospital.city.$touch()"
-            ></v-text-field>
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.country"
-              :error-messages="countryErrors"
-              label="Country"
-              required
-              prepend-inner-icon="fas fa-map-marker-alt"
-              @input="$v.hospital.country.$touch()"
-              @blur="$v.hospital.country.$touch()"
-            ></v-text-field>
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.phone_number"
-              :error-messages="phoneErrors"
-              label="Phone number"
-              required
-              prepend-inner-icon="fas fa-phone-alt"
-              @input="$v.hospital.phone_number.$touch()"
-              @blur="$v.hospital.phone_number.$touch()"
-            ></v-text-field>
-            <!-- <v-text-field
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.address"
+                :error-messages="addressErrors"
+                label="Address"
+                required
+                prepend-inner-icon="fas fa-map-marker-alt"
+                @input="$v.hospital.address.$touch()"
+                @blur="$v.hospital.address.$touch()"
+              ></v-text-field>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.city"
+                :error-messages="cityErrors"
+                label="City"
+                required
+                prepend-inner-icon="fas fa-map-marker-alt"
+                @input="$v.hospital.city.$touch()"
+                @blur="$v.hospital.city.$touch()"
+              ></v-text-field>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.country"
+                :error-messages="countryErrors"
+                label="Country"
+                required
+                prepend-inner-icon="fas fa-map-marker-alt"
+                @input="$v.hospital.country.$touch()"
+                @blur="$v.hospital.country.$touch()"
+              ></v-text-field>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.phone_number"
+                :error-messages="phoneErrors"
+                label="Phone number"
+                required
+                prepend-inner-icon="fas fa-phone-alt"
+                @input="$v.hospital.phone_number.$touch()"
+                @blur="$v.hospital.phone_number.$touch()"
+              ></v-text-field>
+              <!-- <v-text-field
               class="pt-4"
               v-model="hospital.available_doses"
               :error-messages="dosesErrors"
@@ -73,52 +77,53 @@
               @input="$v.hospital.available_doses.$touch()"
               @blur="$v.hospital.available_doses.$touch()"
             ></v-text-field> -->
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.username"
-              :error-messages="usernameErrors"
-              label="Username"
-              required
-              prepend-inner-icon="far fa-user"
-              @input="$v.hospital.username.$touch()"
-              @blur="$v.hospital.username.$touch()"
-            ></v-text-field>
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.email"
-              :error-messages="emailErrors"
-              label="Email"
-              required
-              prepend-inner-icon="fas fa-at"
-              @input="$v.hospital.email.$touch()"
-              @blur="$v.hospital.email.$touch()"
-            ></v-text-field>
-            <v-text-field
-              class="pt-4"
-              v-model="hospital.password"
-              :error-messages="passwordErrors"
-              success
-              label="Password"
-              required
-              prepend-inner-icon="fas fa-lock"
-              @input="$v.hospital.password.$touch()"
-              @blur="$v.hospital.password.$touch()"
-            ></v-text-field>
-            <v-btn
-              rounded
-              color="primary"
-              v-if="!submitted"
-              @click="handleRegister"
-              dark
-            >
-              Register
-            </v-btn>
-          </div>
-          <p class="error mt-2" v-if="errorMessage">{{ errorMessage }}</p>
-        </form>
-      </div>
-    </div>
-  </div>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.username"
+                :error-messages="usernameErrors"
+                label="Username"
+                required
+                prepend-inner-icon="far fa-user"
+                @input="$v.hospital.username.$touch()"
+                @blur="$v.hospital.username.$touch()"
+              ></v-text-field>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.email"
+                :error-messages="emailErrors"
+                label="Email"
+                required
+                prepend-inner-icon="fas fa-at"
+                @input="$v.hospital.email.$touch()"
+                @blur="$v.hospital.email.$touch()"
+              ></v-text-field>
+              <v-text-field
+                class="pt-4"
+                v-model="hospital.password"
+                :error-messages="passwordErrors"
+                label="Password"
+                required
+                prepend-inner-icon="fas fa-lock"
+                @input="$v.hospital.password.$touch()"
+                @blur="$v.hospital.password.$touch()"
+              ></v-text-field>
+              <v-btn
+                rounded
+                color="primary"
+                v-if="!submitted"
+                @click="handleRegister"
+                dark
+              >
+                Register
+              </v-btn>
+            </div>
+            <p class="error mt-2" v-if="errorMessage">{{ errorMessage }}</p>
+          </form>
+        </div>
+      </v-col>
+      <!-- </div> -->
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -276,9 +281,9 @@ export default {
   bottom: 0;
   left: 0;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
 }
-
+/* 
 .container {
   width: 100vw;
   height: 100vh;
@@ -286,23 +291,23 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 7rem;
   padding: 0 2rem;
-}
-.img {
+} */
+/* .img {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
-.login,
+/* .login,
 .signup {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-}
-.signup {
+} */
+/* .signup {
   margin-top: 70px;
-}
+} */
 
 .img img {
   width: 500px;
@@ -315,8 +320,8 @@ export default {
   max-width: 780px;
   padding: 10px;
 }
-.login img {
-  height: 100px;
+.signup img {
+  height: 150px;
 }
 
 .login h2 {
@@ -331,16 +336,7 @@ export default {
   font-size: 1rem;
 }
 
-a.left {
-  text-align: center;
-  color: grey !important;
-}
-
-a.left:hover {
-  color: #38d39f !important;
-}
-
-.btn {
+/* .btn {
   display: block;
   width: 100%;
   height: 50px;
@@ -364,46 +360,28 @@ a.left:hover {
 }
 .btn:hover {
   background-position: right;
-}
+}*/
 @media screen and (max-width: 1100px) {
   .side_wave {
     display: none;
   }
 }
-
+/* 
 @media screen and (max-width: 1050px) {
   .container {
     grid-gap: 5rem;
   }
 }
-
-@media screen and (max-width: 1000px) {
-  form {
-    width: 290px;
-  }
-
-  .login h2 {
-    font-size: 2.4rem;
-    margin: 8px 0;
-  }
-
+*/
+/* @media screen and (max-width: 1000px) {
   .img img {
-    width: 400px;
+    width: 100%;
   }
-}
+} */
 
-@media screen and (max-width: 900px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
-
+/* @media screen and (max-width: 900px) {
   .img {
-    display: none;
+    width: 100%;
   }
-
-  .login,
-  .signup {
-    justify-content: center;
-  }
-}
+} */
 </style>
