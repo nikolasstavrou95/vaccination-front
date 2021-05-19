@@ -71,10 +71,12 @@
 
 
 <script>
+import { mapState } from "vuex";
 import HospitalDataService from "../services/user.service";
 import { validationMixin } from "vuelidate";
 import { required, email, helpers } from "vuelidate/lib/validators";
 const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
+
 export default {
   name: "Profile",
   mixins: [validationMixin],
@@ -93,11 +95,10 @@ export default {
   },
   data() {
     return {
-      hospital: null,
-
       error: "",
     };
   },
+
   // computed: {
   //   currentUser() {
   //     return this.$store.state.auth.hospital;
@@ -115,6 +116,10 @@ export default {
   //     });
   // },
   computed: {
+    ...mapState({
+      hospital: (state) => state.hospital.hospitalData,
+    }),
+
     nameErrors() {
       const errors = [];
       if (!this.$v.hospital.name.$dirty) return errors;
@@ -161,19 +166,24 @@ export default {
       return errors;
     },
   },
-  methods: {
-    getHospital() {
-      HospitalDataService.getHospitalData(
-        this.$store.state.auth.hospital.username
-      )
-        .then((response) => {
-          this.hospital = response.data;
-        })
-        .catch((errors) => {
-          this.error = `${errors.response.error}`;
-        });
-    },
 
+  methods: {
+    async getHospital() {
+      await this.$store.dispatch(
+        "loadHospitalData",
+        this.$store.state.auth.hospital.username
+      );
+
+      // HospitalDataService.getHospitalData(
+      //   this.$store.state.auth.hospital.username
+      // )
+      //   .then((response) => {
+      //     this.hospital = response.data;
+      //   })
+      //   .catch((errors) => {
+      //     this.error = `${errors.response.error}`;
+      //   });
+    },
     updateHospital() {
       var data = {
         name: this.hospital.name,
@@ -195,7 +205,7 @@ export default {
     },
   },
   mounted() {
-    this.error = "";
+    // this.error = "";
     this.getHospital();
   },
 };
