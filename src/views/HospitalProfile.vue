@@ -43,11 +43,21 @@
         <h4>Phone number</h4>
         <v-text-field
           v-model="hospital.phone_number"
-          :error-messages="addressErrors"
+          :error-messages="phoneErrors"
           prepend-inner-icon="fas fa-map-marked-alt"
           required
           @input="$v.hospital.phone_number.$touch()"
           @blur="$v.hospital.phone_number.$touch()"
+          name="address"
+        ></v-text-field>
+        <h4>Username</h4>
+        <v-text-field
+          v-model="hospital.username"
+          :error-messages="usernameErrors"
+          prepend-inner-icon="fas fa-user"
+          required
+          @input="$v.hospital.username.$touch()"
+          @blur="$v.hospital.username.$touch()"
           name="address"
         ></v-text-field>
 
@@ -62,17 +72,30 @@
           Update Hospital
         </v-btn>
 
-        <p class="mt-3" v-if="error">{{ error }}</p>
+        
       </div>
     </div>
+    <v-snackbar
+      v-model="snackbar2"
+      :timeout="timeout2"
+      :color="color2"
+      rounded="pill"
+      top
+    >
+      {{ message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 
 
 <script>
-import { mapState } from "vuex";
-import HospitalDataService from "../services/user.service";
+//import { mapState } from "vuex";
+//import HospitalDataService from "../services/user.service";
 import { validationMixin } from "vuelidate";
 import { required, email, helpers } from "vuelidate/lib/validators";
 const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
@@ -95,7 +118,13 @@ export default {
   },
   data() {
     return {
-      error: "",
+      
+      snackbar2: false,
+      timeout2: 2000,
+      message: "",
+      color2:"",
+     
+      
     };
   },
 
@@ -116,9 +145,11 @@ export default {
   //     });
   // },
   computed: {
-    ...mapState({
-      hospital: (state) => state.hospital.hospitalData,
-    }),
+    hospital(){
+     return  this.$store.state.hospital.hospitalData;
+     },
+     
+    
 
     nameErrors() {
       const errors = [];
@@ -127,6 +158,15 @@ export default {
       !this.$v.hospital.name.required &&
         errors.push("Hospital's name is required");
       return errors;
+    },
+    usernameErrors(){
+      const errors = [];
+      if (!this.$v.hospital.username.$dirty) return errors;
+
+      !this.$v.hospital.username.required &&
+        errors.push("Hospital's username is required");
+      return errors;
+
     },
     // dosesErrors() {
     //   const errors = [];
@@ -168,40 +208,73 @@ export default {
   },
 
   methods: {
+  
     async getHospital() {
-      await this.$store.dispatch(
-        "loadHospitalData",
+      try{
+       await this.$store.dispatch(
+        "loadHospital",
         this.$store.state.auth.hospital.username
       );
+      
+      
+        
+      }
 
-      // HospitalDataService.getHospitalData(
-      //   this.$store.state.auth.hospital.username
-      // )
-      //   .then((response) => {
-      //     this.hospital = response.data;
-      //   })
-      //   .catch((errors) => {
-      //     this.error = `${errors.response.error}`;
-      //   });
+      catch(err){
+        this.color2="#e17b58";
+        this.snackbar2 = true;
+        this.message=`Couldn't show this Hospital profile. An error occured during request (${err})`
+      }
+
+
     },
-    updateHospital() {
+    async updateHospital() {
       var data = {
+        id:this.hospital.id,
         name: this.hospital.name,
         address: this.hospital.address,
         email: this.hospital.email,
         phone_number: this.hospital.phone_number,
         city: this.hospital.city,
         country: this.hospital.country,
-      };
+        username:this.hospital.username,
 
-      HospitalDataService.update(this.hospital.username, data)
-        .then(() => {
-          this.getHospital();
-          this.message = "Hospital profile was updated successfully!";
-        })
-        .catch((err) => {
-          this.message = `Couldn't update this Hospital profile. An Error occured during update (${err})`;
-        });
+
+
+      };
+      try{
+        
+        let response = await this.$store.dispatch("editHospital", data);
+        if(response){
+          throw new Error()
+        }
+        this.color2 = "#9ce690"; 
+        
+        this.message = "Patient Edited Successfully";
+        this.snackbar2 = true;
+
+        
+        this.getHospital();
+
+      } catch(err){
+        this.color2="#e17b58";
+        this.snackbar2 = true;
+        this.message =`Couldn't update this Hospital profile. An error occured during update (${err})`;
+        
+       
+   
+    
+      }
+    
+
+      // HospitalDataService.update(this.hospital.username, data)
+      //   .then(() => {
+      //     this.getHospital();
+      //     this.message = "Hospital profile was updated successfully!";
+      //   })
+      //   .catch((err) => {
+      //     this.message = `Couldn't update this Hospital profile. An Error occured during update (${err})`;
+      //   });
     },
   },
   mounted() {
