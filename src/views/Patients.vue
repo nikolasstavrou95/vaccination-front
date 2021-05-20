@@ -44,6 +44,7 @@
                 rounded
                 outlined
                 fab
+                
                 class="mr-2"
                 color="#03A9F4"
                 @click="showEditPatient(item)"
@@ -81,6 +82,8 @@
               <v-text-field
                 class="mx-4"
                 v-model="editedPatient.name"
+                 :error-messages="nameErrors"
+                 @change="$v.editedPatient.name.$touch()"
                 label="Full Name*"
                 required
                 clearable
@@ -92,6 +95,8 @@
                 class="mx-4"
                 label="Amka*"
                 v-model="editedPatient.amka"
+                :error-messages="amkaErrors"
+                @change="$v.editedPatient.amka.$touch()"
                 required
                 clearable
                 type="number"
@@ -102,6 +107,8 @@
               <v-text-field
                 class="mx-4"
                 v-model.number="editedPatient.age"
+                :error-messages="ageErrors"
+                @change="$v.editedPatient.age.$touch()"
                 label="Age*"
                 required
                 clearable
@@ -112,6 +119,8 @@
               <v-select
                 class="mr-4 ml-2"
                 v-model="editedPatient.sex"
+                :error-messages="sexErrors"
+                @change="$v.editedPatient.sex.$touch()"
                 :items="['FEMALE', 'MALE']"
                 label="Sex*"
                 required
@@ -122,6 +131,8 @@
             <v-col cols="12">
               <v-text-field
                 v-model="editedPatient.address"
+                :error-messages="addressErrors"
+                @change="$v.editedPatient.address.$touch()"
                 class="mx-4"
                 label="Address*"
                 required
@@ -132,6 +143,8 @@
               <v-select
                 class="mx-4"
                 v-model="editedPatient.status"
+                :error-messages="statusErrors"
+                @change="$v.editedPatient.status.$touch()"
                 :items="['AVAILABLE', 'COMPLETED', 'PENDING', 'CANCELED']"
                 label="Status*"
                 required
@@ -267,9 +280,26 @@
 <script>
 import NewPatient from "@/components/NewPatient.vue";
 import { mapState } from "vuex";
+import { validationMixin } from "vuelidate";
+import { required, helpers, minValue,integer,minLength,maxLength } from "vuelidate/lib/validators";
+const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
+const alpha = helpers.regex("alpha", /^[a-zA-Z ]*$/);
+
 
 export default {
   components: { NewPatient },
+  mixins: [validationMixin],
+  validations: {
+   editedPatient: {
+      name: { required, alpha},
+      amka: { required, integer, minValue: minValue(0),minLength: minLength(8), maxLength:maxLength(8)},
+      address : { required, containNumbers },
+      age: { required, integer, minValue: minValue(0) },
+      status:{required},
+      sex:{required},
+    },
+  },
+  
 
   data() {
     return {
@@ -277,7 +307,8 @@ export default {
       loadTable: true,
       editDialog: false,
       deleteDialog: false,
-      editedPatient: {},
+      editedPatient:{},
+      
       loading: false,
       toDeletePatient: {},
       snackbar2: false,
@@ -307,8 +338,76 @@ export default {
   },
   computed: {
     ...mapState({ patients: (state) => state.patients.patients }),
+
+    nameErrors() {
+      const errors = [];
+      if (!this.$v.editedPatient.name.$dirty) return errors;
+      !this.$v.editedPatient.name.alpha &&
+        errors.push("Patient's name is alphabetic character");
+      !this.$v.editedPatient.name.required &&
+        errors.push("Patient's name is required");
+      return errors;
+    },
+    ageErrors() {
+      const errors = [];
+      if (!this.$v.editedPatient.age.$dirty) return errors;
+
+      !this.$v.editedPatient.age.required &&
+        errors.push("Patient's age is required");
+      !this.$v.editedPatient.age.integer &&
+        errors.push("Age is number");
+      !this.$v.editedPatient.age.minValue &&
+        errors.push("Age should be a positive number");
+      
+      return errors;
+    },
+    
+    sexErrors() {
+      const errors = [];
+      if (!this.$v.editedPatient.sex.$dirty) return errors;
+      
+      !this.$v.editedPatient.sex.required &&
+        errors.push("Patient's sex is required");
+      return errors;
+    },
+    statusErrors() {
+      const errors = [];
+      if (!this.$v.editedPatient.status.$dirty) return errors;
+      
+      !this.$v.editedPatient.status.required &&
+        errors.push("Patient's status is required");
+      return errors;
+    },
+    amkaErrors() {
+      const errors = [];
+      if (!this.$v.editedPatient.amka.$dirty) return errors;
+      !this.$v.editedPatient.amka.integer &&
+        errors.push("Amka should be number");
+      !this.$v.editedPatient.amka.minValue &&
+        errors.push("Please give a valid number");
+    
+      !this.$v.editedPatient.amka.minLength &&
+        errors.push("Amka should be 8 numbers");
+      !this.$v.editedPatient.amka.maxLength &&
+        errors.push("Amka should be 8 numbers");
+      !this.$v.editedPatient.amka.required &&
+        errors.push("Amka is required");
+      return errors;
+    },
+    addressErrors() {
+      const errors = [];
+      if (!this.$v.editedPatient.address.$dirty) return errors;
+      !this.$v.editedPatient.address.required && errors.push("Address is required");
+      // test if there is a number in the address
+      !this.$v.editedPatient.address.containNumbers &&
+        errors.push("Address not contain numbers");
+
+      return errors;
+    },
+    
   },
-  methods: {
+ methods: {
+ 
     getColor(status) {
       if (status == "COMPLETED") return "#9ce690";
       else if (status == "CANCELED") return "#e17b58";
@@ -319,6 +418,7 @@ export default {
       console.log(item);
       this.deleteDialog = true;
       this.toDeletePatient = item;
+      
     },
     async deletePatient() {
       try {
@@ -342,6 +442,7 @@ export default {
       console.log(item);
       this.editDialog = true;
       this.editedPatient = item;
+      
     },
     async editPatient() {
       try {

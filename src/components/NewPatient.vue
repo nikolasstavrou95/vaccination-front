@@ -39,9 +39,11 @@
                 <v-text-field 
                   class="mx-4"
                   v-model="patient.name"
+                  :error-messages="nameErrors"
                   label="Full Name*"
                   required
                   clearable
+                  @change="$v.patient.name.$touch()"
                  
                  
                 ></v-text-field>
@@ -56,9 +58,11 @@
                 class="mx-4"
                   label="Amka*"
                   v-model="patient.amka"
+                  :error-messages="amkaErrors"
                   required
                   clearable
                   type="number"
+                  @change="$v.patient.amka.$touch()"
                  
                 ></v-text-field>
               </v-col>
@@ -67,10 +71,12 @@
                 <v-text-field
                 class="mx-4"
                 v-model.number="patient.age"
+                :error-messages="ageErrors"
                   label="Age*"
                   required
                   clearable
                   type="number"
+                  @change="$v.patient.age.$touch()"
                   
                 ></v-text-field>
               </v-col>
@@ -78,23 +84,27 @@
                 <v-select
                 class="mr-4 ml-2"
                   v-model="patient.sex"
+                  :error-messages="sexErrors"
                   :items="['FEMALE', 'MALE']"
                   label="Sex*"
           
                   required
-                   rounded
+                  rounded
                   background-color="#d7eae5"
+                  @change="$v.patient.sex.$touch()"
+
                 ></v-select>
               </v-col>
               <v-col
                 cols="12">
               <v-text-field
                 v-model="patient.address"
+                :error-messages="addressErrors"
                 class="mx-4"
-                  label="Address*"
-                  required
-                   clearable
-                
+                label="Address*"
+                required
+                clearable
+                @change="$v.patient.address.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -104,11 +114,13 @@
                  <v-select
                  class="mx-4"
                  v-model="patient.status"
+                 :error-messages="statusErrors"
                   :items="['AVAILABLE', 'COMPLETED','PENDING','CANCELED']"
                   label="Status*"
                   required
                   rounded
                   background-color="#d7eae5"
+                  @change="$v.patient.status.$touch()"
                 ></v-select>
               </v-col>
               <v-col
@@ -201,8 +213,24 @@
 </template>
 
 <script>
-
+import { validationMixin } from "vuelidate";
+import { required, helpers, minValue,integer } from "vuelidate/lib/validators";
+const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
+const alpha = helpers.regex("alpha", /^[a-zA-Z ]*$/);
+const length = helpers.len("length",8);
 export default {
+  mixins: [validationMixin],
+  validations: {
+   patient: {
+      name: { required, alpha},
+      amka: { required, integer, minValue: minValue(0),length},
+      address : { required, containNumbers },
+      age: { required, integer, minValue: minValue(0) },
+      status:{required},
+      sex:{required},
+    },
+  },
+
  
   data() {
     return {
@@ -225,9 +253,80 @@ export default {
     
     }
   },
+  computed:{
+    nameErrors() {
+      const errors = [];
+      if (!this.$v.patient.name.$dirty) return errors;
+      !this.$v.patient.name.alpha &&
+        errors.push("Patient's name is alphabetic character");
+      !this.$v.patient.name.required &&
+        errors.push("Patient's name is required");
+      return errors;
+    },
+    ageErrors() {
+      const errors = [];
+      if (!this.$v.patient.age.$dirty) return errors;
+
+      !this.$v.patient.age.required &&
+        errors.push("Patient's age is required");
+      !this.$v.patient.age.integer &&
+        errors.push("Age is number");
+      !this.$v.patient.age.minValue &&
+        errors.push("Age should be a positive number");
+      
+      return errors;
+    },
+    
+    sexErrors() {
+      const errors = [];
+      if (!this.$v.patient.sex.$dirty) return errors;
+      
+      !this.$v.patient.sex.required &&
+        errors.push("Patient's sex is required");
+      return errors;
+    },
+    statusErrors() {
+      const errors = [];
+      if (!this.$v.patient.status.$dirty) return errors;
+      
+      !this.$v.patient.status.required &&
+        errors.push("Patient's status is required");
+      return errors;
+    },
+    amkaErrors() {
+      const errors = [];
+      if (!this.$v.patient.amka.$dirty) return errors;
+      !this.$v.patient.amka.integer &&
+        errors.push("Amka should be number");
+      !this.$v.patient.amka.minValue &&
+        errors.push("Please give a valid number");
+      !this.$v.patient.amka.length &&
+        errors.push("Amka should be number");
+      !this.$v.patient.amka.required &&
+        errors.push("Amka is required");
+      return errors;
+    },
+    addressErrors() {
+      const errors = [];
+      if (!this.$v.patient.address.$dirty) return errors;
+      !this.$v.patient.address.required && errors.push("Address is required");
+      // test if there is a number in the address
+      !this.$v.patient.address.containNumbers &&
+        errors.push("Address not contain numbers");
+
+      return errors;
+    },
+    
+
+  },
    methods: {
    async savePatient() {
-    try{
+     
+     this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.errorMessage = "All the fields are required";
+      }else { 
+        try{
       this.loading = true
      await this.$store.dispatch('addPatient', this.patient)
        this.loading = false
@@ -254,6 +353,7 @@ export default {
        this.text="Couldn't add patient. Please check your internet connection"
         console.log("something went wrong here",error)
         
+      }
       }
    },
       resetFields() {
