@@ -21,6 +21,7 @@ export const actions = {
             commit('SET_HOSPITAL', response.data)
         } catch (error) {
             console.log("Couldn't load Hospital")
+            return error;
         }
     },
     
@@ -33,10 +34,7 @@ export const actions = {
             return error;
         }
     },
-    loadStoreData({commit}, hospital){
-        commit('LOAD_HOSPITAL', hospital)
-        
-    }
+   
 
 
 

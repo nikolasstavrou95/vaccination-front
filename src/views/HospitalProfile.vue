@@ -211,10 +211,11 @@ export default {
   
     async getHospital() {
       try{
-       await this.$store.dispatch(
+       let response = await this.$store.dispatch(
         "loadHospital",
         this.$store.state.auth.hospital.username
       );
+      if(response) throw new Error()
       
       
         
@@ -238,6 +239,10 @@ export default {
         city: this.hospital.city,
         country: this.hospital.country,
         username:this.hospital.username,
+        password:this.hospital.password,
+        private:this.hospital.private,
+        public: this.hospital.public,
+        
 
 
 
@@ -248,7 +253,7 @@ export default {
         if(response){
           throw new Error()
         }
-        this.color2 = "#9ce690"; 
+        this.color2 = "#2d9277"; 
         
         this.message = "Patient Edited Successfully";
         this.snackbar2 = true;
