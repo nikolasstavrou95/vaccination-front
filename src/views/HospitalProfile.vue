@@ -1,11 +1,31 @@
 <template>
   <v-container>
+    
     <div class="col-left">
+      
       <div class="image">
         <v-img src="/logo2.png" />
       </div>
     </div>
     <div class="col-right">
+      <v-toolbar
+      flat 
+    >
+      <v-spacer></v-spacer>
+      <v-btn
+        color="primary"
+        fab
+        small
+        @click="isEditing = !isEditing"
+      >
+        <v-icon v-if="isEditing">
+          mdi-close
+        </v-icon>
+        <v-icon v-else>
+          mdi-pencil
+        </v-icon>
+      </v-btn>
+    </v-toolbar>
       <div class="hospital-form">
         <h2 class="title">Hospital Information</h2>
 
@@ -18,6 +38,7 @@
           @input="$v.hospital.name.$touch()"
           @blur="$v.hospital.name.$touch()"
           name="name"
+          :disabled="!isEditing"
         ></v-text-field>
         <h4>E-mail</h4>
         <v-text-field
@@ -28,6 +49,7 @@
           @input="$v.hospital.email.$touch()"
           @blur="$v.hospital.email.$touch()"
           name="email"
+          :disabled="!isEditing"
         ></v-text-field>
         <h4>Address</h4>
 
@@ -39,6 +61,7 @@
           @input="$v.hospital.address.$touch()"
           @blur="$v.hospital.address.$touch()"
           name="address"
+          :disabled="!isEditing"
         ></v-text-field>
         <h4>Phone number</h4>
         <v-text-field
@@ -49,6 +72,7 @@
           @input="$v.hospital.phone_number.$touch()"
           @blur="$v.hospital.phone_number.$touch()"
           name="address"
+          :disabled="!isEditing"
         ></v-text-field>
         <h4>Username</h4>
         <v-text-field
@@ -59,15 +83,17 @@
           @input="$v.hospital.username.$touch()"
           @blur="$v.hospital.username.$touch()"
           name="address"
+          :disabled="!isEditing"
         ></v-text-field>
 
         <v-btn
           color="primary"
           small
-          
+          outlined
           rounded
           class="mt-4"
           @click="updateHospital"
+          :disabled="!isEditing"
         >
           Update Hospital
         </v-btn>
@@ -94,8 +120,7 @@
 
 
 <script>
-//import { mapState } from "vuex";
-//import HospitalDataService from "../services/user.service";
+
 import { validationMixin } from "vuelidate";
 import { required, email, helpers } from "vuelidate/lib/validators";
 const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
@@ -118,7 +143,7 @@ export default {
   },
   data() {
     return {
-      
+      isEditing: false,
       snackbar2: false,
       timeout2: 2000,
       message: "",
@@ -260,6 +285,7 @@ export default {
 
         
         this.getHospital();
+        this.isEditing=!this.isEditing;
 
       } catch(err){
         this.color2="#e17b58";
@@ -306,7 +332,7 @@ export default {
   justify-content: flex-end;
 }
 .image {
-  margin: 50px auto;
+  margin: 100px auto;
 }
 .image {
   width: 210px;
