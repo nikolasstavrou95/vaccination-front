@@ -1,6 +1,6 @@
 <template>
   <header class="app-header">
-    <nav class="mt-14">
+    <nav class="mt-4">
       <v-navigation-drawer
         v-if="currentUser"
         v-model="drawer"
