@@ -192,16 +192,6 @@ export default {
       !this.$v.hospital.country.required && errors.push("Country is required");
       return errors;
     },
-    // dosesErrors() {
-    //   const errors = [];
-    //   if (!this.$v.hospital.available_doses.$dirty) return errors;
-    //   !this.$v.hospital.available_doses.integer &&
-    //     errors.push("Please give a valid number");
-    //   !this.$v.hospital.available_doses.minValue &&
-    //     errors.push("Please give a positive number");
-    //   !this.$v.hospital.available_doses.required &&
-    //     errors.push("Available doses is required");
-    //   return errors;
 
     emailErrors() {
       const errors = [];
@@ -258,7 +248,15 @@ export default {
           (data) => {
             this.message = data.message;
             this.successful = true;
-          },
+            const loginData = { username: this.hospital.username,password: this.hospital.password}
+            this.$store.dispatch("auth/login",loginData)
+              .then(
+            () => {
+              this.$router.push({ path: "user" });
+
+             } )
+          }
+          ,
           (error) => {
             this.errorMessage = `💥${error.response.data.message}`;
             this.submitted = false;
