@@ -62,9 +62,9 @@
         ></v-text-field>
 
         <v-btn
-          color="light-blue"
+          color="primary"
           small
-          outlined
+          
           rounded
           class="mt-4"
           @click="updateHospital"
