@@ -25,7 +25,7 @@
             small
             outlined
               rounded
-            ><router-link to="link"
+            ><router-link v-bind:to="link"
                 >{{btnLabel}}</router-link
               ></v-btn
             >
