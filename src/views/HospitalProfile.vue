@@ -344,4 +344,20 @@ export default {
 .hospital-form .title {
   margin-bottom: 30px;
 }
+@media screen and (max-width:600px){
+  .container{
+
+    flex-direction: column;
+     height: auto;
+     padding:30px;
+     margin:0;
+      box-shadow: none;
+  }
+  .image {
+   display:none;
+  }
+  .hospital-form {
+     margin-top: 10px;
+  }
+}
 </style>
