@@ -101,19 +101,7 @@
         
       </div>
     </div>
-    <v-snackbar
-      v-model="snackbar2"
-      :timeout="timeout2"
-      :color="color2"
-      rounded="pill"
-      top
-    >
-      {{ message }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
-      </template>
-    </v-snackbar>
+    
   </v-container>
 </template>
 
@@ -153,22 +141,6 @@ export default {
     };
   },
 
-  // computed: {
-  //   currentUser() {
-  //     return this.$store.state.auth.hospital;
-  //   },
-  // },
-  // mounted() {
-  //   HospitalDataService.getHospitalData(
-  //     this.$store.state.auth.hospital.username
-  //   )
-  //     .then((response) => {
-  //       this.hospital = response.data;
-  //     })
-  //     .catch((errors) => {
-  //       this.error = `${errors.response.error}`;
-  //     });
-  // },
   computed: {
     hospital(){
      return  this.$store.state.hospital.hospitalData;
@@ -193,16 +165,6 @@ export default {
       return errors;
 
     },
-    // dosesErrors() {
-    //   const errors = [];
-    //   if (!this.$v.hospital.available_doses.$dirty) return errors;
-    //   !this.$v.hospital.available_doses.integer &&
-    //     errors.push("Please give a valid number");
-    //   !this.$v.hospital.available_doses.minValue &&
-    //     errors.push("Please give a positive number");
-    //   !this.$v.hospital.available_doses.required &&
-    //     errors.push("Available doses is required");
-    //   return errors;
 
     emailErrors() {
       const errors = [];
@@ -231,7 +193,6 @@ export default {
       return errors;
     },
   },
-
   methods: {
   
     async getHospital() {
