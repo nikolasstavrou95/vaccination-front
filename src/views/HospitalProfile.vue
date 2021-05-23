@@ -202,8 +202,7 @@ export default {
         this.$store.state.auth.hospital.username
       );
       if(response) throw new Error()
-      
-      
+
         
       }
 
@@ -228,6 +227,7 @@ export default {
         password:this.hospital.password,
         private:this.hospital.private,
         public: this.hospital.public,
+        vaccines: this.hospital.vaccines
         
 
 
@@ -257,16 +257,7 @@ export default {
    
     
       }
-    
 
-      // HospitalDataService.update(this.hospital.username, data)
-      //   .then(() => {
-      //     this.getHospital();
-      //     this.message = "Hospital profile was updated successfully!";
-      //   })
-      //   .catch((err) => {
-      //     this.message = `Couldn't update this Hospital profile. An Error occured during update (${err})`;
-      //   });
     },
   },
   mounted() {
