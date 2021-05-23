@@ -121,6 +121,7 @@ export default {
         if (this.hospital.username && this.hospital.password) {
           this.$store.dispatch("auth/login", this.hospital).then(
             () => {
+              
               this.$router.push({ path: "user" });
 
               this.cleanLogin();
@@ -164,7 +165,7 @@ export default {
 
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 7rem;

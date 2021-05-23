@@ -4,7 +4,7 @@
       <Navbar />
       <router-view></router-view>
     </v-main>
-    <v-footer class="mt-8 mb-4" color="white">
+    <v-footer class="mt-8 mb-4" color="transparent">
       <v-row justify="center">
         {{ new Date().getFullYear() }} — <strong>SKG code -Team Nu11s!</strong>
       </v-row>

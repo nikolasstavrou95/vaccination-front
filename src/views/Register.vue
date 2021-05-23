@@ -2,7 +2,7 @@
   <v-container class="d-flex">
     <v-row>
       <img class="side_wave" src="wave.png" />
-      <v-col class="d-none d-md-flex">
+      <v-col class="d-none d-md-flex justify-center align-center">
         <!-- <div class="container"> -->
         <div class="img"><img src="bg-image.svg" /></div>
       </v-col>
@@ -66,17 +66,7 @@
                 @input="$v.hospital.phone_number.$touch()"
                 @blur="$v.hospital.phone_number.$touch()"
               ></v-text-field>
-              <!-- <v-text-field
-              class="pt-4"
-              v-model="hospital.available_doses"
-              :error-messages="dosesErrors"
-              label="Available doses"
-              required
-              prepend-inner-icon="fas fa-crutch"
-              name="doses"
-              @input="$v.hospital.available_doses.$touch()"
-              @blur="$v.hospital.available_doses.$touch()"
-            ></v-text-field> -->
+            
               <v-text-field
                 class="pt-4"
                 v-model="hospital.username"
@@ -252,6 +242,7 @@ export default {
             this.$store.dispatch("auth/login",loginData)
               .then(
             () => {
+              
               this.$router.push({ path: "user" });
 
              } )
@@ -281,31 +272,7 @@ export default {
   height: 100%;
   z-index: 0;
 }
-/* 
-.container {
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 7rem;
-  padding: 0 2rem;
-} */
-/* .img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
-/* .login,
-.signup {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-} */
-/* .signup {
-  margin-top: 70px;
-} */
 
 .img img {
   width: 500px;
@@ -334,52 +301,11 @@ export default {
   font-size: 1rem;
 }
 
-/* .btn {
-  display: block;
-  width: 100%;
-  height: 50px;
-  border-radius: 25px;
-  outline: none;
-  border: none;
-  background-image: linear-gradient(
-    to right,
-    var(--light-blue),
-    var(--baby-blue),
-    var(--blue)
-  );
-  background-size: 200%;
-  font-size: 1.2rem;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-  text-transform: uppercase;
-  margin: 1rem 0;
-  cursor: pointer;
-  transition: 0.5s;
-}
-.btn:hover {
-  background-position: right;
-}*/
+
 @media screen and (max-width: 1100px) {
   .side_wave {
     display: none;
   }
 }
-/* 
-@media screen and (max-width: 1050px) {
-  .container {
-    grid-gap: 5rem;
-  }
-}
-*/
-/* @media screen and (max-width: 1000px) {
-  .img img {
-    width: 100%;
-  }
-} */
 
-/* @media screen and (max-width: 900px) {
-  .img {
-    width: 100%;
-  }
-} */
 </style>
