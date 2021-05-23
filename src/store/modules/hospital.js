@@ -13,6 +13,11 @@ export const mutations = {
         state.hospitalData = hospital
     }
 }
+export const getters={
+    availableVaccines(state){
+        return state.hospitalData.vaccines.length ? state.hospitalData.vaccines.filter(vaccine=> vaccine.status==="AVAILABLE").length : 0;
+    }
+}
 
 export const actions = {
     async loadHospital({ commit }, username) {

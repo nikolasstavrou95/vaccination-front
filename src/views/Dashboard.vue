@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" lg="4">
        
-        <info-card :title="vaccinesCard.title" :img="vaccinesCard.image" :btnLabel="vaccinesCard.btnLabel" :link="vaccinesCard.link" :number="vaccinesCard.number"></info-card>
+        <info-card :title="vaccinesCard.title" :img="vaccinesCard.image" :btnLabel="vaccinesCard.btnLabel" :link="vaccinesCard.link" :number="availableVaccines"></info-card>
       </v-col>
       <v-col cols="12" lg="4">
         <info-card :title="vaccinationCard.title" :img="vaccinationCard.image" :btnLabel="vaccinationCard.btnLabel" :link="vaccinationCard.link" :number="vaccinationCard.number"></info-card>
@@ -20,6 +20,19 @@
     <v-row>
       <patients></patients>
     </v-row>
+    <v-snackbar
+      v-model="snackbar2"
+      :timeout="timeout2"
+      :color="color2"
+      rounded="pill"
+      top
+    >
+      {{ message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -37,7 +50,7 @@ InfoCard
     vaccinesCard:{
       title:"Available Vaccines",
       image:"https://img.icons8.com/officel/80/000000/like--v1.png",
-      number:"100",
+     
       btnLabel:"ADD MORE",
       link:"/user/vaccinations"
 
@@ -56,10 +69,49 @@ InfoCard
       number:"300",
       btnLabel:"SEE ALL",
       link:"/user/vaccinations"
-    }
+    },
+    snackbar2: false,
+      timeout2: 2000,
+      message: "",
+      color2:"",
+
 
 
 
   }),
+  computed: {
+    availableVaccines(){
+      return this.$store.getters.availableVaccines;
+    }
+    
+
+  },
+  methods:{
+    async getHospital() {
+      try{
+       let response = await this.$store.dispatch(
+        "loadHospital",
+        this.$store.state.auth.hospital.username
+      );
+      if(response) throw new Error()
+      
+      
+        
+      }
+
+      catch(err){
+        this.color2="#e17b58";
+        this.snackbar2 = true;
+        this.message=`Couldn't show this Hospital profile. An error occured during request (${err})`
+      }
+
+
+    }
+      
+    
+  },
+   mounted() {
+    this.getHospital();
+  }
 };
 </script>
