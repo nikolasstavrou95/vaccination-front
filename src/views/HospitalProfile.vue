@@ -227,7 +227,8 @@ export default {
         password:this.hospital.password,
         private:this.hospital.private,
         public: this.hospital.public,
-        vaccines: this.hospital.vaccines
+        vaccines: this.hospital.vaccines,
+        roles:this.hospital.roles
         
 
 
