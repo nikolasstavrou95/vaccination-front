@@ -20,12 +20,16 @@
     <v-row>
       <patients></patients>
     </v-row>
+  
     <v-snackbar
       v-model="snackbar2"
       :timeout="timeout2"
       :color="color2"
       rounded="pill"
       top
+      left
+     
+      
     >
       {{ message }}
 
@@ -33,65 +37,7 @@
         <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
       </template>
     </v-snackbar>
-     <v-dialog v-model="addVaccinesDialog" persistent max-width="800px">
-      <v-card>
-        <v-toolbar color="#61ba9f" dark rounded>
-          <v-toolbar-title class="mx-4">Add Vaccines</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-icon class="mx-4" @click="addVaccinesDialog = false">mdi-close</v-icon>
-        </v-toolbar>
-
-        <v-container>
-          <v-row justify="center">
-            <v-card-title>
-              <h4>
-                Do you have more Vaccines available? You can add them down here
-              </h4></v-card-title
-            >
-            <v-card-text>
-              <v-row justify="center">
-                <v-col cols="12" md="4">
-                  <h5>
-                    Number of vaccines you add:
-                    
-                  </h5>
-                </v-col>
-                <v-col cols="12" md="4">
-                 <v-text-field
-                          v-model="vaccines.doses"
-                          label="Doses"
-                        ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-row>
-        </v-container>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            class="mb-6"
-            color="#e17b58"
-            outlined
-            rounded
-            @click="addVaccinesDialog = false"
-          >
-            Cancel
-          </v-btn>
-
-          <v-btn
-            :loading="loading"
-            class="mx-3 mb-6"
-            color="#61ba9f"
-            outlined
-            rounded
-            @click="addVaccines"
-          >
-            Yes
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+  
   </v-container>
 </template>
 
@@ -134,10 +80,7 @@ InfoCard
       timeout2: 2000,
       message: "",
       color2:"",
-      addVaccinesDialog: false,
-       vaccines:{
-         doses:""
-       }
+      
 
 
 
@@ -145,7 +88,8 @@ InfoCard
   }),
   computed: {
     availableVaccines(){
-      return this.$store.getters.availableVaccines;
+      const value = this.$store.hospital ? this.$store.getters.availableVaccines : ""
+      return value;
     }
     
 
@@ -157,28 +101,17 @@ InfoCard
         "loadHospital",
         this.$store.state.auth.hospital.username
       );
-      if(response) throw new Error()
-      
-      
-        
-      }
+      if(response){
+        throw new Error()}
 
-      catch(err){
+      }catch(err){
         this.color2="#e17b58";
+        this.message=`Couldn't show this Hospital data. An error occured during request (${err})`
         this.snackbar2 = true;
-        this.message=`Couldn't show this Hospital profile. An error occured during request (${err})`
+       
       }
-
-
-    },
-    showAddVaccinesDialog(){
-    this.addVaccinesDialog = true;
     },
     
-    addVaccines(){
-      console.log(this.vaccines.doses)
-    }
-      
     
   },
   

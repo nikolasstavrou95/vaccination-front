@@ -101,6 +101,20 @@
         
       </div>
     </div>
+    <v-snackbar
+      v-model="snackbar2"
+      :timeout="timeout2"
+      :color="color2"
+      rounded="pill"
+      top
+      
+    >
+      {{ message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
     
   </v-container>
 </template>
@@ -201,12 +215,13 @@ export default {
         "loadHospital",
         this.$store.state.auth.hospital.username
       );
-      if(response) throw new Error()
+      response=true;
+      if(response) {
+        throw new Error("Err")
+        }
 
         
-      }
-
-      catch(err){
+      }catch(err){
         this.color2="#e17b58";
         this.snackbar2 = true;
         this.message=`Couldn't show this Hospital profile. An error occured during request (${err})`
