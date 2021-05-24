@@ -240,8 +240,9 @@ export default {
         country: this.hospital.country,
         username:this.hospital.username,
         password:this.hospital.password,
-        private:this.hospital.private,
-        public: this.hospital.public,
+        keys:this.hospital.keys,
+        publicKey: this.hospital.publicKey,
+        
         vaccines: this.hospital.vaccines,
         roles:this.hospital.roles
         
