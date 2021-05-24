@@ -162,6 +162,7 @@ export default {
   methods: {
     logOut() {
       this.$store.dispatch("auth/logout");
+      this.$store.dispatch("deleteHospital")
       this.$router.push("/login");
     },
   },
