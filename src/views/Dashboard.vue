@@ -27,7 +27,7 @@
       :color="color2"
       rounded="pill"
       top
-      left
+      
      
       
     >
@@ -88,8 +88,10 @@ InfoCard
   }),
   computed: {
     availableVaccines(){
-      const value = this.$store.hospital ? this.$store.getters.availableVaccines : ""
-      return value;
+      if(this.$store.state.hospital.hospitalData){
+      return this.$store.getters.availableVaccines;
+      }
+      return 0;
     }
     
 
