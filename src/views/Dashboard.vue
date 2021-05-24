@@ -20,12 +20,16 @@
     <v-row>
       <patients></patients>
     </v-row>
+  
     <v-snackbar
       v-model="snackbar2"
       :timeout="timeout2"
       :color="color2"
       rounded="pill"
       top
+      
+     
+      
     >
       {{ message }}
 
@@ -33,6 +37,7 @@
         <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
       </template>
     </v-snackbar>
+  
   </v-container>
 </template>
 
@@ -52,7 +57,8 @@ InfoCard
       image:"https://img.icons8.com/officel/80/000000/like--v1.png",
      
       btnLabel:"ADD MORE",
-      link:"/user/vaccinations"
+      link:"/user/vaccines",
+     
 
 
     },
@@ -74,6 +80,7 @@ InfoCard
       timeout2: 2000,
       message: "",
       color2:"",
+      
 
 
 
@@ -81,7 +88,10 @@ InfoCard
   }),
   computed: {
     availableVaccines(){
+      if(this.$store.state.hospital.hospitalData){
       return this.$store.getters.availableVaccines;
+      }
+      return 0;
     }
     
 
@@ -93,23 +103,20 @@ InfoCard
         "loadHospital",
         this.$store.state.auth.hospital.username
       );
-      if(response) throw new Error()
-      
-      
-        
-      }
+      if(response){
+        throw new Error()}
 
-      catch(err){
+      }catch(err){
         this.color2="#e17b58";
+        this.message=`Couldn't show this Hospital data. An error occured during request (${err})`
         this.snackbar2 = true;
-        this.message=`Couldn't show this Hospital profile. An error occured during request (${err})`
+       
       }
-
-
-    }
-      
+    },
+    
     
   },
+  
    mounted() {
     this.getHospital();
   }

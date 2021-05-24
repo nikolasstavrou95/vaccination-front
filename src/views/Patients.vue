@@ -22,7 +22,7 @@
             :headers="headers"
             :items="patients"
             :search="search"
-            :loading="loadTable"
+            
           >
             <template v-slot:top>
               <v-progress-linear

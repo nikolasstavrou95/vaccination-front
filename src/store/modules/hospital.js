@@ -11,7 +11,11 @@ export const mutations = {
     },
     EDIT_HOSPITAL(state,hospital){
         state.hospitalData = hospital
+    },
+    DELETE_HOSPITAL(state){
+        state.hospitalData = null;
     }
+    
 }
 export const getters={
     availableVaccines(state){
@@ -39,6 +43,9 @@ export const actions = {
             return error;
         }
     },
+    deleteHospital({commit}){
+        commit('DELETE_HOSPITAL')
+    }
    
 
 

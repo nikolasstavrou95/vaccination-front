@@ -135,6 +135,11 @@ export default {
         to: "/user/vaccinations",
       },
       {
+        title: "Vaccines",
+        icon: "mdi-clipboard-edit-outline",
+        to: "/user/vaccines",
+      },
+      {
         title: "Statistics",
         icon: "mdi-chart-areaspline",
         to: "/user/statistics",
@@ -157,6 +162,7 @@ export default {
   methods: {
     logOut() {
       this.$store.dispatch("auth/logout");
+      this.$store.dispatch("deleteHospital")
       this.$router.push("/login");
     },
   },

@@ -214,16 +214,16 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, helpers, minValue,integer } from "vuelidate/lib/validators";
+import { required, helpers, minValue,integer, minLength,maxLength } from "vuelidate/lib/validators";
 const containNumbers = helpers.regex("containNumbers", /\w\s\d+/);
 const alpha = helpers.regex("alpha", /^[a-zA-Z ]*$/);
-const length = helpers.len("length",8);
+
 export default {
   mixins: [validationMixin],
   validations: {
    patient: {
       name: { required, alpha},
-      amka: { required, integer, minValue: minValue(0),length},
+      amka: { required, integer, minValue: minValue(0),minLength: minLength(8), maxLength:maxLength(8)},
       address : { required, containNumbers },
       age: { required, integer, minValue: minValue(0) },
       status:{required},
@@ -300,8 +300,10 @@ export default {
         errors.push("Amka should be number");
       !this.$v.patient.amka.minValue &&
         errors.push("Please give a valid number");
-      !this.$v.patient.amka.length &&
-        errors.push("Amka should be number");
+      !this.$v.patient.amka.minLength &&
+        errors.push("Amka should be 8 numbers");
+      !this.$v.patient.amka.maxLength &&
+        errors.push("Amka should be 8 numbers");
       !this.$v.patient.amka.required &&
         errors.push("Amka is required");
       return errors;
