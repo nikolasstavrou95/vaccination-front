@@ -215,7 +215,7 @@ export default {
         "loadHospital",
         this.$store.state.auth.hospital.username
       );
-      response=true;
+      
       if(response) {
         throw new Error("Err")
         }
