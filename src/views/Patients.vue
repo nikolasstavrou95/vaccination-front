@@ -304,7 +304,7 @@ export default {
   data() {
     return {
       search: "",
-      loadTable: true,
+      
       editDialog: false,
       deleteDialog: false,
       editedPatient:{},
