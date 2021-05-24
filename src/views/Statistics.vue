@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="statistics ma-1">
+  <v-container fluid class="statistics">
     <bar-chart :chart-data="citiesChartData" :options="options"></bar-chart>
     <pie-chart class="chart pt-4"></pie-chart>
     <bar-chart :chart-data="hospitalsChartData" :options="options"></bar-chart>
