@@ -9,7 +9,8 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 const dataState = createPersistedState({
-  paths: ['hospital']
+  paths: ['hospital'],
+ 
 })
 export default new Vuex.Store({
   modules: {
