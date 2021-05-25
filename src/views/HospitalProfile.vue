@@ -252,7 +252,7 @@ export default {
       };
       try{
         
-        let response = await this.$store.dispatch("editHospital", data);
+        let response = await this.$store.dispatch("editHospital",this.$store.state.auth.hospital.username,data);
         if(response){
           throw new Error()
         }
