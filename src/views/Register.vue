@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex">
-    <v-row>
+    <v-row class="align-center">
       <img class="side_wave" src="wave.png" />
       <v-col class="d-none d-md-flex justify-center align-center">
         <!-- <div class="container"> -->
@@ -278,9 +278,7 @@ export default {
   width: 500px;
 }
 
-.login form {
-  width: 360px;
-}
+
 .signup form {
   max-width: 780px;
   padding: 10px;
@@ -289,17 +287,6 @@ export default {
   height: 150px;
 }
 
-.login h2 {
-  margin: 15px 0;
-  color: var(--black);
-  text-transform: uppercase;
-  font-size: 2.9rem;
-}
-.login h3 {
-  color: rgb(66, 66, 66);
-  text-decoration: underline;
-  font-size: 1rem;
-}
 
 
 @media screen and (max-width: 1100px) {

@@ -1,10 +1,12 @@
 <template>
-  <div class="col-md-12">
-    <img class="side_wave" src="wave.png" />
-    <div class="container">
-      <div class="img">
-        <img src="bg-image.svg" />
-      </div>
+  <v-container class="d-flex">
+   <v-row class="top">
+      <img class="side_wave" src="wave.png" />
+      <v-col class="d-none d-md-flex justify-center align-center">
+        <!-- <div class="container"> -->
+        <div class="img"><img src="bg-image.svg" /></div>
+      </v-col>
+      <v-col class="d-xl-flex justify-center align-center">
       <div class="login">
         <form action="index.html">
           <img src="logo2.png" />
@@ -21,8 +23,7 @@
             type="text"
             prepend-inner-icon="fas fa-user"
             name="username"
-            @input="$v.hospital.username.$touch()"
-            @blur="$v.hospital.username.$touch()"
+            @change="$v.hospital.username.$touch()"
             @click="cleanStatus"
           >
           </v-text-field>
@@ -33,8 +34,7 @@
             prepend-inner-icon="fas fa-lock"
             type="password"
             name="password"
-            @input="$v.hospital.password.$touch()"
-            @blur="$v.hospital.password.$touch()"
+             @change="$v.hospital.password.$touch()"
             @click="cleanStatus"
           >
           </v-text-field>
@@ -50,8 +50,10 @@
           </div>
         </form>
       </div>
-    </div>
-  </div>
+      </v-col>
+
+  </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -88,13 +90,6 @@ export default {
         errors.push("Username is required");
       return errors;
     },
-    // emailErrors() {
-    //   const errors = [];
-    //   if (!this.$v.hospital.email.$dirty) return errors;
-    //   !this.$v.hospital.email.email && errors.push("Must be valid e-mail");
-    //   !this.$v.hospital.email.required && errors.push("E-mail is required");
-    //   return errors;
-    // },
     passwordErrors() {
       const errors = [];
       if (!this.$v.hospital.password.$dirty) return errors;
@@ -114,14 +109,14 @@ export default {
       this.loading = true;
       this.$v.$touch();
       if (this.$v.$invalid) {
-        this.submitStatus = "ERROR";
+        this.submitStatus = "Please give username and password";
         this.loading = false;
       } else {
         // do your submit logic here
         if (this.hospital.username && this.hospital.password) {
           this.$store.dispatch("auth/login", this.hospital).then(
             () => {
-              
+             
               this.$router.push({ path: "user" });
 
               this.cleanLogin();
@@ -162,16 +157,11 @@ export default {
   height: 100%;
   z-index: 0;
 }
-
-.container {
-  width: 100vw;
-  height: 80vh;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 7rem;
-  padding: 0 2rem;
-  z-index: 1;
+.top{
+  margin-top:130px;
 }
+
+
 .img {
   display: flex;
   justify-content: center;
@@ -179,28 +169,23 @@ export default {
   z-index: 1;
 }
 
-.login,
-.signup {
+.login
+{
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   text-align: center;
-}
-.signup {
-  margin-top: 70px;
-}
+} 
+
 
 .img img {
   width: 500px;
 }
 
 .login form {
-  width: 360px;
-}
-.signup form {
   max-width: 780px;
-  padding: 10px;
 }
+
 .login img {
   height: 100px;
 }
@@ -226,48 +211,17 @@ a.left:hover {
   color: #38d39f !important;
 }
 
-.btn {
-  display: block;
-  width: 100%;
-  height: 50px;
-  border-radius: 25px;
-  outline: none;
-  border: none;
-  background-image: linear-gradient(
-    to right,
-    var(--light-blue),
-    var(--baby-blue),
-    var(--blue)
-  );
-  background-size: 200%;
-  font-size: 1.2rem;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-  text-transform: uppercase;
-  margin: 1rem 0;
-  cursor: pointer;
-  transition: 0.5s;
-}
-.btn:hover {
-  background-position: right;
-}
+
 @media screen and (max-width: 1100px) {
   .side_wave {
     display: none;
   }
 }
 
-@media screen and (max-width: 1050px) {
-  .container {
-    grid-gap: 5rem;
-  }
-}
+
 
 @media screen and (max-width: 1000px) {
-  form {
-    width: 290px;
-  }
-
+  
   .login h2 {
     font-size: 2.4rem;
     margin: 8px 0;
@@ -278,18 +232,13 @@ a.left:hover {
   }
 }
 
-@media screen and (max-width: 900px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
+/* @media screen and (max-width: 900px) {
+  
 
   .img {
     display: none;
   }
 
-  .login,
-  .signup {
-    justify-content: center;
-  }
-}
-</style>
+  
+}*/
+</style> 
