@@ -1,4 +1,5 @@
 <template>
+<v-container>
      <v-card>
           <v-card-text class="pa-5">
             <h3
@@ -21,23 +22,28 @@
           </v-card-text>
           <v-footer>
             <v-btn
-            color="light-blue"
+            color="primary"
             small
             outlined
-              rounded
+            rounded
+          
             ><router-link v-bind:to="link"
                 >{{btnLabel}}</router-link
               ></v-btn
             >
           </v-footer>
         </v-card>
+       
+</v-container>
 </template>
 <script>
 
 
 export default {
   
-  props: ["title", "img","link","btnLabel","number"],
+  props: ["title", "img","link","btnLabel","number"]
+  
+
 
   
 };
