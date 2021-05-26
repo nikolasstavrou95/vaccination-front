@@ -34,9 +34,9 @@ export const actions = {
         }
     },
     
-    async editHospital({ commit }, hospital) {
+    async editHospital({ commit }, hospital,data) {
         try {
-            let response = await HospitalDataService.editHospitalData(hospital)
+            let response = await HospitalDataService.editHospitalData(hospital,data)
             commit('EDIT_HOSPITAL', response.data.data)
         } catch (error) {
             console.log("Couldn't load Hospital")

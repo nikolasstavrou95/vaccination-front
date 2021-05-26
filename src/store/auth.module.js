@@ -1,5 +1,6 @@
 import AuthService from '../services/auth.service';
 
+
 const hospital = JSON.parse(localStorage.getItem('user'));
 const initialState = hospital
     ? { status: { loggedIn: true }, hospital }
@@ -50,6 +51,7 @@ export const auth = {
         logout(state) {
             state.status.loggedIn = false;
             state.hospital = null;
+            
         },
         registerSuccess(state) {
             state.status.loggedIn = false;
