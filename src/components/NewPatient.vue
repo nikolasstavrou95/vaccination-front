@@ -77,12 +77,12 @@
                   clearable
                   type="number"
                   @change="$v.patient.age.$touch()"
-                  
+                 
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="3">
                 <v-select
-                class="mr-4 ml-2"
+                class="mr-4"
                   v-model="patient.sex"
                   :error-messages="sexErrors"
                   :items="['FEMALE', 'MALE']"
@@ -115,7 +115,7 @@
                  class="mx-4"
                  v-model="patient.status"
                  :error-messages="statusErrors"
-                  :items="['AVAILABLE', 'COMPLETED','PENDING','CANCELED']"
+                  :items="['0/2', '2/2','1/2']"
                   label="Status*"
                   required
                   rounded
@@ -330,24 +330,24 @@ export default {
       }else { 
         try{
       this.loading = true
-     await this.$store.dispatch('addPatient', this.patient)
+    let response= await this.$store.dispatch('addPatient', this.patient)
+    
        this.loading = false
        this.dialog=false  
        this.resetFields()
        this.$store.dispatch('loadPatients') 
      
-       //if (response.status==200){
+    
         
         this.snackbar=true
       this.text="Patient Added Successfully"
       this.color="#9ce690"
+      if(response){
+          throw new Error('error')
+        }
        }
-      // else if ( response.status==400 ){
-     //  this.snackbar=true
-      // this.color="#e17b58"
-     //  this.text="Couldn't add patient. Please check your internet connection"
-      // } 
-       
+      
+        
       
        catch(error){
        this.snackbar=true

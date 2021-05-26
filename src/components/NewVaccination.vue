@@ -36,8 +36,8 @@
               <v-col
                 cols="12"
               >
-               <v-autocomplete
-        v-model="vaccination.patient_AMKA"
+           <v-autocomplete
+        v-model="vaccination.id"
         :items="patients"
         class="mx-4"
         :search="search"
@@ -45,11 +45,13 @@
         hide-no-data
         hide-selected
         item-text="name"
-        item-value="amka"
-        label="Search Patient by name"
+        item-value="id"
+        label="Search Patient by name*"
         prepend-icon="mdi-account-search"
-        @change="$v.vaccination.patient_AMKA.$touch()"
-        :error-messages="patientErrors"
+        @change="$v.vaccination.id.$touch()"
+        :error-messages="idErrors"
+         background-color="#d7eae5"
+         
       ></v-autocomplete>
               </v-col>
              
@@ -57,33 +59,38 @@
               <v-col cols="12" md="6">
                 <v-text-field
                 class="mx-4"
-                v-model="vaccination.Date"
+                v-model="vaccination.date"
                   label="Date*"
                   required
                   clearable
-                   @change="$v.vaccination.Date.$touch()"
+                   @change="$v.vaccination.date.$touch()"
                    :error-messages="dateErrors"
                   type="date">
                     </v-text-field>
               </v-col>
-              <v-col
+               <v-col
                 cols="12" md="6" >
                   <v-select
                  class="mx-4"
-                 v-model="vaccination.vaccine_brand"
-                  :items="['Astra Zeneca', 'J&J','Moderna','Pfizer']"
+                 v-model="vaccination.brand"
+                  :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER']"
                   label="Brand*"
                   required
                   rounded
                   background-color="#d7eae5"
                   :error-messages="brandErrors"
-                 @change="$v.vaccination.vaccine_brand.$touch()"
+                 @change="$v.vaccination.brand.$touch()"
                 ></v-select>
               </v-col>
+             
              
               
               
             </v-row>
+            {{this.vaccination.id}}
+            {{this.vaccination}}
+           
+            
                 <small
                 class="ml-4">*indicates required field</small>
           </v-container>
@@ -164,9 +171,9 @@ export default {
  mixins: [validationMixin],
   validations: {
    vaccination: {
-      patient_AMKA: { required},
-      vaccine_brand: { required},
-      Date : { required},
+      id: { required},
+     brand:{required},
+      date : { required}
     }},
   data() {
     return {
@@ -177,7 +184,10 @@ export default {
      search: null,
     timeout: 2000,
     loading:false,
-    vaccination: {}
+    vaccination: {
+      
+     
+    }
       
     
     }
@@ -196,28 +206,30 @@ export default {
                   patients:(state) => state.patients.patients}),
     brandErrors() {
     const errors = [];
-    if (!this.$v.vaccination.vaccine_brand.$dirty) return errors;
+    if (!this.$v.vaccination.brand.$dirty) return errors;
       
-      !this.$v.vaccination.vaccine_brand.required &&
+      !this.$v.vaccination.brand.required &&
         errors.push("Vaccine's Brand is required");
       return errors;
     }, 
     dateErrors() {
     const errors = [];
-    if (!this.$v.vaccination.Date.$dirty) return errors;
+    if (!this.$v.vaccination.date.$dirty) return errors;
       
-      !this.$v.vaccination.Date.required &&
+      !this.$v.vaccination.date.required &&
         errors.push("Date is required");
       return errors;
     },
-    patientErrors() {
+    idErrors() {
     const errors = [];
-    if (!this.$v.vaccination.patient_AMKA.$dirty) return errors;
+    if (!this.$v.vaccination.id.$dirty) return errors;
       
-      !this.$v.vaccination.patient_AMKA.required &&
+      !this.$v.vaccination.id.required &&
         errors.push("Please select a patient");
       return errors;
-    },                              
+    },
+   
+                           
      }
    
   
@@ -230,13 +242,16 @@ export default {
    
 
    async saveVaccination() {
- var data = {
-        hospital_id:this.hospital,
-        amka: this.vaccination.patient_AMKA,
-        date: this.vaccination.Date,
-        brand: this.vaccination.vaccine_brand
+ 
+  var data = {
+        hosp:this.hospital,
+       id: this.vaccination.id,
+        date: this.vaccination.date,
+        brand: this.vaccination.brand
  }
+ 
  var username=this.hospital
+
     this.$v.$touch();
       if (this.$v.$invalid) {
         this.errorMessage = "All the fields are required";
@@ -244,12 +259,13 @@ export default {
     try{
       this.loading = true
     
-       await this.$store.dispatch('addVaccination',username, data)
+    let response=await this.$store.dispatch('addVaccination',username, data)
        this.loading = false
        this.dialog=false  
        this.resetFields()
        this.$store.dispatch('loadVaccinations')
-        
+        if(response){
+        throw new Error()}
         this.snackbar=true
       this.text="Vaccination Added Successfully"
       this.color="#9ce690"
@@ -267,10 +283,10 @@ export default {
       //this.$refs.form.reset()
       
        
-       this.vaccination.patient_AMKA="",
-      this.vaccination.hospital_id="",
-       this.vaccination.vaccine_brand="",
-       this.vaccination.Date=""
+       this.vaccination.id="",
+       this.vaccination.hosp="",
+       this.vaccination.brand=""
+       this.vaccination.date=""
       }
      
      

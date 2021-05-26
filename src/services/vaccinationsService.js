@@ -8,9 +8,9 @@ export default {
     return axios.get(API_URL + "findAllVaccinations", { headers: authHeader() })
     },
     addVaccination(username,vaccination){
-      const url = API_URL+username+"/vaccination"
+      const url = API_URL+username+"/vaccination/"
          return axios.post(url,vaccination,{ headers: authHeader() })
-      },
+      }
      
       
 

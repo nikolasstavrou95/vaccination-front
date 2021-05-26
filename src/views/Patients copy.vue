@@ -145,7 +145,7 @@
                 v-model="editedPatient.status"
                 :error-messages="statusErrors"
                 @change="$v.editedPatient.status.$touch()"
-                :items="['0/2', '2/2', '1/2']"
+                :items="['AVAILABLE', 'COMPLETED', 'PENDING', 'CANCELED']"
                 label="Status*"
                 required
                 rounded
@@ -409,9 +409,9 @@ export default {
  methods: {
  
     getColor(status) {
-      if (status == "2/2") return "#9ce690";
-      
-      else if (status == "0/2") return "light blue";
+      if (status == "COMPLETED") return "#9ce690";
+      else if (status == "CANCELED") return "#e17b58";
+      else if (status == "AVAILABLE") return "light blue";
       else return "#e6cd4e";
     },
     showDeletePatient(item) {
