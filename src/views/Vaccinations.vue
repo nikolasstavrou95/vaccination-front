@@ -55,6 +55,14 @@
 
   </v-col>
   </v-row>
+
+
+
+
+
+
+
+  
 </v-container>
  
   
@@ -78,10 +86,11 @@ import {mapState} from 'vuex';
       
         headers: [
          
-          { text: 'Hospital', value: 'hospital_id' },
-          { text: 'Amka', value: 'patient_amka' },
-          { text: 'Date', value: 'Date' },
-          { text: 'Brand', value: 'vaccine_brand' },
+          { text: 'Hospital', value: 'hosp',sortable: false },
+          { text: 'Amka', value: 'AMKA',sortable: false },
+          { text: 'Date', value: 'date' },
+          { text: 'Brand', value: 'brand' },
+          { text: "Actions", value: "actions", sortable: false }
          
         ],
       
