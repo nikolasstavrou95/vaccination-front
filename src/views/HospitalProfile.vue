@@ -230,7 +230,7 @@ export default {
 
     },
     async updateHospital() {
-      var data = {
+      var hospitaldata = {
         id:this.hospital.id,
         name: this.hospital.name,
         address: this.hospital.address,
@@ -240,7 +240,7 @@ export default {
         country: this.hospital.country,
         username:this.hospital.username,
         password:this.hospital.password,
-        keys:this.hospital.keys,
+        key:this.hospital.key,
         publicKey: this.hospital.publicKey,
         
         vaccines: this.hospital.vaccines,
@@ -252,7 +252,7 @@ export default {
       };
       try{
         
-        let response = await this.$store.dispatch("editHospital",this.$store.state.auth.hospital.username,data);
+        let response = await this.$store.dispatch("editHospital", {username: this.$store.state.auth.hospital.username, data: hospitaldata});
         if(response){
           throw new Error()
         }

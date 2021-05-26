@@ -12,10 +12,12 @@ class HospitalDataService {
     getHospitalData(username) {
         return axios.get(API_URL + `${username}/getHospital`, { headers: authHeader() });
     }
-    editHospitalData(username,data){
-        return axios.post(API_URL + `${username}/updateUser`, data , { headers: authHeader() }); 
-       
+
+    editHospitalData(username , data){
+        return axios.post(API_URL + `${username}/updateUser`, data, { headers: authHeader() }); 
+
     }
+
 
 
 }
