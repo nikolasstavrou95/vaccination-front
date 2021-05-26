@@ -88,6 +88,7 @@
               
             </v-row>
             {{this.vaccination.id}}
+           
             {{this.vaccination}}
            
             
@@ -244,14 +245,13 @@ export default {
    async saveVaccination() {
  
   var data = {
+        id: this.vaccination.id,
         hosp:this.hospital,
-       id: this.vaccination.id,
+      
         date: this.vaccination.date,
         brand: this.vaccination.brand
  }
  
- var username=this.hospital
-
     this.$v.$touch();
       if (this.$v.$invalid) {
         this.errorMessage = "All the fields are required";
@@ -259,11 +259,11 @@ export default {
     try{
       this.loading = true
     
-    let response=await this.$store.dispatch('addVaccination',username, data)
+    let response = await this.$store.dispatch('addVaccination', {hospital : this.hospital, vaccination: data})
        this.loading = false
        this.dialog=false  
        this.resetFields()
-       this.$store.dispatch('loadVaccinations')
+      //  this.$store.dispatch('loadVaccinations')
         if(response){
         throw new Error()}
         this.snackbar=true

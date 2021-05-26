@@ -36,9 +36,10 @@ export const  mutations= {
         }
           
      }  ,
-    async addVaccination({commit},username,vaccination)
+    async addVaccination({commit},{payload})
      { try{
-        let response= await vaccinationsService.addVaccination(username,vaccination)
+       console.log(payload.username,payload.vaccination)
+        let response = await vaccinationsService.addVaccination(payload.username, payload.vaccination)
     
         commit('ADD_VACCINATION', response.data.data)
         
