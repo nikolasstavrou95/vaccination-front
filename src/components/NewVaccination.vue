@@ -259,7 +259,7 @@ export default {
     try{
       this.loading = true
     
-    let response = await this.$store.dispatch('addVaccination', {hospital : this.hospital, vaccination: data})
+    let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
        this.loading = false
        this.dialog=false  
        this.resetFields()
