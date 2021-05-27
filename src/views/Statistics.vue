@@ -87,26 +87,41 @@ export default {
   },
   methods:{
      async getData(){
-     const response = await StatisticsDataService.getMetadata("PENDING");
+     const response = await StatisticsDataService.getMetadata(this.$store.state.auth.hospital.username);
      console.log(response.data)
-     var tempdata = response.data
-    
-     this.createTables(tempdata,this.hospitalsChartData,"hospital-name")
-     this.createTables(tempdata,this.citiesChartData,"hospital-city")
-     this.createTables(tempdata,this.countriesChartData,"hospital-country");
-     this.createTables(tempdata,this.agesChartData,"age");
+     var data=[];
+     var metadata=[];
+     var merged = [].concat.apply([], response.data);
+     console.log(merged)
+     //filter by status 
+     var filtered =merged.filter((arr)=>
+       arr["1"]["vaccination-status"]!=="PENDING"
+
+     )
+     console.log(filtered)
+     //categorize by object
+     filtered.forEach((arr)=>{
+       data.push(arr[0]);
+       metadata.push(arr[1]);
+     })
+      console.log(data,metadata)
+     this.createTables(metadata,this.hospitalsChartData,"hospital-name")
+     this.createTables(metadata,this.citiesChartData,"hospital-city")
+    this.createTables(metadata,this.countriesChartData,"hospital-country");
+   this.createTables(data,this.agesChartData,"age");
     },
     createTables(data,chart,groupby){
       let collection = data.reduce((r, a) => {
   
-        r[a.metadata[groupby]] = [...r[a.metadata[groupby]] || [], a];
+        r[a[groupby]] = [...r[a[groupby]] || [], a];
         return r;
        }, {});
        console.log("group", collection);
         let objectArray = Object.entries(collection);
-      
+       
        objectArray.forEach(([key, value]) => {
-       chart.push({label: key, totals:value.length})
+       if(key!='undefined')  
+        chart.push({label: key, totals:value.length})
         
     });
 

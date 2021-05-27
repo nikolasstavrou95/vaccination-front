@@ -1,14 +1,14 @@
 import axios from 'axios';
+import authHeader from './auth-header';
 
 
-
-const API_URL = 'http://localhost:9984/api/v1/';
+const API_URL = 'http://localhost:8080/';
 
 
 class StatisticsDataService {
 
-    getMetadata(search) {
-        return axios.get(API_URL + `metadata/?search=${search}`);
+    getMetadata(username) {
+        return axios.get(API_URL + `${username}/vaccination/allHospitals`, { headers: authHeader() });
     }
 
 
