@@ -74,17 +74,8 @@
           name="address"
           :disabled="!isEditing"
         ></v-text-field>
-        <h4>Username</h4>
-        <v-text-field
-          v-model="hospital.username"
-          :error-messages="usernameErrors"
-          prepend-inner-icon="fas fa-user"
-          required
-          @input="$v.hospital.username.$touch()"
-          @blur="$v.hospital.username.$touch()"
-          name="address"
-          :disabled="!isEditing"
-        ></v-text-field>
+        
+        
 
         <v-btn
           color="primary"
