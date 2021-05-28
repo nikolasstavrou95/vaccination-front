@@ -45,6 +45,31 @@
         color="#2d8c92"
       ></v-progress-linear>
        </template>
+       <template v-slot:item.actions="{ item }">
+              <v-btn
+                small
+                rounded
+                outlined
+                fab
+                
+                class="mr-2"
+                color="#03A9F4"
+                @click="showEditVaccination(item)"
+              >
+                <v-icon> mdi-pencil </v-icon>
+              </v-btn>
+              <v-btn
+                small
+                rounded
+                outlined
+                fab
+                class="mr-2"
+                color="#e17b58"
+                @click="showTransVaccination(item)"
+              >
+                <v-icon> mdi-send </v-icon>
+              </v-btn>
+            </template>
     
  
      
@@ -86,10 +111,10 @@ import {mapState} from 'vuex';
       
         headers: [
          
-          { text: 'Hospital', value: 'hosp',sortable: false },
+          { text: 'Hospital', value: 'hospital-name',sortable: false },
           { text: 'Amka', value: 'AMKA',sortable: false },
           { text: 'Date', value: 'date' },
-          { text: 'Brand', value: 'brand' },
+          { text: 'Status', value: 'status' },
           { text: "Actions", value: "actions", sortable: false }
          
         ],
@@ -100,13 +125,30 @@ import {mapState} from 'vuex';
       this.initVaccinations()
     },
    computed:{
-     ...mapState({vaccinations: state=>state.vaccinations.vaccinations})
+     ...mapState({vaccinationsAll: state=>state.vaccinations.vaccinations}),
+
+     vaccinations(){
+        return this.getVaccination();
+     }
    },
    methods: {
       async initVaccinations (){
         this.loading=true
-         await this.$store.dispatch('loadVaccinations')
+         await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
+         
          this.loading=false
+      },
+      getVaccination(){
+        var merged=[];
+        console.log(this.vaccinationsAll)
+       this.vaccinationsAll.forEach(element => {
+        merged.push({...element[0] ,...element[1]}
+          );
+       });
+        
+        console.log(this.vaccinationsAll)
+        console.log(merged)
+        return merged;
       }
     
    }

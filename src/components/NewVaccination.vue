@@ -263,7 +263,7 @@ export default {
        this.loading = false
        this.dialog=false  
        this.resetFields()
-      //  this.$store.dispatch('loadVaccinations')
+       this.$store.dispatch('loadVaccinations',this.hospital)
         if(response){
         throw new Error()}
         this.snackbar=true

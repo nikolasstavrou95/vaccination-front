@@ -27,9 +27,9 @@ export const  mutations= {
       }
 
    export const actions={
-      async loadVaccinations({commit})
+      async loadVaccinations({commit},username)
       { try{
-       let response=await vaccinationsService.getAllVaccinations()
+       let response=await vaccinationsService.getAllVaccinations(username)
           commit('SET_VACCINATIONS', response.data)
         }catch(error){
           console.log("Couldn't load vaccinations")
