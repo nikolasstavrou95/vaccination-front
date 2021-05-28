@@ -423,7 +423,7 @@ export default {
     async deletePatient() {
       try {
         this.loading = true;
-        await this.$store.dispatch("deletePatient", this.toDeletePatient.id);
+        await this.$store.dispatch("deletePatient",{username: this.$store.state.auth.hospital.username, patient:this.toDeletePatient.id});
         this.loading = false;
         this.deleteDialog = false;
         this.snackbar2 = true;
@@ -447,7 +447,7 @@ export default {
     async editPatient() {
       try {
         this.loading = true;
-        await this.$store.dispatch("editPatient", this.editedPatient);
+        await this.$store.dispatch("editPatient",{username: this.$store.state.auth.hospital.username ,patient:this.editedPatient});
         this.loading = false;
         this.editDialog = false;
         this.snackbar2 = true;
@@ -464,7 +464,7 @@ export default {
     },
     async initPatients() {
       this.loading = true;
-      await this.$store.dispatch("loadPatients");
+      await this.$store.dispatch("loadPatients",this.$store.state.auth.hospital.username);
       this.loading = false;
     },
   },

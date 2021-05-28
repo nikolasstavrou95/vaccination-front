@@ -330,12 +330,12 @@ export default {
       }else { 
         try{
       this.loading = true
-    let response= await this.$store.dispatch('addPatient', this.patient)
+    let response= await this.$store.dispatch('addPatient',{username: this.$store.state.auth.hospital.username, patient:this.patient})
     
        this.loading = false
        this.dialog=false  
        this.resetFields()
-       this.$store.dispatch('loadPatients') 
+       this.$store.dispatch('loadPatients',this.$store.state.auth.hospital.username) 
      
     
         
