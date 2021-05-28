@@ -28,18 +28,18 @@ export const mutations = {
 }
 
 export const actions = {
-  async loadPatients({ commit }) {
+  async loadPatients({ commit },username) {
     try {
-      let response = await patientsService.getAllPatients()
+      let response = await patientsService.getAllPatients(username)
       commit('SET_PATIENTS', response.data)
     } catch (error) {
       console.log("Couldn't load patients")
     }
 
   },
-  async addPatient({ commit }, patient) {
+  async addPatient({ commit }, payload) {
     try {
-      let response = await patientsService.addPatient(patient)
+      let response = await patientsService.addPatient(payload.username,payload.patient)
 
       commit('ADD_PATIENT', response.data.data)
 
@@ -47,19 +47,19 @@ export const actions = {
       console.log("something went wrong here store", error)
     }
   },
-  async deletePatient({ commit }, patient) {
+  async deletePatient({ commit }, payload) {
     try {
-      let response = await patientsService.deletePatient(patient)
+      let response = await patientsService.deletePatient(payload.username, payload.patient)
       if (response.status == 200 || response.status == 204) {
-        commit('DELETE_PATIENT', patient.id)
+        commit('DELETE_PATIENT', payload.patient.id)
       }
     } catch (error) {
       console.log("something went wrong here store", error)
     }
   },
-  async editPatient({ commit }, patient) {
+  async editPatient({ commit }, payload) {
     try {
-      let response = await patientsService.editPatient(patient)
+      let response = await patientsService.editPatient(payload.username,payload.patient)
       let editedPatient = response.data.data
       commit('EDIT_PATIENT', editedPatient)
 
