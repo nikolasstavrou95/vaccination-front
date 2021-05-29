@@ -82,13 +82,7 @@ export const router = new VueRouter({
           component: () => import(/* webpackChunkName: "about" */ '../views/Statistics.vue')
 
         },
-        {
-
-          path: 'help',
-          name: 'Help',
-          component: () => import(/* webpackChunkName: "about" */ '../views/Help.vue')
-
-        },
+        
         {
 
           path: 'profile',
