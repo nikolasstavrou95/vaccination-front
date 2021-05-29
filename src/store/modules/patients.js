@@ -3,7 +3,8 @@ import patientsService from "@/services/patientsService.js";
 export const state = {
 
   patients: [],
-  patient: {}
+  patient: {},
+  unvaccinated:[]
 
 }
 export const mutations = {
@@ -22,9 +23,12 @@ export const mutations = {
   EDIT_PATIENT(state, patient) {
     state.patients.forEach(p => {
       if (p.id == patient.id) { p = patient }
-    });
+    })},
+    SET_UNPATIENTS(state, patients) {
+      state.unvaccinated = patients
+    },
 
-  }
+  
 }
 
 export const actions = {
@@ -34,6 +38,15 @@ export const actions = {
       commit('SET_PATIENTS', response.data)
     } catch (error) {
       console.log("Couldn't load patients")
+    }
+
+  },
+  async loadUnPatients({ commit },username) {
+    try {
+      let response = await patientsService.getUnPatients(username)
+      commit('SET_UNPATIENTS', response.data)
+    } catch (error) {
+      console.log("Couldn't loadpatients")
     }
 
   },

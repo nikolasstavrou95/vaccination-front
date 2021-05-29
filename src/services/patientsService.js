@@ -6,7 +6,7 @@ import authHeader from './auth-header';
 
 export default {
   getAllPatients(username) {
-    return axios.get(API_URL + `${username}/patient/findAll`, { headers: authHeader() })
+    return axios.get(API_URL + `${username}/patient/all`, { headers: authHeader() })
   },
   addPatient(username,patient) {
     const url = API_URL + `${username}/patient/addPatient`
@@ -19,6 +19,11 @@ export default {
   editPatient(username,patient) {
     const url = API_URL + `${username}/patient/update`
     return axios.post(url, patient, { headers: authHeader() })
+  },
+  getUnPatients(username){
+
+   const url = API_URL + `${username}/patient/unvaccinated`
+   return axios.get(url, { headers: authHeader() });
   }
 
 
