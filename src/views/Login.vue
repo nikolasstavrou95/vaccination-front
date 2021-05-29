@@ -135,6 +135,8 @@ export default {
       }
     },
     cleanLogin() {
+       this.$v.$reset()
+     
       this.hospital.email = "";
       this.hospital.password = "";
     },
