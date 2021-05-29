@@ -17,6 +17,13 @@ class HospitalDataService {
         return axios.post(API_URL + `${username}/updateUser`, data, { headers: authHeader() }); 
 
     }
+    addVaccines(data){
+        console.log(authHeader())
+        return axios.post(API_URL + `${data.username}/vaccine/add/${data.brand}/${data.quantity}/`, [], { headers: authHeader() });
+    }
+    loadavailableVaccines(username){
+        return axios.get(API_URL + `${username}/vaccine/countAvailable`, { headers: authHeader() });
+    }
 
 
 
