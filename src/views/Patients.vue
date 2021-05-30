@@ -139,38 +139,7 @@
                 clearable
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
-              <v-select
-                class="mx-4"
-                v-model="editedPatient.status"
-                :error-messages="statusErrors"
-                @change="$v.editedPatient.status.$touch()"
-                :items="['0/2', '2/2', '1/2']"
-                label="Status*"
-                required
-                rounded
-                background-color="#d7eae5"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-autocomplete
-                class="mx-4"
-                v-model="editedPatient.symptoms"
-                :items="[
-                  'Headache',
-                  'Nausea',
-                  'Fatigue',
-                  'Fever',
-                  'Muscle Pain',
-                  'Blood Clots',
-                  'Chest Pain',
-                ]"
-                label="Symptoms"
-                clearable
-                rounded
-                background-color="#d7eae5"
-              ></v-autocomplete>
-            </v-col>
+           
           </v-row>
           <small class="ml-4">*indicates required field</small>
         </v-container>
@@ -295,7 +264,7 @@ export default {
       amka: { required, integer, minValue: minValue(0),minLength: minLength(11), maxLength:maxLength(11)},
       address : { required, containNumbers },
       age: { required, integer, minValue: minValue(0) },
-      status:{required},
+
       sex:{required},
     },
   },
@@ -370,14 +339,7 @@ export default {
         errors.push("Patient's sex is required");
       return errors;
     },
-    statusErrors() {
-      const errors = [];
-      if (!this.$v.editedPatient.status.$dirty) return errors;
-      
-      !this.$v.editedPatient.status.required &&
-        errors.push("Patient's status is required");
-      return errors;
-    },
+    
     amkaErrors() {
       const errors = [];
       if (!this.$v.editedPatient.amka.$dirty) return errors;
