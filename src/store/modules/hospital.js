@@ -3,7 +3,10 @@ import HospitalDataService from "@/services/user.service.js";
 export const state = {
 
     hospitalData: {},
-    availableVaccines:""
+    availableVaccines:"",
+    vaccines:[],
+    transferableHospitals:[],
+    
 
 }
 export const mutations = {
@@ -18,16 +21,19 @@ export const mutations = {
     },
     SET_VACCINES(state,vaccines){
         state.availableVaccines  = vaccines
-    }
-    
+    },
+    SET_VACCINES_LIST(state,vaccines){
+        state.vaccines  = vaccines
+    },
+    SET_HOSPITALS_TRANSFER(state,hospitals){
+        state.transferableHospitals  = hospitals
+    },
     
 }
-export const getters={
-    // availableVaccines(state){
-    //     return state.hospitalData.vaccines.length ? state.hospitalData.vaccines.filter(vaccine=> vaccine.status==="AVAILABLE").length : 0;
-    // },
+ export const getters={
+   
     availableVaccinesByBrand(state){
-        const availableVaccines = state.hospitalData.vaccines.length ? state.hospitalData.vaccines.filter(vaccine=> vaccine.status==="AVAILABLE") : []
+        const availableVaccines = state.hospitalData.vaccines.length ? state.hospitalData.vaccines : [];
         const collection = [];
         let temp = availableVaccines.reduce((r, a) => {
   
@@ -40,7 +46,8 @@ export const getters={
              collection.push({label: key, totals:value.length})
              
          });
-           
+
+        
         return collection;
 
     }
@@ -88,6 +95,26 @@ export const actions = {
             commit('SET_VACCINES', response.data.data)
         } catch (error) {
             console.log("Couldn't load Vaccines")
+            return error;
+        }
+    },
+    async loadVaccinesByBrand({ commit }, username) {
+        try {
+            let response = await HospitalDataService.getAvailableVaccinesByBrand(username)
+            commit('SET_VACCINES_LIST', response.data)
+
+        } catch (error) {
+            console.log("Couldn't load Vaccines")
+            return error;
+        }
+    },
+    async loadTransferableHospitals({ commit }, payload) {
+        try {
+            let response = await HospitalDataService.getTransferableHospitals(payload.username,payload.brand)
+            commit('SET_HOSPITALS_TRANSFER', response.data)
+
+        } catch (error) {
+            console.log("Couldn't load Hospitals")
             return error;
         }
     },

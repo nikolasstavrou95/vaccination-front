@@ -24,6 +24,12 @@ class HospitalDataService {
     loadavailableVaccines(username){
         return axios.get(API_URL + `${username}/vaccine/countAvailable`, { headers: authHeader() });
     }
+    getAvailableVaccinesByBrand(username){
+        return axios.get(API_URL + `${username}/vaccine/findAllByStatus/AVAILABLE`,{headers: authHeader()});
+    }
+    getTransferableHospitals(username,brand){
+        return axios.get(API_URL + `${username}/getTransferableHospitals/${brand}`,{headers: authHeader()})
+    }
 
 
 
