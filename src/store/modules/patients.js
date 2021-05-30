@@ -5,6 +5,7 @@ export const state = {
   patients: [],
   patient: {},
   unvaccinated:[]
+  
 
 }
 export const mutations = {

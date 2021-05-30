@@ -24,7 +24,8 @@ export default {
 
    const url = API_URL + `${username}/patient/unvaccinated`
    return axios.get(url, { headers: authHeader() });
-  }
+  },
+  
 
 
 
