@@ -55,6 +55,7 @@
                 class="mr-2"
                 color="#03A9F4"
                 @click="showEditVaccination(item)"
+
               >
                 <v-icon> mdi-pencil </v-icon>
               </v-btn>
@@ -66,6 +67,7 @@
                 class="mr-2"
                 color="#e17b58"
                 @click="showTransVaccination(item)"
+                :disabled="item.status==='DONE'"
               >
                 <v-icon> mdi-send </v-icon>
               </v-btn>
@@ -85,7 +87,7 @@
         <v-toolbar color="#61ba9f" dark rounded>
           <v-toolbar-title class="mx-4">Transfer Vaccination</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-icon class="mx-4" @click="tranferDialog = false">mdi-close</v-icon>
+          <v-icon class="mx-4" @click="transferDialog = false">mdi-close</v-icon>
         </v-toolbar>
 
         <v-container>
@@ -134,7 +136,7 @@
             color="#e17b58"
             outlined
             rounded
-            @click="tranferDialog = false"
+            @click="transferDialog = false"
           >
             Cancel
           </v-btn>
@@ -196,8 +198,8 @@
                   <v-select
                  class="mx-4"
                  v-model="editedVaccination.status"
-                  :items="['DONE', 'CANCELED','PENDING']"
-                  label="Brand*"
+                  :items="['DONE','PENDING','CANCELLED']"
+                  label="Status*"
                   required
                   rounded
                   background-color="#d7eae5"
@@ -332,11 +334,13 @@ import vaccinationsService from "@/services/vaccinationsService.js";
       hospitals(){
         return this.$store.state.hospital.transferableHospitals;
       },
-    
+     
 
      vaccinations(){
-        return this.getVaccination();
+        return this.$store.state.vaccinations.vaccinations;
      },
+     
+     
 
       brandErrors() {
     const errors = [];
@@ -362,20 +366,20 @@ import vaccinationsService from "@/services/vaccinationsService.js";
          
          this.loading=false
       },
-      getVaccination(){
-        var merged=[];
-        console.log(this.vaccinationsAll)
-       this.vaccinationsAll.forEach(element => {
-        merged.push({...element[0] ,...element[1],transid: element[2]}
-          )
+      // getVaccination(){
+      //   var merged=[];
+      //   console.log(this.vaccinationsAll)
+      //  this.vaccinationsAll.forEach(element => {
+      //   merged.push({...element[0] ,...element[1],transid: element[2]}
+      //     )
          
-       });
+      //  });
         
-        console.log(this.vaccinationsAll)
-        console.log(merged)
+      //   console.log(this.vaccinationsAll)
+      //   console.log(merged)
         
-        return merged;
-      },
+      //   return merged;
+      // },
       showTransVaccination(item){
         this.transferDialog = true;
         this.toTranferVaccination= item;
@@ -441,7 +445,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
             throw new Error()}
           this.editDialog=false;
           this.loading = false;
-
+          this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
           }catch(err){
            this.color2="#e17b58";
            this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
@@ -469,6 +473,12 @@ import vaccinationsService from "@/services/vaccinationsService.js";
        
        }
        
+     },
+     check(status){
+       if(status==='DONE'){
+         return true;
+       }
+       return false;
      }
 
    }
