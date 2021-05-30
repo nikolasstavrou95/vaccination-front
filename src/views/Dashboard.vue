@@ -99,7 +99,7 @@
                 <v-col cols="12" md="9">
                  <v-data-table
                  :headers="headers"
-                 :items="availableVaccinesByBrand"
+                 :items="vaccinesList"
      
       
                  hide-default-footer
@@ -260,6 +260,7 @@ mixins: [validationMixin],
 
       link:"/user/vaccinations"
     },
+    vaccinesList:[],
     snackbar2: false,
       timeout2: 2000,
       message: "",
@@ -280,9 +281,9 @@ mixins: [validationMixin],
     availableVaccines(){
       return this.$store.state.hospital.availableVaccines
     },
-    // availableVaccinesByBrand(){
-    //   return this.$store.getters.availableVaccinesByBrand;
-    // },
+    availableVaccinesByBrand(){
+      return this.$store.state.hospital.vaccines;
+    },
     numberErrors() {
       const errors = [];
       if (!this.$v.vaccine.number.$dirty) return errors;
@@ -347,6 +348,26 @@ mixins: [validationMixin],
        
       }
     },
+    async getAvailableVaccinesByBrand() {
+      
+      try{
+       let response = await this.$store.dispatch(
+      'loadVaccinesByBrand',
+        this.$store.state.auth.hospital.username
+      );
+      
+      if(response){
+        throw new Error()}
+
+      this.countAvailableVaccinesByBrand();
+
+      }catch(err){
+        this.color2="#e17b58";
+        this.message=`Couldn't show this Hospital data. An error occured during request (${err})`
+        this.snackbar2 = true;
+       
+      }
+    },
     
    async addVaccines(){
      this.loading=true;
@@ -372,6 +393,8 @@ mixins: [validationMixin],
         this.snackbar2 = true;
         this.loading=false;
         this.getAvailableVaccines();
+        this.getAvailableVaccinesByBrand();
+        this.countAvailableVaccinesByBrand();
         this.clear();
        }).catch(err =>{
         this.color2="#e17b58";
@@ -387,6 +410,7 @@ mixins: [validationMixin],
     },
     showListVaccines(condition){
       this.listVaccinesDialog= condition;
+       this.getAvailableVaccinesByBrand();
      
       
     },
@@ -394,6 +418,24 @@ mixins: [validationMixin],
       this.$v.$reset()
       this.vaccine.brand=null;
       this.vaccine.number="";
+    },
+     countAvailableVaccinesByBrand(){
+        
+       this.vaccinesList=[];
+        let temp = this.availableVaccinesByBrand.reduce((r, a) => {
+  
+            r[a["brand"]] = [...r[a["brand"]] || [], a];
+            return r;
+           }, {});
+           let objectArray = Object.entries(temp);
+           objectArray.forEach(([key, value]) => {
+            if(key!='undefined')  
+             this.vaccinesList.push({label: key, totals:value.length})
+             
+         });
+
+        
+       
     }
     },
 
@@ -403,7 +445,9 @@ mixins: [validationMixin],
    mounted() {
     this.getHospital();
     this.getAvailableVaccines();
+    this.getAvailableVaccinesByBrand();
     console.log(this.availableVaccines)
+    console.log(this.availableVaccinesByBrand);
   }
 };
 </script>
