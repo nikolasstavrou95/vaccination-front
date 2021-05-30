@@ -80,6 +80,183 @@
 
   </v-col>
   </v-row>
+   <v-dialog v-model="transferDialog" persistent max-width="800px">
+      <v-card>
+        <v-toolbar color="#61ba9f" dark rounded>
+          <v-toolbar-title class="mx-4">Transfer Vaccination</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-icon class="mx-4" @click="tranferDialog = false">mdi-close</v-icon>
+        </v-toolbar>
+
+        <v-container>
+          <v-row justify="center">
+            <v-card-title>
+              <h4>
+                Are you sure you want to tranfer this vaccination?
+              </h4></v-card-title
+            >
+            <v-card-text>
+              <v-row justify="center">
+                <v-col cols="12" md="4">
+                  <h5>
+                    Patient Name:
+                    <h6>{{ toTranferVaccination.name}}</h6>
+                  </h5>
+                </v-col>
+                <v-col cols="12" md="4">
+                  <h5>
+                    Status:
+                    <h6>{{ toTranferVaccination.status }}</h6>
+                  </h5>
+                </v-col>
+                <v-col cols="12" md="4">
+                    <v-select
+                 class="mx-4"
+                 v-model="toTranferVaccination.next"
+                  :items="hospitals"
+                  label="Hospitals*"
+                  required
+                  rounded
+                  background-color="#d7eae5"
+                  :error-messages="hospitalsErrors"
+                 @change="$v.toTranferVaccination.next.$touch()"
+                ></v-select>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-row>
+        </v-container>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="mb-6"
+            color="#e17b58"
+            outlined
+            rounded
+            @click="tranferDialog = false"
+          >
+            Cancel
+          </v-btn>
+
+          <v-btn
+            :loading="loading"
+            class="mx-3 mb-6"
+            color="#61ba9f"
+            outlined
+            rounded
+            @click="tranferVaccination"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="editDialog" persistent max-width="800px">
+      <v-card>
+        <v-toolbar color="#61ba9f" dark rounded>
+          <v-toolbar-title class="mx-4"
+            >Edit Vaccination</v-toolbar-title
+          >
+          <v-spacer></v-spacer>
+          <v-icon class="mx-4" @click="editDialog = false">mdi-close</v-icon>
+        </v-toolbar>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+             <v-text-field
+                class="mx-4"
+                v-model="editedVaccination.date"
+                  label="Date*"
+                  required
+                  clearable
+                   @change="$v.editedVaccination.date.$touch()"
+                   :error-messages="dateErrors"
+                   type="date"
+                 >
+                    </v-text-field>
+            </v-col>
+
+            <v-col
+                cols="12" md="6" >
+                  <v-select
+                 class="mx-4"
+                 v-model="editedVaccination['vaccine-brand']"
+                  :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER']"
+                  label="Brand*"
+                  required
+                  rounded
+                  background-color="#d7eae5"
+                  :error-messages="brandErrors"
+                 @change="$v.editedVaccination['vaccine-brand'].$touch()"
+                ></v-select>
+              </v-col>
+             <v-col
+                cols="12" md="6" >
+                  <v-select
+                 class="mx-4"
+                 v-model="editedVaccination.status"
+                  :items="['DONE', 'CANCELED','PENDING']"
+                  label="Brand*"
+                  required
+                  rounded
+                  background-color="#d7eae5"
+                 
+                
+                ></v-select>
+              </v-col>
+
+            
+           
+           
+          
+           
+          </v-row>
+          <small class="ml-4">*indicates required field</small>
+        </v-container>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="mb-6"
+            color="#e17b58"
+            outlined
+            rounded
+            @click="editDialog = false"
+          >
+            Cancel
+          </v-btn>
+
+          <v-btn
+            :loading="loading"
+            class="mx-3 mb-6"
+            color="#61ba9f"
+            outlined
+            rounded
+            @click="editVaccination"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-snackbar
+      v-model="snackbar2"
+      :timeout="timeout2"
+      :color="color2"
+      rounded="pill"
+      top
+      
+     
+      
+    >
+      {{ message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
+
 
 
 
@@ -98,9 +275,20 @@
 
 import NewVaccination from '@/components/NewVaccination.vue';
 import {mapState} from 'vuex';
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+import vaccinationsService from "@/services/vaccinationsService.js";
 
   export default {
     components:{NewVaccination},
+    mixins: [validationMixin],
+  validations: {
+   editedVaccination: {
+     
+      ['vaccine-brand']:{required},
+      date : { required}
+      
+    }},
     
     data() {
       return {
@@ -112,24 +300,60 @@ import {mapState} from 'vuex';
         headers: [
          
           { text: 'Hospital', value: 'hospital-name',sortable: false },
+          { text: 'Name', value: 'name' },
           { text: 'Amka', value: 'AMKA',sortable: false },
+
           { text: 'Date', value: 'date' },
           { text: 'Status', value: 'status' },
+          { text: 'Brand', value: 'vaccine-brand' },
           { text: "Actions", value: "actions", sortable: false }
          
         ],
+        transferDialog:false,
+        toTranferVaccination: {},
+        editDialog:false,
+        editedVaccination: {},
+        snackbar2: false,
+        timeout2: 2000,
+        message: "",
+        color2:"",
+
       
       }
     },
     mounted () {
-      this.initVaccinations()
+      this.initVaccinations();
+     
     },
    computed:{
-     ...mapState({vaccinationsAll: state=>state.vaccinations.vaccinations}),
+     ...mapState(
+       {vaccinationsAll: state=>state.vaccinations.vaccinations},
+     ),
+      hospitals(){
+        return this.$store.state.hospital.transferableHospitals;
+      },
+    
 
      vaccinations(){
         return this.getVaccination();
-     }
+     },
+
+      brandErrors() {
+    const errors = [];
+    if (!this.$v.editedVaccination['vaccine-brand'].$dirty) return errors;
+      
+      !this.$v.editedVaccination['vaccine-brand'].required &&
+        errors.push("Vaccine's Brand is required");
+      return errors;
+    }, 
+    dateErrors() {
+    const errors = [];
+    if (!this.$v.editedVaccination.date.$dirty) return errors;
+      
+      !this.$v.editedVaccination.date.required &&
+        errors.push("Date is required");
+      return errors;
+    }
    },
    methods: {
       async initVaccinations (){
@@ -142,17 +366,113 @@ import {mapState} from 'vuex';
         var merged=[];
         console.log(this.vaccinationsAll)
        this.vaccinationsAll.forEach(element => {
-        merged.push({...element[0] ,...element[1]}
-          );
+        merged.push({...element[0] ,...element[1],transid: element[2]}
+          )
+         
        });
         
         console.log(this.vaccinationsAll)
         console.log(merged)
+        
         return merged;
+      },
+      showTransVaccination(item){
+        this.transferDialog = true;
+        this.toTranferVaccination= item;
+         this.getHospitals();
+         console.log(this.hospitals);
+
+      },
+      async tranferVaccination(){
+
+       
+         var data = {
+          date: this.toTranferVaccination.date,
+          brand: this.toTranferVaccination['vaccine-brand'],
+          amka: this.toTranferVaccination.AMKA,
+          status: this.toTranferVaccination.status,
+          next: this.toTranferVaccination.next
+
+        }
+        try{
+           
+        this.loading = true;
+        await vaccinationsService.transferVaccination(this.$store.state.auth.hospital.username,this.toTranferVaccination.transid, data)
+        
+       
+        this.loading=false;
+         this.transferDialog = false;
+
+        }catch(err){
+        this.color2="#e17b58";
+        this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
+        this.snackbar2 = true;
+        this.transferDialog = false;
+        this.loading=false
+       
       }
-    
+
+
+      },
+      showEditVaccination(item){
+
+        this.editDialog = true;
+        this.editedVaccination= item;
+      },
+      async editVaccination(){
+        var data = {
+          date: this.editedVaccination.date,
+          brand: this.editedVaccination['vaccine-brand'],
+          amka: this.editedVaccination.AMKA,
+          status: this.editedVaccination.status,
+
+        }
+        this.$v.$touch();
+          if (this.$v.$invalid) {
+          this.loading = false;}
+          else{
+             try{
+          
+      
+           this.loading=true
+           const response = await this.$store.dispatch('editVaccination',{username:this.$store.state.auth.hospital.username, transid: this.editedVaccination.transid, vaccination: data})
+        
+          if(response){
+            throw new Error()}
+          this.editDialog=false;
+          this.loading = false;
+
+          }catch(err){
+           this.color2="#e17b58";
+           this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
+           this.snackbar2 = true;
+           this.loading= false;
+       
+      }
+
+      }
+   },
+     async getHospitals(){
+       
+       try{
+       const response = await this.$store.dispatch('loadTransferableHospitals', {username: this.$store.state.auth.hospital.username, brand: this.toTranferVaccination['vaccine-brand']})
+
+         if(response){
+            throw new Error()}
+
+         
+       }catch(error){
+           this.color2="#e17b58";
+           this.message=`Couldn't load Hospitals. An error occured during request (${error})`
+           this.snackbar2 = true;
+          
+       
+       }
+       
+     }
+
    }
-   }
+  }
   
 </script>
 

@@ -11,7 +11,18 @@ export default {
     addVaccination(username,vaccination){
      
          return axios.post(API_URL+ `${username}/vaccination/`, vaccination , { headers: authHeader() })
+    },
+    editVaccination(username,transid,vaccination){
+        return axios.post(API_URL+ `${username}/vaccination/update/${transid}`, vaccination, { headers:authHeader() })
+    },
+    transferVaccination(username,transid,vaccination){
+        return axios.post(API_URL+ `${username}/vaccination/transfer/${transid}`, vaccination, {headers:authHeader()})
+    },
+    getPatientVaccineList(username,patientID){
+        const url = API_URL + `${username}/vaccine/findBrands/${patientID}`;
+        return axios.get(url, { headers: authHeader() });
       }
+
      
    
 
