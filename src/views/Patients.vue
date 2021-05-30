@@ -292,7 +292,7 @@ export default {
   validations: {
    editedPatient: {
       name: { required, alpha},
-      amka: { required, integer, minValue: minValue(0),minLength: minLength(8), maxLength:maxLength(8)},
+      amka: { required, integer, minValue: minValue(0),minLength: minLength(11), maxLength:maxLength(11)},
       address : { required, containNumbers },
       age: { required, integer, minValue: minValue(0) },
       status:{required},
@@ -387,9 +387,9 @@ export default {
         errors.push("Please give a valid number");
     
       !this.$v.editedPatient.amka.minLength &&
-        errors.push("Amka should be 8 numbers");
+        errors.push("Amka should be 11 numbers");
       !this.$v.editedPatient.amka.maxLength &&
-        errors.push("Amka should be 8 numbers");
+        errors.push("Amka should be 11 numbers");
       !this.$v.editedPatient.amka.required &&
         errors.push("Amka is required");
       return errors;
