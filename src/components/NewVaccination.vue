@@ -38,7 +38,7 @@
               >
            <v-autocomplete
         v-model="vaccination.id"
-        :items="patients"
+        :items="unvaccinatedPatients"
         class="mx-4"
         :search="search"
         color="#d7eae5"
@@ -51,6 +51,7 @@
         @change="$v.vaccination.id.$touch()"
         :error-messages="idErrors"
          background-color="#d7eae5"
+        
          
       ></v-autocomplete>
               </v-col>
@@ -73,13 +74,14 @@
                   <v-select
                  class="mx-4"
                  v-model="vaccination.brand"
-                  :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER']"
+                  :items="vaccineList"
                   label="Brand*"
                   required
                   rounded
                   background-color="#d7eae5"
                   :error-messages="brandErrors"
                  @change="$v.vaccination.brand.$touch()"
+                 @click="getVaccineList"
                 ></v-select>
               </v-col>
              
@@ -188,7 +190,8 @@ export default {
     vaccination: {
       
      
-    }
+    },
+    
       
     
     }
@@ -199,12 +202,20 @@ export default {
         "loadHospital",
         this.$store.state.auth.hospital.username
       ),
-      this.$store.dispatch("loadPatients")
+      this.$store.dispatch("loadPatients", this.$store.state.auth.hospital.username)
+      this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
   },
    computed:{
    
      ...mapState({ hospital: (state) => state.auth.hospital.username, 
-                  patients:(state) => state.patients.patients}),
+                  unvaccinatedPatients:(state) => state.patients.unvaccinated,
+                   vaccineList: (state)=>state.vaccinations.patientVaccinesList
+                  }),
+    
+  
+    
+     
+   
     brandErrors() {
     const errors = [];
     if (!this.$v.vaccination.brand.$dirty) return errors;
@@ -231,13 +242,7 @@ export default {
     },
    
                            
-     }
-   
-  
-   ,
-     
-  
-    
+     },
   
    methods: {
    
@@ -287,6 +292,23 @@ export default {
        this.vaccination.hosp="",
        this.vaccination.brand=""
        this.vaccination.date=""
+      },
+
+      async getVaccineList(){
+        try{
+        
+         let response= await this.$store.dispatch('getVaccineList',{username:this.hospital,patientid: this.vaccination.id})
+
+         if(response){
+        throw new Error()}
+        return this.$store.state.vaccinations.patientVaccinesList
+        
+      }catch(err){
+        this.snackbar=true
+       this.color="#e17b58"
+       this.text="Couldn't load vaccines for current patient. Please check your internet connection"
+        console.log("something went wrong here",err)
+        }
       }
      
      
@@ -306,5 +328,5 @@ export default {
 <style scoped lang="sass">
 
 
-</style>>
+</style>
 
