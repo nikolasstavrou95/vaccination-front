@@ -298,6 +298,7 @@ export default {
         { text: "Address", value: "address", sortable: false },
         { text: "Status", value: "status" },
         { text: "Symptoms", value: "symptoms", sortable: false },
+        
         { text: "Actions", value: "actions", sortable: false },
       ],
     };
@@ -373,7 +374,7 @@ export default {
     getColor(status) {
       if (status == "2/2") return "#9ce690";
       
-      else if (status == "0/2") return "light blue";
+      else if (status == "0/2") return "red lighten-2";
       else return "#e6cd4e";
     },
     showDeletePatient(item) {

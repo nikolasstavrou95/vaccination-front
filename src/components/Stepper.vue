@@ -1,170 +1,141 @@
 <template>
-  <v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="800px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          large
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-        <v-icon class="mr-2">mdi-clipboard-plus</v-icon>
-          New Vaccination
-        </v-btn>
-      </template>
-      <v-card>
-           <v-toolbar
-      color="#61ba9f"
-      dark
-      rounded
-    >
-         <v-toolbar-title
-         class="mx-4">Add New Vaccination </v-toolbar-title>
-           <v-spacer></v-spacer>
-           <v-icon 
-         
-          class='mx-4'
-           @click="dialog=false">mdi-close</v-icon>
+<v-container>
+  <v-stepper v-model="e1">
+    <v-stepper-header>
+      <v-stepper-step
+        :complete="e1 > 1"
+        step="1"
+      >
+        Select Patient
+      </v-stepper-step>
+
+      <v-divider></v-divider>
+
+      <v-stepper-step
         
-        </v-toolbar>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-              >
-           <v-autocomplete
+        step="2"
+      >
+        Select Date and Vaccine Brand
+      </v-stepper-step>
+
+      <v-divider></v-divider>
+
+      
+    </v-stepper-header>
+
+    <v-stepper-items>
+      <v-stepper-content step="1">
+        <v-card
+          class="mb-12"
+          color="#d7eae5"
+         height="200px"
+        >
+        <v-row justify="center">
+        <v-col cols="12" md="9" >
+         <v-autocomplete
         v-model="vaccination.id"
         :items="unvaccinatedPatients"
-        class="mx-4"
+        class="mx-4 mt-8"
         :search="search"
-        color="#d7eae5"
-        hide-no-data
-       
+        color="primary"
+        hide-selected
         item-text="name"
         item-value="id"
         label="Search Patient by name*"
         prepend-icon="mdi-account-search"
-        @change="$v.vaccination.id.$touch()"
+        @blur="$v.vaccination.id.$touch()"
         :error-messages="idErrors"
          background-color="#d7eae5"
         
          
       ></v-autocomplete>
-              </v-col>
-             
-            
-              <v-col cols="12" md="6">
+        
+        </v-col>
+        </v-row>
+        </v-card>
+
+        <v-btn
+        class="mr-2"
+         rounded
+        outlined
+          color="#61ba9f"
+          @click="checkComplete"
+        >
+          Continue
+        </v-btn>
+
+       
+      </v-stepper-content>
+
+      <v-stepper-content step="2">
+        <v-card
+           class="mb-12"
+          color="#d7eae5"
+         height="200px"
+        >
+        <v-row justify="center">
+             <v-col cols="12" md="4"  >
+     
                 <v-text-field
-                class="mx-4"
+               class="mx-4 mt-8"
                 v-model="vaccination.date"
                   label="Date*"
                   required
-                  background-color="#d7eae5"
                   clearable
+                  
                    @change="$v.vaccination.date.$touch()"
                    :error-messages="dateErrors"
                   type="date">
                     </v-text-field>
               </v-col>
                <v-col
-                cols="12" md="6" >
+                cols="12" md="4" >
                   <v-select
-                 class="mx-4"
+                class="mx-4 mt-8"
                  v-model="vaccination.brand"
                   :items="vaccineList"
                   label="Brand*"
                   required
                   rounded
-                  background-color="#d7eae5"
-                  :error-messages="brandErrors"
+                 :error-messages="brandErrors"
                  @change="$v.vaccination.brand.$touch()"
                  @click="getVaccineList"
                 ></v-select>
               </v-col>
-             
+           
              
               
               
             </v-row>
-            
-           
-            
-                <small
-                class="ml-4">*indicates required field</small>
-          </v-container>
-      
-       
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-          class="mx-3 mb-6"
-            color="#e17b58"
-           outlined
-         
-            rounded
-            @click="dialog = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-          color="#4FC3F7"
-           class="mx-3 mb-6"
-           
-            rounded
-            
-            outlined
         
-            @click="resetFields"
-          
-          >
-            Reset
-          </v-btn>
-          <v-btn 
-           class="mx-3 mb-6"
-            rounded
-            color="#61ba9f"
-           :loading="loading"
-            outlined
-            @click="saveVaccination"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-         
-      </v-card>
-    </v-dialog>
-      <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      :color="color"
-      rounded="pill"
-      bottom
-    >
-       {{text}}
+        
+        
+        </v-card>
 
-      <template v-slot:action="{ attrs }">
         <v-btn
-         
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
+         class="mr-2"
+         rounded
+        outlined
+          color="#61ba9f"
+          @click="saveVaccination"
         >
-          Close
+         Save
         </v-btn>
-      </template>
-    </v-snackbar>
-  </v-row>
-    
 
+        <v-btn outlined rounded
+          color="#e17b58" @click="e1 = 1">
+          Cancel
+        </v-btn>
+      </v-stepper-content>
 
-    
+     
+    </v-stepper-items>
+  </v-stepper>
+</v-container>
 </template>
 
-<script>
+  <script>
+
 import { mapState } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
@@ -179,7 +150,7 @@ export default {
     }},
   data() {
     return {
-      dialog:false,
+      e1: 1,
      snackbar:false,
      text:"",
      color:"",
@@ -190,9 +161,7 @@ export default {
       
      
     },
-    
-      
-    
+     
     }
   },
   
@@ -265,13 +234,11 @@ export default {
     
     let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
        this.loading = false
-       this.dialog=false  
+       this.e1 = 1
        this.resetFields()
-       
+       this.$store.dispatch('loadVaccinations',this.hospital)
         if(response){
         throw new Error()}
-        this.$store.dispatch('loadVaccinations',this.hospital)
-        
         this.snackbar=true
       this.text="Vaccination Added Successfully"
       this.color="#9ce690"
@@ -310,6 +277,11 @@ export default {
        this.text="Couldn't load vaccines for current patient. Please check your internet connection"
         console.log("something went wrong here",err)
         }
+      },
+      checkComplete(){
+         if (this.vaccination.id!=null) {
+        this.e1=2
+      }
       }
      
      
@@ -326,8 +298,7 @@ export default {
   
 </script>
 
-<style scoped lang="sass">
-
+<style  scoped>
 
 </style>
 

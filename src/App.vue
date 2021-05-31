@@ -6,7 +6,7 @@
     </v-main>
     <v-footer class="mt-8 mb-4" color="transparent">
       <v-row justify="center">
-        {{ new Date().getFullYear() }} — <strong>SKG code -Team Nu11s!</strong>
+        {{ new Date().getFullYear() }} — <strong>SKG code - <v-icon> mdi-null</v-icon>Team Nu11s!</strong><v-icon> mdi-null</v-icon>
       </v-row>
     </v-footer>
   </v-app>
