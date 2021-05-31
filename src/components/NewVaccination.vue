@@ -42,8 +42,8 @@
         class="mx-4"
         :search="search"
         color="#d7eae5"
-        hide-no-data
-       
+        no-data-text="Not Found.Please add Patient First"
+        clearbale
         item-text="name"
         item-value="id"
         label="Search Patient by name*"

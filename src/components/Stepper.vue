@@ -31,7 +31,7 @@
          height="200px"
         >
         <v-row justify="center">
-        <v-col cols="12" md="9" >
+        <v-col cols="12" md="6" >
          <v-autocomplete
         v-model="vaccination.id"
         :items="unvaccinatedPatients"
@@ -41,6 +41,8 @@
         hide-selected
         item-text="name"
         item-value="id"
+        no-data-text="Not found.Please add Patient First"
+        clearable
         label="Search Patient by name*"
         prepend-icon="mdi-account-search"
         @blur="$v.vaccination.id.$touch()"
@@ -51,7 +53,12 @@
       ></v-autocomplete>
         
         </v-col>
+         <v-col cols="12" md="3"  class="mx-4 mt-14" >
+             <NewPatient/>
+         </v-col>
         </v-row>
+      
+       
         </v-card>
 
         <v-btn
@@ -139,8 +146,11 @@
 import { mapState } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
-
+import NewPatient from '@/components/NewPatient.vue';
 export default {
+    components: {
+        NewPatient,
+    },
  mixins: [validationMixin],
   validations: {
    vaccination: {
