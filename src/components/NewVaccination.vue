@@ -75,7 +75,7 @@
                   <v-select
                  class="mx-4"
                  v-model="vaccination.brand"
-                  :items="vaccineList"
+                  :items="patientVaccines"
                   label="Brand*"
                   required
                   rounded
@@ -168,7 +168,7 @@
 import { mapState } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
-
+import vaccinationsService from "@/services/vaccinationsService.js";
 export default {
  mixins: [validationMixin],
   validations: {
@@ -190,6 +190,8 @@ export default {
       
      
     },
+
+    patientVaccines:[]
     
       
     
@@ -296,13 +298,18 @@ export default {
       },
 
       async getVaccineList(){
+       
         try{
         
-         let response= await this.$store.dispatch('getVaccineList',{username:this.hospital,patientid: this.vaccination.id})
-
-         if(response){
-        throw new Error()}
-        return this.$store.state.vaccinations.patientVaccinesList
+         let response = await vaccinationsService.getPatientVaccineList(this.hospital,this.vaccination.id)
+         let list =[] 
+         response.data.forEach(element => {
+         element ? list.push(element) : []
+         
+       });
+       this.patientVaccines = list;
+         
+       
         
       }catch(err){
         this.snackbar=true
@@ -312,9 +319,12 @@ export default {
         }
       }
      
+   
+   }
+     
      
        
-   }
+   
 }
 
   
