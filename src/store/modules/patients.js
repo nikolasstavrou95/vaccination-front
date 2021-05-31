@@ -54,7 +54,7 @@ export const actions = {
   async addPatient({ commit }, payload) {
     try {
       let response = await patientsService.addPatient(payload.username,payload.patient)
-
+      console.log(response.data.data)
       commit('ADD_PATIENT', response.data.data)
 
     } catch (error) {
