@@ -136,7 +136,7 @@ export default {
       },
       {
         title: "Vaccines",
-        icon: "mdi-clipboard-edit-outline",
+        icon: "mdi-needle",
         to: "/user/vaccines",
       },
       {

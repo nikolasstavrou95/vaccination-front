@@ -64,7 +64,7 @@
     </v-row>
    
     <v-row>
-      <patients></patients>
+     <Stepper/>
     </v-row>
    
     <v-snackbar
@@ -151,7 +151,7 @@
             <v-card-text>
               
               <v-row justify="center">
-                <v-col cols="12" md="6">
+                <v-col cols="12" class="mt-2" md="6">
                  <v-select
                  class="mx-4"
                  v-model="vaccine.brand"
@@ -163,33 +163,40 @@
                   background-color="#d7eae5"
                   @change="$v.vaccine.brand.$touch()"
                 ></v-select>
+               
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col cols="12" class="mt-2" md="4">
                   <v-text-field
                    v-model="vaccine.number"
                    :error-messages="numberErrors"
-                   prepend-inner-icon="fas fa-map-marked-alt"
+                   prepend-inner-icon="mdi-needle"
                    required
                    @change="$v.vaccine.number.$touch()"
                    type="number"
                    label="Number*"
                   
                  ></v-text-field>
-              
+               
                 </v-col>
+                 
               </v-row>
+              
+                  
              
             </v-card-text>
           </v-row>
         </v-container>
 
         <v-card-actions>
+            
           <v-spacer></v-spacer>
+          <small class="mr-10">*indicates required field</small>
           <v-btn
             class="mb-6"
             color="#e17b58"
             outlined
             rounded
+            
             @click="showAddVaccines(false)"
           >
             Cancel
@@ -219,11 +226,12 @@ import InfoCard from '../components/InfoCard.vue';
 import { validationMixin } from "vuelidate";
 import { required, minValue } from "vuelidate/lib/validators";
 import HospitalDataService from "@/services/user.service.js";
+import Stepper from '@/components/Stepper.vue';
 export default {
   name: "Dashboard",
 components: {
-InfoCard
- 
+InfoCard,
+ Stepper
 },
 mixins: [validationMixin],
   validations: {

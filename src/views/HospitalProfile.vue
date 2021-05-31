@@ -67,7 +67,7 @@
         <v-text-field
           v-model="hospital.phone_number"
           :error-messages="phoneErrors"
-          prepend-inner-icon="fas fa-map-marked-alt"
+          prepend-inner-icon="mdi-phone-classic"
           required
           @input="$v.hospital.phone_number.$touch()"
           @blur="$v.hospital.phone_number.$touch()"
