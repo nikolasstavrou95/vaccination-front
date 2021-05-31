@@ -1,10 +1,10 @@
 <template>
   <v-container fluid class="statistics">
-    <bar-chart v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
-    <pie-chart class="chart pt-4"></pie-chart>
-     <bar-chart v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
-    <bar-chart v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart>
-     <bar-chart v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></bar-chart>
+    <bar-chart class="mt-6 pa-4" v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
+    <pie-chart class="chart mt-6 pa-4"></pie-chart>
+     <bar-chart class="mt-6 pa-4" v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
+    <bar-chart class="mt-6 pa-4" v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart>
+     <bar-chart class="mt-6 pa-4" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></bar-chart>
   </v-container>
 </template>
 

@@ -297,6 +297,7 @@ export default {
        this.dialog=false  
        this.resetFields()
        this.$store.dispatch('loadPatients',this.$store.state.auth.hospital.username) 
+       this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
      
     
         

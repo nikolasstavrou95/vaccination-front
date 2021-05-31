@@ -72,6 +72,20 @@
               >
                 <v-icon> mdi-send </v-icon>
               </v-btn>
+            
+              <v-tooltip bottom v-if="!item.transferable">
+             <template v-slot:activator="{ on, attrs }">
+                 <v-icon
+                 color="#e17b58"
+                 dark
+                 v-bind="attrs"
+                 v-on="on"
+                 >
+                 mdi-flag
+                </v-icon>
+              </template>
+              <span>This vaccination needs transfer!</span>
+           </v-tooltip>
             </template>
     
  
@@ -175,7 +189,7 @@
                   clearable
                    @change="$v.editedVaccination.date.$touch()"
                    :error-messages="dateErrors"
-                   type="date"
+                    type="date"
                     :disabled="editedVaccination.status ==='DONE'"
                  >
                     </v-text-field>
@@ -191,9 +205,9 @@
                   required
                   rounded
                   background-color="#d7eae5"
-                  :error-messages="brandErrors"
-                 @change="$v.editedVaccination['vaccine-brand'].$touch()"
-                 :disabled=true
+                  
+                
+                  :disabled=true
                 ></v-select>
               </v-col>
              <v-col
@@ -207,6 +221,7 @@
                   rounded
                   background-color="#d7eae5"
                   :disabled="editedVaccination.status ==='DONE'"
+                   @change="$v.editedVaccination.status.$touch()"
                  
                 
                 ></v-select>
@@ -218,14 +233,16 @@
                 <v-autocomplete
                 class="mx-4"
                 v-model="editedVaccination.symptoms"
-                  :items="['Headache', 'Nausea', 'Fatigue', 'Fever', 'Muscle Pain', 'Blood Clots', 'Chest Pain']"
+                  :items="['Headache', 'Nausea', 'Fatigue', 'Fever', 'Muscle Pain', 'Blood Clots', 'Chest Pain','Normal']"
                   label="Symptoms"
-                   
+                   multiple
+                   required
                    clearable
                    rounded
                   background-color="#d7eae5" 
-                  
+                  :error-messages="symptomsErrors"
                   v-if="editedVaccination.status ==='DONE'"
+                  @change="$v.editedVaccination.symptoms.$touch()"
                  
                 ></v-autocomplete>
               </v-col>
@@ -310,8 +327,13 @@ import vaccinationsService from "@/services/vaccinationsService.js";
    editedVaccination: {
      
       brand:{required},
-      date : { required}
+      date : { required},
+      symptoms:{required}
       
+    },
+    toTranferVaccination:{
+      next:{required}
+
     }},
     
     data() {
@@ -370,7 +392,15 @@ import vaccinationsService from "@/services/vaccinationsService.js";
     if (!this.$v.editedVaccination.brand.$dirty) return errors;
       
       !this.$v.editedVaccination.brand.required &&
-        errors.push("Vaccine's Brand is required");
+        errors.push("Brand is required");
+      return errors;
+    }, 
+    symptomsErrors() {
+    const errors = [];
+    if (!this.$v.editedVaccination.symptoms.$dirty) return errors;
+      
+      !this.$v.editedVaccination.symptoms.required &&
+        errors.push("Symptoms are required");
       return errors;
     }, 
     dateErrors() {
@@ -379,6 +409,14 @@ import vaccinationsService from "@/services/vaccinationsService.js";
       
       !this.$v.editedVaccination.date.required &&
         errors.push("Date is required");
+      return errors;
+    },
+    hospitalsErrors() {
+    const errors = [];
+    if (!this.$v.toTranferVaccination.next.$dirty) return errors;
+      
+      !this.$v.toTranferVaccination.next.required &&
+        errors.push("Hospital is required");
       return errors;
     }
    },
@@ -389,20 +427,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
          
          this.loading=false
       },
-      // getVaccination(){
-      //   var merged=[];
-      //   console.log(this.vaccinationsAll)
-      //  this.vaccinationsAll.forEach(element => {
-      //   merged.push({...element[0] ,...element[1],transid: element[2]}
-      //     )
-         
-      //  });
-        
-      //   console.log(this.vaccinationsAll)
-      //   console.log(merged)
-        
-      //   return merged;
-      // },
+      
       showTransVaccination(item){
         this.transferDialog = true;
         this.toTranferVaccination= item;
@@ -421,24 +446,32 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           next: this.toTranferVaccination.next
 
         }
-        try{
-           
-        this.loading = true;
-        await vaccinationsService.transferVaccination(this.$store.state.auth.hospital.username,this.toTranferVaccination.transid, data)
+         this.loading = true;
+        this.$v.$touch();
+          if (this.$v.$invalid) {
+            this.loading=false;}
+          else{
+
+           try{
+          
+         
+           this.loading = true;
+           await vaccinationsService.transferVaccination(this.$store.state.auth.hospital.username,this.toTranferVaccination.transid, data)
         
        
-        this.loading=false;
-         this.transferDialog = false;
+           this.loading=false;
+           this.transferDialog = false;
 
-        }catch(err){
-        this.color2="#e17b58";
-        this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
-        this.snackbar2 = true;
-        this.transferDialog = false;
-        this.loading=false
+           }catch(err){
+           this.color2="#e17b58";
+           this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
+           this.snackbar2 = true;
+           this.transferDialog = false;
+           this.loading=false
        
       }
-
+        }
+        
 
       },
       showEditVaccination(item){
@@ -483,7 +516,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
      async getHospitals(){
        
        try{
-       const response = await this.$store.dispatch('loadTransferableHospitals', {username: this.$store.state.auth.hospital.username, brand: this.toTranferVaccination['vaccine-brand']})
+       const response = await this.$store.dispatch('loadTransferableHospitals', {username: this.$store.state.auth.hospital.username, brand: this.toTranferVaccination.brand})
 
          if(response){
             throw new Error()}

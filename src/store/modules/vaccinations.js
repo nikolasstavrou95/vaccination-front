@@ -36,7 +36,7 @@ export const  mutations= {
        let merged =[];
        
       response.data.forEach(element => {
-       merged.push({...element[0] ,...element[1],transid: element[2]}
+       merged.push({...element[0] ,...element[1],transid: element[2],transferable: element[3]}
          )
         
       });
@@ -52,7 +52,7 @@ export const  mutations= {
        console.log(payload.username,payload.vaccination)
         let response = await vaccinationsService.addVaccination(payload.username, payload.vaccination)
     
-        console.log(response.data.data)
+        
         commit('ADD_VACCINATION', response.data.data)
         
      } catch(error){

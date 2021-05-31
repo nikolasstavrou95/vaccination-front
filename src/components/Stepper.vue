@@ -3,7 +3,7 @@
   <v-stepper v-model="e1">
     <v-stepper-header>
       <v-stepper-step
-        :complete="e1 > 1"
+       
         step="1"
         editable
       >
@@ -33,7 +33,7 @@
          height="200px"
         >
         <v-row justify="center">
-        <v-col cols="12" md="9" >
+        <v-col cols="12" md="6" >
          <v-autocomplete
         v-model="vaccination.id"
         :items="unvaccinatedPatients"
@@ -43,6 +43,8 @@
         hide-selected
         item-text="name"
         item-value="id"
+        no-data-text="Not found.Please add Patient First"
+        clearable
         label="Search Patient by name*"
         prepend-icon="mdi-account-search"
         @blur="$v.vaccination.id.$touch()"
@@ -53,6 +55,9 @@
       ></v-autocomplete>
         
         </v-col>
+         <v-col cols="12" md="3"  class="mx-4 mt-14" >
+             <NewPatient/>
+         </v-col>
         </v-row>
         </v-card> -->
         <patients/>
