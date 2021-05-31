@@ -17,7 +17,6 @@
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
-    "secure-ls": "^1.2.6",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
