@@ -5,7 +5,7 @@ export const state={
    
     vaccinations:[],
     vaccination:{},
-    patientVaccinesList:[]
+   
  
   }
 export const  mutations= {
@@ -25,10 +25,7 @@ export const  mutations= {
         });
        
       },
-      SET_VACCINES(state,vaccine)
-      {
-        state.patientVaccinesList = vaccine;
-       },
+      
   }
     
    export const actions={
@@ -86,24 +83,7 @@ export const  mutations= {
        return error;
      }
     },
-    async getVaccineList({commit},payload)
-    { 
-      try{
-      console.log(payload.username,payload.patientid)
-       let response = await vaccinationsService.getPatientVaccineList(payload.username,payload.patientid)
-       let list =[] 
-       response.data.forEach(element => {
-         element ? list.push(element) : []
-         
-       });
-      
-       commit('SET_VACCINES', list)
-       
-    } catch(error){
-      console.log("something went wrong here store",error)
-      return error;
-    }
-   },
+   
     
    
     
