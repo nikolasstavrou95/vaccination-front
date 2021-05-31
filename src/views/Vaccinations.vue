@@ -55,6 +55,7 @@
                 class="mr-2"
                 color="#03A9F4"
                 @click="showEditVaccination(item)"
+                :disabled="item.status ==='CANCELLED'"
 
               >
                 <v-icon> mdi-pencil </v-icon>
@@ -67,7 +68,7 @@
                 class="mr-2"
                 color="#e17b58"
                 @click="showTransVaccination(item)"
-                :disabled="item.status==='DONE'"
+                :disabled="item.status==='DONE' || item.status==='CANCELLED'"
               >
                 <v-icon> mdi-send </v-icon>
               </v-btn>
@@ -175,6 +176,7 @@
                    @change="$v.editedVaccination.date.$touch()"
                    :error-messages="dateErrors"
                    type="date"
+                    :disabled="editedVaccination.status ==='DONE'"
                  >
                     </v-text-field>
             </v-col>
@@ -183,7 +185,7 @@
                 cols="12" md="6" >
                   <v-select
                  class="mx-4"
-                 v-model="editedVaccination['vaccine-brand']"
+                 v-model="editedVaccination.brand"
                   :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER']"
                   label="Brand*"
                   required
@@ -191,6 +193,7 @@
                   background-color="#d7eae5"
                   :error-messages="brandErrors"
                  @change="$v.editedVaccination['vaccine-brand'].$touch()"
+                 :disabled=true
                 ></v-select>
               </v-col>
              <v-col
@@ -203,9 +206,28 @@
                   required
                   rounded
                   background-color="#d7eae5"
+                  :disabled="editedVaccination.status ==='DONE'"
                  
                 
                 ></v-select>
+             </v-col>
+                 <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-autocomplete
+                class="mx-4"
+                v-model="editedVaccination.symptoms"
+                  :items="['Headache', 'Nausea', 'Fatigue', 'Fever', 'Muscle Pain', 'Blood Clots', 'Chest Pain']"
+                  label="Symptoms"
+                   
+                   clearable
+                   rounded
+                  background-color="#d7eae5" 
+                  
+                  v-if="editedVaccination.status ==='DONE'"
+                 
+                ></v-autocomplete>
               </v-col>
 
             
@@ -287,7 +309,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
   validations: {
    editedVaccination: {
      
-      ['vaccine-brand']:{required},
+      brand:{required},
       date : { required}
       
     }},
@@ -301,13 +323,14 @@ import vaccinationsService from "@/services/vaccinationsService.js";
       
         headers: [
          
-          { text: 'Hospital', value: 'hospital-name',sortable: false },
+          
           { text: 'Name', value: 'name' },
           { text: 'Amka', value: 'AMKA',sortable: false },
 
           { text: 'Date', value: 'date' },
           { text: 'Status', value: 'status' },
-          { text: 'Brand', value: 'vaccine-brand' },
+          { text: 'Brand', value: 'brand' },
+          { text: 'Symptoms', value: 'symptoms',sortable: false },
           { text: "Actions", value: "actions", sortable: false }
          
         ],
@@ -344,9 +367,9 @@ import vaccinationsService from "@/services/vaccinationsService.js";
 
       brandErrors() {
     const errors = [];
-    if (!this.$v.editedVaccination['vaccine-brand'].$dirty) return errors;
+    if (!this.$v.editedVaccination.brand.$dirty) return errors;
       
-      !this.$v.editedVaccination['vaccine-brand'].required &&
+      !this.$v.editedVaccination.brand.required &&
         errors.push("Vaccine's Brand is required");
       return errors;
     }, 
@@ -426,9 +449,10 @@ import vaccinationsService from "@/services/vaccinationsService.js";
       async editVaccination(){
         var data = {
           date: this.editedVaccination.date,
-          brand: this.editedVaccination['vaccine-brand'],
+          brand: this.editedVaccination.brand,
           amka: this.editedVaccination.AMKA,
           status: this.editedVaccination.status,
+          
 
         }
         this.$v.$touch();

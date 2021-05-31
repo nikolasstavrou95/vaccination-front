@@ -268,9 +268,11 @@ export default {
        this.loading = false
        this.dialog=false  
        this.resetFields()
-       this.$store.dispatch('loadVaccinations',this.hospital)
+       
         if(response){
         throw new Error()}
+        this.$store.dispatch('loadVaccinations',this.hospital)
+        
         this.snackbar=true
       this.text="Vaccination Added Successfully"
       this.color="#9ce690"
