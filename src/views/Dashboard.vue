@@ -99,7 +99,7 @@
                 <v-col cols="12" md="9">
                  <v-data-table
                  :headers="headers"
-                 :items="vaccinesList"
+                 :items="list"
      
       
                  hide-default-footer
@@ -248,7 +248,7 @@ mixins: [validationMixin],
      
       btnLabel:"ADD MORE",
       btnLabel2:"SEE ALL",
-      link:"/user/vaccines",
+     
      
 
 
@@ -429,7 +429,7 @@ mixins: [validationMixin],
     },
      countAvailableVaccinesByBrand(){
         
-       this.vaccinesList=[];
+       this.list=[];
         let temp = this.availableVaccinesByBrand.reduce((r, a) => {
   
             r[a["brand"]] = [...r[a["brand"]] || [], a];
@@ -438,7 +438,7 @@ mixins: [validationMixin],
            let objectArray = Object.entries(temp);
            objectArray.forEach(([key, value]) => {
             if(key!='undefined')  
-             this.vaccinesList.push({label: key, totals:value.length})
+             this.list.push({label: key, totals:value.length})
              
          });
 

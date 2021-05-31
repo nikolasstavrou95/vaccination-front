@@ -5,8 +5,9 @@
       <v-stepper-step
         :complete="e1 > 1"
         step="1"
+        editable
       >
-        Select Patient
+        Add Patinets
       </v-stepper-step>
 
       <v-divider></v-divider>
@@ -14,8 +15,9 @@
       <v-stepper-step
         
         step="2"
+        editable
       >
-        Select Date and Vaccine Brand
+       Create / update appointmet
       </v-stepper-step>
 
       <v-divider></v-divider>
@@ -25,7 +27,7 @@
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <v-card
+        <!-- <v-card
           class="mb-12"
           color="#d7eae5"
          height="200px"
@@ -52,7 +54,8 @@
         
         </v-col>
         </v-row>
-        </v-card>
+        </v-card> -->
+        <patients/>
 
         <v-btn
         class="mr-2"
@@ -68,7 +71,7 @@
       </v-stepper-content>
 
       <v-stepper-content step="2">
-        <v-card
+        <!-- <v-card
            class="mb-12"
           color="#d7eae5"
          height="200px"
@@ -109,8 +112,9 @@
             </v-row>
         
         
-        
-        </v-card>
+         
+        </v-card>-->
+        <vaccinations/>
 
         <v-btn
          class="mr-2"
@@ -139,8 +143,11 @@
 import { mapState } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import Patients from '../views/Patients.vue';
+import Vaccinations from '../views/Vaccinations.vue';
 
 export default {
+  components: { Patients, Vaccinations },
  mixins: [validationMixin],
   validations: {
    vaccination: {
@@ -282,23 +289,13 @@ export default {
          if (this.vaccination.id!=null) {
         this.e1=2
       }
-      }
-     
+      
+      },
+      
      
        
    }
-}
-
-  
-   
-
-
+}  
  
   
-  
 </script>
-
-<style  scoped>
-
-</style>
-
