@@ -185,7 +185,7 @@
                 class="mx-4"
                 v-model="editedVaccination.date"
                   label="Date*"
-                  required
+                  
                   clearable
                    @change="$v.editedVaccination.date.$touch()"
                    :error-messages="dateErrors"
@@ -202,10 +202,10 @@
                  v-model="editedVaccination.brand"
                   :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER']"
                   label="Brand*"
-                  required
+                  
                   rounded
                   background-color="#d7eae5"
-                  
+                 
                 
                   :disabled=true
                 ></v-select>
@@ -217,11 +217,11 @@
                  v-model="editedVaccination.status"
                   :items="['DONE','PENDING','CANCELLED']"
                   label="Status*"
-                  required
+                  
                   rounded
                   background-color="#d7eae5"
                   :disabled="editedVaccination.status ==='DONE'"
-                   @change="$v.editedVaccination.status.$touch()"
+                 
                  
                 
                 ></v-select>
@@ -236,13 +236,15 @@
                   :items="['Headache', 'Nausea', 'Fatigue', 'Fever', 'Muscle Pain', 'Blood Clots', 'Chest Pain','Normal']"
                   label="Symptoms"
                    multiple
-                   required
+                   
                    clearable
                    rounded
                   background-color="#d7eae5" 
-                  :error-messages="symptomsErrors"
-                  v-if="editedVaccination.status ==='DONE'"
-                  @change="$v.editedVaccination.symptoms.$touch()"
+                  
+                   v-if="editedVaccination.status==='DONE'"
+                   
+
+                 
                  
                 ></v-autocomplete>
               </v-col>
@@ -316,25 +318,24 @@
 
 import NewVaccination from '@/components/NewVaccination.vue';
 import {mapState} from 'vuex';
-import { validationMixin } from "vuelidate";
+//import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import vaccinationsService from "@/services/vaccinationsService.js";
 
   export default {
     components:{NewVaccination},
-    mixins: [validationMixin],
-  validations: {
-   editedVaccination: {
-     
-      brand:{required},
-      date : { required},
-      symptoms:{required}
-      
-    },
-    toTranferVaccination:{
-      next:{required}
+    validations:{
+      editedVaccination:{
+            
+            date : {required},
+            
+          },
+      toTranferVaccination:{
+          next:{required}
 
-    }},
+          }
+    },
+  
     
     data() {
       return {
@@ -365,9 +366,12 @@ import vaccinationsService from "@/services/vaccinationsService.js";
         message: "",
         color2:"",
 
+
       
       }
+
     },
+    
     mounted () {
       this.initVaccinations();
      
@@ -488,10 +492,14 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           
 
         }
-        this.$v.$touch();
-          if (this.$v.$invalid) {
-          this.loading = false;}
+       
+         this.loading = true;
+        
+          if (!(this.editedVaccination.date && this.editedVaccination.brand && this.editedVaccination.status)) {
+            this.loading=false;
+            console.log("lllll")}
           else{
+         
              try{
           
       
@@ -509,9 +517,9 @@ import vaccinationsService from "@/services/vaccinationsService.js";
            this.snackbar2 = true;
            this.loading= false;
        
+         }  
       }
-
-      }
+      
    },
      async getHospitals(){
        
