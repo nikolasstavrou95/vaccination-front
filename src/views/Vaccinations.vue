@@ -352,7 +352,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           { text: 'Date', value: 'date' },
           { text: 'Status', value: 'status' },
           { text: 'Brand', value: 'brand' },
-          { text: 'Symptoms', value: 'symptoms',sortable: false },
+          
           { text: "Actions", value: "actions", sortable: false }
          
         ],
