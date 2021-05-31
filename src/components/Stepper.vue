@@ -7,7 +7,7 @@
         step="1"
         editable
       >
-        Add Patinets
+        Add Patiets
       </v-stepper-step>
 
       <v-divider></v-divider>
@@ -17,7 +17,7 @@
         step="2"
         editable
       >
-       Create / update appointmet
+       Create / update appointment
       </v-stepper-step>
 
       <v-divider></v-divider>
