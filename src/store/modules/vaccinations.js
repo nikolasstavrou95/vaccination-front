@@ -34,8 +34,17 @@ export const  mutations= {
    export const actions={
       async loadVaccinations({commit},username)
       { try{
-       let response=await vaccinationsService.getAllVaccinations(username)
-          commit('SET_VACCINATIONS', response.data)
+       let response = await vaccinationsService.getAllVaccinations(username)
+
+       let merged =[];
+       
+      response.data.forEach(element => {
+       merged.push({...element[0] ,...element[1],transid: element[2]}
+         )
+        
+      });
+      console.log(merged)
+      commit('SET_VACCINATIONS', merged)
         }catch(error){
           console.log("Couldn't load vaccinations")
         }
@@ -46,6 +55,7 @@ export const  mutations= {
        console.log(payload.username,payload.vaccination)
         let response = await vaccinationsService.addVaccination(payload.username, payload.vaccination)
     
+        console.log(response.data.data)
         commit('ADD_VACCINATION', response.data.data)
         
      } catch(error){
