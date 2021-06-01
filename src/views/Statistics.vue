@@ -1,10 +1,11 @@
 <template>
   <v-container fluid class="statistics">
     <bar-chart class="mt-6 pa-4" v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
-    <pie-chart class="chart mt-12 pa-12" :chart-data="pieChartData" :chartColors="colors" :options="pieOptions"  label="Vacinations" :labels="labels" ></pie-chart>
+    <pie-chart class="chart mt-12 pa-12" v-if="pieChartData.length>0" :chart-data="pieChartData" :chartColors="colors" :options="pie.options" label="Vacinations" :labels="labels"></pie-chart>
      <bar-chart class="mt-6 pa-4" v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
     <bar-chart class="mt-6 pa-4" v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart>
      <line-chart class="mt-6 pa-4" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></line-chart>
+      <line-chart class="mt-6 pa-4" v-if="monthsChartData.length>0" :chart-data="monthsChartData" :chartColors="colors" :options="options" label="Vaccinations per Month"></line-chart>
   </v-container>
 </template>
 
@@ -56,16 +57,18 @@ export default {
       countriesChartData:[],
       agesChartData:[],
       pieChartData:[],
+      monthsChartData:[],
       labels:["COMPLETED","PENDING","CANCELLED"],
     
-      pieOptions: {
+    pie :{
+      options: {
         legend: {
           display: true,
         },
         responsive: true,
         maintainAspectRatio: false,
       },
-    
+    },
 
       options: {
         scales: {
@@ -101,6 +104,7 @@ export default {
      console.log(response.data)
      var data=[];
      var metadata=[];
+     var months=[];
      var merged = [].concat.apply([], response.data);
      console.log(merged)
      //filter by status 
@@ -128,13 +132,30 @@ export default {
        data.push(arr[0]);
        metadata.push(arr[1]);
      })
+     let date = new Date("2020, 05, 21");
+    
+     console.log(date.toLocaleString('en-us',{month:'long'}));
+     metadata.forEach((arr)=>{
+       date = new Date(arr.date);
+       months.push({month: date.toLocaleString('en-us', { month: 'long' })})
+        
+     })
+     var monthsArray = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+       months.sort(function(a, b){
+        return monthsArray.indexOf(a.month)
+           - monthsArray.indexOf(b.month);
+  });
+      console.log(data,metadata,months);
 
-      console.log(data,metadata)
-      this.pieChartData = [done.length,pending.length,cancelled.length]
+     
+     
+     this.pieChartData = [done.length,pending.length,cancelled.length];
      this.createTables(metadata,this.hospitalsChartData,"hospital-name")
      this.createTables(metadata,this.citiesChartData,"hospital-city")
-    this.createTables(metadata,this.countriesChartData,"hospital-country");
-   this.createTables(data,this.agesChartData,"age");
+     this.createTables(metadata,this.countriesChartData,"hospital-country");
+     this.createTables(data,this.agesChartData,"age");
+     this.createTables(months,this.monthsChartData,"month");
+   
     },
     createTables(data,chart,groupby){
       let collection = data.reduce((r, a) => {
@@ -154,7 +175,7 @@ export default {
     }
 
   },
-
+  
   
 
 
@@ -165,8 +186,3 @@ export default {
   }
 };
 </script>
-<style  scoped>
-.side_wave {
-  display: none !important;
-}
-</style>
