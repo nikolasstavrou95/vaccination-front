@@ -7,7 +7,7 @@
         step="1"
         editable
       >
-        Add Patiets
+        Add Patients
       </v-stepper-step>
 
       <v-divider></v-divider>
@@ -62,15 +62,7 @@
         </v-card> -->
         <patients/>
 
-        <v-btn
-        class="mr-2"
-         rounded
-        outlined
-          color="#61ba9f"
-          @click="checkComplete"
-        >
-          Continue
-        </v-btn>
+       
 
        
       </v-stepper-content>
@@ -121,20 +113,7 @@
         </v-card>-->
         <vaccinations/>
 
-        <v-btn
-         class="mr-2"
-         rounded
-        outlined
-          color="#61ba9f"
-          @click="saveVaccination"
-        >
-         Save
-        </v-btn>
-
-        <v-btn outlined rounded
-          color="#e17b58" @click="e1 = 1">
-          Cancel
-        </v-btn>
+        
       </v-stepper-content>
 
      
