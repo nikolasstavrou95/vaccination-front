@@ -1,19 +1,20 @@
 <template>
   <v-container fluid class="statistics">
     <bar-chart class="mt-6 pa-4" v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
-    <pie-chart class="chart mt-6 pa-4"></pie-chart>
+    <pie-chart class="chart mt-12 pa-12" :chart-data="pieChartData" :chartColors="colors" :options="pieOptions"  label="Vacinations" :labels="labels" ></pie-chart>
      <bar-chart class="mt-6 pa-4" v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
     <bar-chart class="mt-6 pa-4" v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart>
-     <bar-chart class="mt-6 pa-4" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></bar-chart>
+     <line-chart class="mt-6 pa-4" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></line-chart>
   </v-container>
 </template>
 
 <script>
 import PieChart from "../components/charts/PieChart.vue";
 import BarChart from "../components/charts/BarChart.vue";
+import LineChart from "../components/charts/LineChart.vue";
 import StatisticsDataService from "@/services/statistics.service.js";
 export default {
-  components: { PieChart, BarChart },
+  components: { PieChart, BarChart,LineChart },
   name: "Statistics",
 
   data() {
@@ -54,8 +55,17 @@ export default {
       citiesChartData:[],
       countriesChartData:[],
       agesChartData:[],
+      pieChartData:[],
+      labels:["COMPLETED","PENDING","CANCELLED"],
     
-      
+      pieOptions: {
+        legend: {
+          display: true,
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    
 
       options: {
         scales: {
@@ -94,18 +104,33 @@ export default {
      var merged = [].concat.apply([], response.data);
      console.log(merged)
      //filter by status 
-     var filtered =merged.filter((arr)=>
-       arr["1"]["vaccination-status"]==="DONE" ||
+     var done =merged.filter((arr)=>
+      
        arr["1"]["status"]=="DONE"
 
      )
-     console.log(filtered)
+     var cancelled = merged.filter((arr)=>
+      
+       arr["1"]["status"]=="CANCELLED"
+
+     )
+     var pending = merged.filter((arr)=>
+      
+       arr["1"]["status"]=="PENDING"
+
+     )
+     console.log("Done",done);
+     console.log("Cancelled",cancelled);
+     console.log("Pending",pending)
+     
      //categorize by object
-     filtered.forEach((arr)=>{
+     done.forEach((arr)=>{
        data.push(arr[0]);
        metadata.push(arr[1]);
      })
+
       console.log(data,metadata)
+      this.pieChartData = [done.length,pending.length,cancelled.length]
      this.createTables(metadata,this.hospitalsChartData,"hospital-name")
      this.createTables(metadata,this.citiesChartData,"hospital-city")
     this.createTables(metadata,this.countriesChartData,"hospital-country");
