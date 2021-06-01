@@ -52,11 +52,11 @@
       </v-container>
       </v-col>
       <v-col cols="12" lg="4">
-        <info-card :title="vaccinationCard.title" :img="vaccinationCard.image" :btnLabel="vaccinationCard.btnLabel" :link="vaccinationCard.link" :number="vaccinationCard.number"></info-card>
+        <info-card :title="vaccinationCard.title" :img="vaccinationCard.image" :btnLabel="vaccinationCard.btnLabel" :link="vaccinationCard.link" :number="vaccinations"></info-card>
         
       </v-col>
       <v-col cols="12" lg="4">
-        <info-card :title="pendingCard.title" :img="pendingCard.image" :btnLabel="pendingCard.btnLabel" :link="pendingCard.link" :number="pendingCard.number"></info-card>
+        <info-card :title="pendingCard.title" :img="pendingCard.image" :btnLabel="pendingCard.btnLabel" :link="pendingCard.link" :number="needTransfer"></info-card>
       </v-col>
       <v-col cols="12" lg="8">
       
@@ -255,19 +255,19 @@ mixins: [validationMixin],
 
     },
     vaccinationCard:{
-      title:"Completed Vaccinations",
+      title:"Cancelled Vaccinations",
       image:"https://img.icons8.com/color/98/000000/checked--v4.png",
-      number:"300",
-      btnLabel:"SEE ALL",
-      link:"/user/vaccinations"
+      number:"",
+    
+     
     },
     pendingCard:{
-      title:"Pending Vaccinations",
+      title:"Transferable Vaccinations",
       image:"https://img.icons8.com/ios/100/000000/watch.png",
-      number:"300",
-      btnLabel:"SEE ALL",
+      
+      
 
-      link:"/user/vaccinations"
+     
     },
     vaccinesList:[],
     snackbar2: false,
@@ -292,6 +292,12 @@ mixins: [validationMixin],
     },
     availableVaccinesByBrand(){
       return this.$store.state.hospital.vaccines;
+    },
+    vaccinations(){
+      return this.$store.state.vaccinations.vaccinationsCancelled
+    },
+    needTransfer(){
+      return this.$store.state.vaccinations.vaccinationsNeedTransfer
     },
     numberErrors() {
       const errors = [];
@@ -441,20 +447,19 @@ mixins: [validationMixin],
             if(key!='undefined')  
              this.list.push({label: key, totals:value.length})
              
-         });
-
-        
+         });   
        
-    }
     },
-
-
     
+   
+  },
   
    mounted() {
     this.getHospital();
     this.getAvailableVaccines();
     this.getAvailableVaccinesByBrand();
+    this.$store.dispatch('loadVaccinations', this.$store.state.auth.hospital.username)
+    
     console.log(this.availableVaccines)
     console.log(this.availableVaccinesByBrand);
   }
