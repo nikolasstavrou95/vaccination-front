@@ -134,11 +134,7 @@ export default {
         icon: "mdi-clipboard-edit-outline",
         to: "/user/vaccinations",
       },
-      {
-        title: "Vaccines",
-        icon: "mdi-needle",
-        to: "/user/vaccines",
-      },
+     
       {
         title: "Statistics",
         icon: "mdi-chart-areaspline",
