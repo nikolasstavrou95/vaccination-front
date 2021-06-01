@@ -296,8 +296,8 @@ export default {
         { text: "Sex", value: "sex" },
         { text: "Age", value: "age" },
         { text: "Address", value: "address", sortable: false },
-        { text: "Status", value: "status" },
-        { text: "Symptoms", value: "symptoms", sortable: false },
+        { text: "Status", value: "status", sortable:true },
+        { text: "Symptoms", value: "symptoms", sortable: false},
         
         { text: "Actions", value: "actions", sortable: false },
       ],
