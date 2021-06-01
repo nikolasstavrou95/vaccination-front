@@ -124,21 +124,21 @@
 
   <script>
 
-import { mapState } from "vuex";
-import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
+//import { mapState } from "vuex";
+//import { validationMixin } from "vuelidate";
+//import { required } from "vuelidate/lib/validators";
 import Patients from '../views/Patients.vue';
 import Vaccinations from '../views/Vaccinations.vue';
 
 export default {
   components: { Patients, Vaccinations },
- mixins: [validationMixin],
-  validations: {
-   vaccination: {
-      id: { required},
-     brand:{required},
-      date : { required}
-    }},
+//  mixins: [validationMixin],
+//   validations: {
+//    vaccination: {
+//       id: { required},
+//      brand:{required},
+//       date : { required}
+//     }},
   data() {
     return {
       e1: 1,
@@ -148,137 +148,137 @@ export default {
      search: null,
     timeout: 2000,
     loading:false,
-    vaccination: {
+    // vaccination: {
       
      
-    },
+    // },
      
     }
   },
   
-   mounted() {
-     this.$store.dispatch(
-        "loadHospital",
-        this.$store.state.auth.hospital.username
-      ),
-      this.$store.dispatch("loadPatients", this.$store.state.auth.hospital.username)
-      this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
-  },
-   computed:{
+//    mounted() {
+//      this.$store.dispatch(
+//         "loadHospital",
+//         this.$store.state.auth.hospital.username
+//       ),
+//       this.$store.dispatch("loadPatients", this.$store.state.auth.hospital.username)
+//       this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
+//   },
+//    computed:{
    
-     ...mapState({ hospital: (state) => state.auth.hospital.username, 
-                  unvaccinatedPatients:(state) => state.patients.unvaccinated,
-                   vaccineList: (state)=>state.vaccinations.patientVaccinesList
-                  }),
+//      ...mapState({ hospital: (state) => state.auth.hospital.username, 
+//                   unvaccinatedPatients:(state) => state.patients.unvaccinated,
+//                    vaccineList: (state)=>state.vaccinations.patientVaccinesList
+//                   }),
     
   
     
      
    
-    brandErrors() {
-    const errors = [];
-    if (!this.$v.vaccination.brand.$dirty) return errors;
+//     brandErrors() {
+//     const errors = [];
+//     if (!this.$v.vaccination.brand.$dirty) return errors;
       
-      !this.$v.vaccination.brand.required &&
-        errors.push("Vaccine's Brand is required");
-      return errors;
-    }, 
-    dateErrors() {
-    const errors = [];
-    if (!this.$v.vaccination.date.$dirty) return errors;
+//       !this.$v.vaccination.brand.required &&
+//         errors.push("Vaccine's Brand is required");
+//       return errors;
+//     }, 
+//     dateErrors() {
+//     const errors = [];
+//     if (!this.$v.vaccination.date.$dirty) return errors;
       
-      !this.$v.vaccination.date.required &&
-        errors.push("Date is required");
-      return errors;
-    },
-    idErrors() {
-    const errors = [];
-    if (!this.$v.vaccination.id.$dirty) return errors;
+//       !this.$v.vaccination.date.required &&
+//         errors.push("Date is required");
+//       return errors;
+//     },
+//     idErrors() {
+//     const errors = [];
+//     if (!this.$v.vaccination.id.$dirty) return errors;
       
-      !this.$v.vaccination.id.required &&
-        errors.push("Please select a patient");
-      return errors;
-    },
+//       !this.$v.vaccination.id.required &&
+//         errors.push("Please select a patient");
+//       return errors;
+//     },
    
                            
-     },
+//      },
   
-   methods: {
+//    methods: {
    
 
-   async saveVaccination() {
+//    async saveVaccination() {
  
-  var data = {
-        id: this.vaccination.id,
-        hosp:this.hospital,
+//   var data = {
+//         id: this.vaccination.id,
+//         hosp:this.hospital,
       
-        date: this.vaccination.date,
-        brand: this.vaccination.brand
- }
+//         date: this.vaccination.date,
+//         brand: this.vaccination.brand
+//  }
  
-    this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.errorMessage = "All the fields are required";
-      }else { 
-    try{
-      this.loading = true
+//     this.$v.$touch();
+//       if (this.$v.$invalid) {
+//         this.errorMessage = "All the fields are required";
+//       }else { 
+//     try{
+//       this.loading = true
     
-    let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
-       this.loading = false
-       this.e1 = 1
-       this.resetFields()
-       this.$store.dispatch('loadVaccinations',this.hospital)
-        if(response){
-        throw new Error()}
-        this.snackbar=true
-      this.text="Vaccination Added Successfully"
-      this.color="#9ce690"
-    }
+//     let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
+//        this.loading = false
+//        this.e1 = 1
+//        this.resetFields()
+//        this.$store.dispatch('loadVaccinations',this.hospital)
+//         if(response){
+//         throw new Error()}
+//         this.snackbar=true
+//       this.text="Vaccination Added Successfully"
+//       this.color="#9ce690"
+//     }
       
-       catch(error){
-       this.snackbar=true
-       this.color="#e17b58"
-       this.text="Couldn't add vaccination. Please check your internet connection"
-        console.log("something went wrong here",error)
-        }
-      }
-   },
-      resetFields() {
-      //this.$refs.form.reset()
+//        catch(error){
+//        this.snackbar=true
+//        this.color="#e17b58"
+//        this.text="Couldn't add vaccination. Please check your internet connection"
+//         console.log("something went wrong here",error)
+//         }
+//       }
+//    },
+//       resetFields() {
+//       //this.$refs.form.reset()
       
        
-       this.vaccination.id="",
-       this.vaccination.hosp="",
-       this.vaccination.brand=""
-       this.vaccination.date=""
-      },
+//        this.vaccination.id="",
+//        this.vaccination.hosp="",
+//        this.vaccination.brand=""
+//        this.vaccination.date=""
+//       },
 
-      async getVaccineList(){
-        try{
+//       async getVaccineList(){
+//         try{
         
-         let response= await this.$store.dispatch('getVaccineList',{username:this.hospital,patientid: this.vaccination.id})
+//          let response= await this.$store.dispatch('getVaccineList',{username:this.hospital,patientid: this.vaccination.id})
 
-         if(response){
-        throw new Error()}
-        return this.$store.state.vaccinations.patientVaccinesList
+//          if(response){
+//         throw new Error()}
+//         return this.$store.state.vaccinations.patientVaccinesList
         
-      }catch(err){
-        this.snackbar=true
-       this.color="#e17b58"
-       this.text="Couldn't load vaccines for current patient. Please check your internet connection"
-        console.log("something went wrong here",err)
-        }
-      },
-      checkComplete(){
-         if (this.vaccination.id!=null) {
-        this.e1=2
-      }
+//       }catch(err){
+//         this.snackbar=true
+//        this.color="#e17b58"
+//        this.text="Couldn't load vaccines for current patient. Please check your internet connection"
+//         console.log("something went wrong here",err)
+//         }
+//       },
+//       checkComplete(){
+//          if (this.vaccination.id!=null) {
+//         this.e1=2
+//       }
       
-      },
+//       },
       
      
        
-   }
+ //  }
 }  
  
   
