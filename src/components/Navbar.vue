@@ -26,9 +26,25 @@
          <v-list-item>
           <v-list-item-content class="justify-center">
             <v-container>
+               
               <v-row justify="center">
               <h5>{{ currentUser.username }} </h5>
+             
               </v-row>
+              </v-container>
+            </v-list-item-content>
+         </v-list-item>
+         <v-list-item>
+          <v-list-item-content class="justify-center">
+            <v-container>
+              <v-row justify="center">
+                 <v-list-item-title class="ml-15">
+                 Transfer Status
+                  </v-list-item-title>
+              <Available/>
+             
+              </v-row>
+               
               </v-container>
             </v-list-item-content>
          </v-list-item>
@@ -119,7 +135,9 @@
   </header>
 </template>
 <script>
+import Available from '@/components/Available.vue';
 export default {
+  components:{Available},
   data: () => ({
     name: "Navbar",
     drawer: null,
@@ -140,8 +158,7 @@ export default {
         icon: "mdi-chart-areaspline",
         to: "/user/statistics",
       },
-       { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" },
-      { title: "Help", icon: "mdi-help-box", to: "/user/help" }
+       { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" }    
       
     ],
   }),

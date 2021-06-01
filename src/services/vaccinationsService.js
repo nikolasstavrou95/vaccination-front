@@ -21,9 +21,11 @@ export default {
     getPatientVaccineList(username,patientID){
         const url = API_URL + `${username}/vaccine/findBrands/${patientID}`;
         return axios.get(url, { headers: authHeader() });
-      }
+      },
 
-     
+      makeAvailable(username){
+        return axios.post(API_URL + `${username}/makeMeAvailable`,{headers: authHeader()})
+    }
    
 
 

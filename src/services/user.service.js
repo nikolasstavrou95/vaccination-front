@@ -30,7 +30,7 @@ class HospitalDataService {
     getTransferableHospitals(username,brand){
         return axios.get(API_URL + `${username}/getTransferableHospitals/${brand}`,{headers: authHeader()})
     }
-
+   
 
 
 }

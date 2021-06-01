@@ -65,6 +65,7 @@
             </template>
           </v-data-table>
         </v-card>
+      
       </v-col>
     </v-row>
     <v-dialog v-model="editDialog" persistent max-width="800px">

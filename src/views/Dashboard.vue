@@ -65,6 +65,7 @@
    
     <v-row>
      <Stepper/>
+     
     </v-row>
    
     <v-snackbar

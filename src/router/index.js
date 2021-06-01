@@ -76,8 +76,7 @@ export const router = new VueRouter({
           component: () => import(/* webpackChunkName: "about" */ '../views/HospitalProfile.vue')
 
         },
-
-
+        
 
       ]
 

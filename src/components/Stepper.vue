@@ -1,13 +1,13 @@
 <template>
 <v-container>
-  <v-stepper v-model="e1">
+  <v-stepper   v-model="e1">
     <v-stepper-header>
       <v-stepper-step
        
         step="1"
-        editable
+        
       >
-        Add Patients
+        Add Patient
       </v-stepper-step>
 
       <v-divider></v-divider>
@@ -15,9 +15,9 @@
       <v-stepper-step
         
         step="2"
-        editable
+        
       >
-       Create / update appointment
+       Create / Update Appointment
       </v-stepper-step>
 
       <v-divider></v-divider>
@@ -27,93 +27,37 @@
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <!-- <v-card
-          class="mb-12"
-          color="#d7eae5"
-         height="200px"
-        >
-        <v-row justify="center">
-        <v-col cols="12" md="6" >
-         <v-autocomplete
-        v-model="vaccination.id"
-        :items="unvaccinatedPatients"
-        class="mx-4 mt-8"
-        :search="search"
-        color="primary"
-        hide-selected
-        item-text="name"
-        item-value="id"
-        no-data-text="Not found.Please add Patient First"
-        clearable
-        label="Search Patient by name*"
-        prepend-icon="mdi-account-search"
-        @blur="$v.vaccination.id.$touch()"
-        :error-messages="idErrors"
-         background-color="#d7eae5"
-        
-         
-      ></v-autocomplete>
-        
-        </v-col>
-         <v-col cols="12" md="3"  class="mx-4 mt-14" >
-             <NewPatient/>
-         </v-col>
-        </v-row>
-        </v-card> -->
+      
         <patients/>
 
-       
+        <v-btn
+        class="mr-2"
+         rounded
+        outlined
+          color="#61ba9f"
+          @click="e1=2"
+        >
+          Continue
+        </v-btn>
 
        
       </v-stepper-content>
 
       <v-stepper-content step="2">
-        <!-- <v-card
-           class="mb-12"
-          color="#d7eae5"
-         height="200px"
-        >
-        <v-row justify="center">
-             <v-col cols="12" md="4"  >
-     
-                <v-text-field
-               class="mx-4 mt-8"
-                v-model="vaccination.date"
-                  label="Date*"
-                  required
-                  clearable
-                  
-                   @change="$v.vaccination.date.$touch()"
-                   :error-messages="dateErrors"
-                  type="date">
-                    </v-text-field>
-              </v-col>
-               <v-col
-                cols="12" md="4" >
-                  <v-select
-                class="mx-4 mt-8"
-                 v-model="vaccination.brand"
-                  :items="vaccineList"
-                  label="Brand*"
-                  required
-                  rounded
-                 :error-messages="brandErrors"
-                 @change="$v.vaccination.brand.$touch()"
-                 @click="getVaccineList"
-                ></v-select>
-              </v-col>
-           
-             
-              
-              
-            </v-row>
-        
-        
-         
-        </v-card>-->
+      
         <vaccinations/>
 
-        
+        <v-btn
+         class="mr-2"
+         rounded
+        outlined
+          color="#61ba9f"
+          @click="e1=1"
+        >
+         Back
+        </v-btn>
+
+       
       </v-stepper-content>
 
      
@@ -124,14 +68,19 @@
 
   <script>
 
+<<<<<<< HEAD
 //import { mapState } from "vuex";
 //import { validationMixin } from "vuelidate";
 //import { required } from "vuelidate/lib/validators";
+=======
+
+>>>>>>> 0a8335a4f19df0b302c458b3ff6bd1c735e6593a
 import Patients from '../views/Patients.vue';
 import Vaccinations from '../views/Vaccinations.vue';
 
 export default {
   components: { Patients, Vaccinations },
+<<<<<<< HEAD
 //  mixins: [validationMixin],
 //   validations: {
 //    vaccination: {
@@ -152,10 +101,18 @@ export default {
       
      
     // },
+=======
+
+  data() {
+    return {
+      e1: 1
+ 
+>>>>>>> 0a8335a4f19df0b302c458b3ff6bd1c735e6593a
      
     }
   },
   
+<<<<<<< HEAD
 //    mounted() {
 //      this.$store.dispatch(
 //         "loadHospital",
@@ -280,6 +237,13 @@ export default {
        
  //  }
 }  
+=======
+  
+     
+       
+   }
+
+>>>>>>> 0a8335a4f19df0b302c458b3ff6bd1c735e6593a
  
   
 </script>
