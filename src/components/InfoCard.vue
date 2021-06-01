@@ -21,16 +21,7 @@
             </div>
           </v-card-text>
           <v-footer>
-            <v-btn
-            color="primary"
-            small
-            outlined
-            rounded
-          
-            ><router-link v-bind:to="link"
-                >{{btnLabel}}</router-link
-              ></v-btn
-            >
+           
           </v-footer>
         </v-card>
        
@@ -41,7 +32,7 @@
 
 export default {
   
-  props: ["title", "img","link","btnLabel","number"]
+  props: ["title", "img","number"]
   
 
 
