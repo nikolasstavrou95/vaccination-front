@@ -25,17 +25,23 @@ import { mapState } from "vuex";
   this.initStatus()
   },
     computed:{ 
-      ...mapState({ status: (state) => state.auth.hospital.iAmAvailable})
+      ...mapState({ status: (state) => state.hospital.hospitalData.iAmAvailable})
     },
     methods:{
-      async  changeStatus(){
+      async changeStatus(){
                    
-     await vaccinationsService.makeAvailable(this.$store.state.auth.hospital.username)
-                    
-        },
-         initStatus(){
-     if (this.$store.state.auth.hospital.iAmAvailable==true){this.switch1=true} }
+         try{
+           await vaccinationsService.makeAvailable(this.$store.state.auth.hospital.username)
+         }catch(error){
+           console.log(error)
+         }
+    },
+    initStatus(){
+    
+        this.switch1=!status
+    
     }
 
+  }
   }
 </script>
