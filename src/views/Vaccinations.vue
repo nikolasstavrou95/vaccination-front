@@ -320,7 +320,7 @@ import NewVaccination from '@/components/NewVaccination.vue';
 import {mapState} from 'vuex';
 //import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
-import vaccinationsService from "@/services/vaccinationsService.js";
+
 
   export default {
     components:{NewVaccination},
@@ -351,7 +351,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           { text: 'Amka', value: 'AMKA',sortable: false },
 
           { text: 'Date', value: 'date' },
-          { text: 'Status', value: 'status' },
+          { text: 'Status', value: 'status'},
           { text: 'Brand', value: 'brand' },
           
           { text: "Actions", value: "actions", sortable: false }
@@ -362,7 +362,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
         editDialog:false,
         editedVaccination: {},
         snackbar2: false,
-        timeout2: 2000,
+        timeout2: 5000,
         message: "",
         color2:"",
 
@@ -426,10 +426,21 @@ import vaccinationsService from "@/services/vaccinationsService.js";
    },
    methods: {
       async initVaccinations (){
+        try{
         this.loading=true
-         await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
-         
+         let response = await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
+         if(response) throw new Error(response)
+         console.log(response);
+        
          this.loading=false
+        } catch(error){
+           this.color2="#e17b58";
+           this.message=`Couldn't load vaccination. ${error}`
+           this.snackbar2 = true;
+           
+           this.loading=false
+       
+        }
       },
       
       showTransVaccination(item){
@@ -444,15 +455,15 @@ import vaccinationsService from "@/services/vaccinationsService.js";
        
          var data = {
           date: this.toTranferVaccination.date,
-          brand: this.toTranferVaccination['vaccine-brand'],
+          brand: this.toTranferVaccination.brand,
           amka: this.toTranferVaccination.AMKA,
           status: this.toTranferVaccination.status,
           next: this.toTranferVaccination.next
 
         }
          this.loading = true;
-        this.$v.$touch();
-          if (this.$v.$invalid) {
+       
+          if (!this.toTranferVaccination.next) {
             this.loading=false;}
           else{
 
@@ -460,15 +471,17 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           
          
            this.loading = true;
-           await vaccinationsService.transferVaccination(this.$store.state.auth.hospital.username,this.toTranferVaccination.transid, data)
-        
-       
+           let response = await this.$store.dispatch('transferVaccination',{username:this.$store.state.auth.hospital.username, transid: this.toTranferVaccination.transid, vaccination: data})
+           if(response) {throw new Error()}
+           console.log(this.vaccinations)
+           setTimeout(function(){ this.initVaccinations() }, 2000);
            this.loading=false;
            this.transferDialog = false;
+         
 
            }catch(err){
            this.color2="#e17b58";
-           this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
+           this.message=`Couldn't transfer this vaccination. An error occured during request (${err})`
            this.snackbar2 = true;
            this.transferDialog = false;
            this.loading=false
@@ -508,15 +521,17 @@ import vaccinationsService from "@/services/vaccinationsService.js";
            const response = await this.$store.dispatch('editVaccination',{username:this.$store.state.auth.hospital.username, transid: this.editedVaccination.transid, vaccination: data})
         
           if(response){
-            throw new Error()}
+            throw new Error(response)}
           this.editDialog=false;
           this.loading = false;
           this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
-          this.initVaccinations();
+         
+          
           if(this.editedVaccination.status==='DONE'){
              this.$store.dispatch('loadVaccines',this.$store.state.auth.hospital.username
       );
           }
+           setTimeout(function(){ this.initVaccinations() }, 2000);
 
           
           }catch(err){

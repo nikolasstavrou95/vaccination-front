@@ -268,22 +268,23 @@ export default {
     let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
        this.loading = false
        this.dialog=false  
-       this.resetFields()
-       
         if(response){
-        throw new Error()}
-        this.$store.dispatch('loadVaccinations',this.hospital)
+        throw new Error(response)}
         
+        
+        this.resetFields()
+       
+       setTimeout(()=> { this.$store.dispatch('loadVaccinations',this.hospital)
+       console.log("refresh") }, 2000);
+       
         this.snackbar=true
-      this.text="Vaccination Added Successfully"
-      this.color="#9ce690"
-    }
-      
-       catch(error){
+       this.text="Vaccination Added Successfully"
+       this.color="#9ce690"
+      }catch(error){
        this.snackbar=true
        this.color="#e17b58"
-       this.text="Couldn't add vaccination. Please check your internet connection"
-        console.log("something went wrong here",error)
+       this.text=`Couldn't add vaccination. ${error}`
+      
         }
       }
    },

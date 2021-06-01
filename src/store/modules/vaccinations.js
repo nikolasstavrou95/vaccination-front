@@ -25,6 +25,12 @@ export const  mutations= {
         });
        
       },
+      DELETE_VACCINATION(state, vaccination) {
+        state.vaccinations.forEach(v => {
+          if (v.transid==vaccination.transid){v=vaccination.v}
+        });
+       
+      },
       
   }
     
@@ -32,7 +38,9 @@ export const  mutations= {
       async loadVaccinations({commit},username)
       { try{
        let response = await vaccinationsService.getAllVaccinations(username)
-
+       
+       if(response.status==='500') throw new Error("Server not responding")
+       if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
        let merged =[];
        
       response.data.forEach(element => {
@@ -43,7 +51,8 @@ export const  mutations= {
       console.log(merged)
       commit('SET_VACCINATIONS', merged)
         }catch(error){
-          console.log("Couldn't load vaccinations")
+          console.log(`Couldn't load vaccinations ${error}`)
+          return error;
         }
           
      }  ,
@@ -51,19 +60,25 @@ export const  mutations= {
      { try{
        console.log(payload.username,payload.vaccination)
         let response = await vaccinationsService.addVaccination(payload.username, payload.vaccination)
-    
+       
+        if(response.status==='500') throw new Error("Server not responding")
+        if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
         
         commit('ADD_VACCINATION', response.data.data)
         
      } catch(error){
        console.log("something went wrong here store",error)
+       return error
      }
     },
     async editVaccination({commit},payload)
-     { try{
+     { 
+       try{
        console.log(payload.username,payload.vaccination)
-        await vaccinationsService.editVaccination(payload.username,payload.transid, payload.vaccination)
-    
+        let response = await vaccinationsService.editVaccination(payload.username,payload.transid, payload.vaccination)
+       
+        if(response.status==='500') throw new Error("Server not responding")
+        if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
         commit('EDIT_VACCINATION', {transid: payload, v: payload.vaccination})
         
      } catch(error){
@@ -74,9 +89,10 @@ export const  mutations= {
     async transferVaccination({commit},payload)
      { try{
        console.log(payload.username,payload.vaccination)
-        let response = await vaccinationsService.addVaccination(payload.username,payload.transid,payload.vaccination)
-    
-        commit('ADD_VACCINATION', response.data.data)
+        let response = await vaccinationsService.transferVaccination(payload.username,payload.transid,payload.vaccination)
+        if(response.status==='500') throw new Error("Server not responding")
+        if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
+        commit('DELETE_VACCINATION', payload.vaccination)
         
      } catch(error){
        console.log("something went wrong here store",error)
