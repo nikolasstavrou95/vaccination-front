@@ -5,6 +5,9 @@ export const state={
    
     vaccinations:[],
     vaccination:{},
+    vaccinationsCancelled:"",
+    vaccinationsNeedTransfer:""
+
    
  
   }
@@ -12,6 +15,9 @@ export const  mutations= {
       SET_VACCINATIONS(state,vaccinations)
       {
         state.vaccinations=vaccinations
+        state.vaccinationsCancelled= state.vaccinations.filter((el=> el.status==="CANCELLED")).length
+        state.vaccinationsNeedTransfer = state.vaccinations.filter((el)=> !el.transferable).length
+
        },
      
       ADD_VACCINATION(state, vaccination) {
