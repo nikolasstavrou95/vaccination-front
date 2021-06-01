@@ -489,6 +489,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           brand: this.editedVaccination.brand,
           amka: this.editedVaccination.AMKA,
           status: this.editedVaccination.status,
+          symptoms: this.editedVaccination.symptoms
           
 
         }
