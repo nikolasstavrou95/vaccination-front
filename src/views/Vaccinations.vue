@@ -497,7 +497,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
         
           if (!(this.editedVaccination.date && this.editedVaccination.brand && this.editedVaccination.status)) {
             this.loading=false;
-            console.log("lllll")}
+           }
           else{
          
              try{
@@ -511,6 +511,11 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           this.editDialog=false;
           this.loading = false;
           this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
+          if(this.editedVaccination.status==='DONE'){
+             this.$store.dispatch('loadVaccines',this.$store.state.auth.hospital.username
+      );
+          }
+          
           }catch(err){
            this.color2="#e17b58";
            this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
