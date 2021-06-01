@@ -101,12 +101,12 @@ export default {
   methods:{
      async getData(){
      const response = await StatisticsDataService.getMetadata(this.$store.state.auth.hospital.username);
-     console.log(response.data)
+     
      var data=[];
      var metadata=[];
      var months=[];
      var merged = [].concat.apply([], response.data);
-     console.log(merged)
+     
      //filter by status 
      var done =merged.filter((arr)=>
       
@@ -123,18 +123,14 @@ export default {
        arr["1"]["status"]=="PENDING"
 
      )
-     console.log("Done",done);
-     console.log("Cancelled",cancelled);
-     console.log("Pending",pending)
      
      //categorize by object
      done.forEach((arr)=>{
        data.push(arr[0]);
        metadata.push(arr[1]);
      })
-     let date = new Date("2020, 05, 21");
     
-     console.log(date.toLocaleString('en-us',{month:'long'}));
+    let date="";
      metadata.forEach((arr)=>{
        date = new Date(arr.date);
        months.push({month: date.toLocaleString('en-us', { month: 'long' })})
@@ -145,7 +141,7 @@ export default {
         return monthsArray.indexOf(a.month)
            - monthsArray.indexOf(b.month);
   });
-      console.log(data,metadata,months);
+     
 
      
      
@@ -163,7 +159,7 @@ export default {
         r[a[groupby]] = [...r[a[groupby]] || [], a];
         return r;
        }, {});
-       console.log("group", collection);
+       
         let objectArray = Object.entries(collection);
        
        objectArray.forEach(([key, value]) => {
