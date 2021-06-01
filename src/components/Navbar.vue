@@ -152,7 +152,7 @@ export default {
         icon: "mdi-clipboard-edit-outline",
         to: "/user/vaccinations",
       },
-    
+     
       {
         title: "Statistics",
         icon: "mdi-chart-areaspline",

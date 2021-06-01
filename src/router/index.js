@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/Home.vue'
+
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 //import Vaccinations from '@/views/Vaccinations.vue'
@@ -14,12 +14,7 @@ Vue.use(VueRouter)
 export const router = new VueRouter({
   mode: 'history',
   routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: Home
-
-    },
+    
     {
       path: '/login',
       name: 'login',
@@ -89,7 +84,7 @@ export const router = new VueRouter({
   ]
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home'];
+  const publicPages = ['/login', '/register'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 

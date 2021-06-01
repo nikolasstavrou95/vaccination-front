@@ -95,8 +95,8 @@ export default {
      console.log(merged)
      //filter by status 
      var filtered =merged.filter((arr)=>
-       arr["1"]["vaccination-status"]==="PENDING" ||
-       arr["1"]["status"]=="PENDING"
+       arr["1"]["vaccination-status"]==="DONE" ||
+       arr["1"]["status"]=="DONE"
 
      )
      console.log(filtered)

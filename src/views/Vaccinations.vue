@@ -55,7 +55,7 @@
                 class="mr-2"
                 color="#03A9F4"
                 @click="showEditVaccination(item)"
-                :disabled="item.status ==='CANCELLED'"
+                :disabled="item.status ==='CANCELLED' || !item.transferable"
 
               >
                 <v-icon> mdi-pencil </v-icon>
@@ -200,7 +200,7 @@
                   <v-select
                  class="mx-4"
                  v-model="editedVaccination.brand"
-                  :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER']"
+                  :items="['ASTRAZENECA', 'JOHNSON','MODERNA','PFIZER','NOVAVAX']"
                   label="Brand*"
                   
                   rounded
@@ -489,6 +489,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           brand: this.editedVaccination.brand,
           amka: this.editedVaccination.AMKA,
           status: this.editedVaccination.status,
+          symptoms: this.editedVaccination.symptoms
           
 
         }
@@ -497,7 +498,7 @@ import vaccinationsService from "@/services/vaccinationsService.js";
         
           if (!(this.editedVaccination.date && this.editedVaccination.brand && this.editedVaccination.status)) {
             this.loading=false;
-            console.log("lllll")}
+           }
           else{
          
              try{
@@ -511,6 +512,13 @@ import vaccinationsService from "@/services/vaccinationsService.js";
           this.editDialog=false;
           this.loading = false;
           this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
+          this.initVaccinations();
+          if(this.editedVaccination.status==='DONE'){
+             this.$store.dispatch('loadVaccines',this.$store.state.auth.hospital.username
+      );
+          }
+
+          
           }catch(err){
            this.color2="#e17b58";
            this.message=`Couldn't edit this vaccination. An error occured during request (${err})`
