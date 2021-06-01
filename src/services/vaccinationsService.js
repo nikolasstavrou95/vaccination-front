@@ -23,8 +23,8 @@ export default {
         return axios.get(url, { headers: authHeader() });
       },
 
-      makeAvailable(username){
-        return axios.post(API_URL + `${username}/makeMeAvailable`,{headers: authHeader()})
+    makeAvailable(username){
+        return axios.post(API_URL + `${username}/makeMeAvailable`, [] , {headers:authHeader()})
     }
    
 
