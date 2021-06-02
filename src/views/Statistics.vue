@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="statistics">
    <v-carousel :continuous="false"
-      :cycle="cycle"
+      
       color="primary"
       hide-delimiter-background
       delimiter-icon="mdi-minus"
