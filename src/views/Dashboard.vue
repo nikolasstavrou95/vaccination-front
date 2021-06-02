@@ -401,8 +401,8 @@ mixins: [validationMixin],
      }
      console.log(data)
      
-       HospitalDataService.addVaccines(data).then((response)=>{
-         console.log(response.data)
+       HospitalDataService.addVaccines(data).then(()=>{
+       
         
         this.color2 = "#2d9277"; 
         this.message=`New Vaccines added successfully`
