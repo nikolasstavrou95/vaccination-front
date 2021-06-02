@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container class="mt-12">
   <v-row justify="center" >
     <v-col cols='12'  >
        <v-card color="#61ba9f">
@@ -10,11 +10,11 @@
     shaped
     >
      <v-card
-    
+     elevation="1"
      left
-     class="my-2 ml-2"
+     class="my-2 ml-2 pa-2"
      flat
-     color="#61ba9f">
+     color="#69c2a7">
      
       <NewVaccination/>
       
@@ -26,7 +26,7 @@
       left
      class="my-2 ml-2"
      
-     color="#61ba9f"
+     color="#69c2a7"
 
        > Refresh
       </v-btn>
@@ -62,11 +62,14 @@
        <template v-slot:item.actions="{ item }">
               <v-btn
                 small
-                rounded
-                outlined
+                
+                
                 fab
                 
-                class="mr-2"
+                
+                outlined
+                
+                class="mr-5"
                 color="#03A9F4"
                 @click="showEditVaccination(item)"
                 :disabled="item.status ==='CANCELLED' || !item.transferable"
@@ -76,8 +79,9 @@
               </v-btn>
               <v-btn
                 small
-                rounded
+               
                 outlined
+                
                 fab
                 class="mr-2"
                 color="#e17b58"
@@ -131,6 +135,7 @@
                 <v-col cols="12" md="4">
                   <h5>
                     Patient Name:
+                    
                     <h6>{{ toTranferVaccination.name}}</h6>
                   </h5>
                 </v-col>
@@ -198,7 +203,7 @@
              <v-text-field
                 class="mx-4"
                 v-model="editedVaccination.date"
-                  label="Date*"
+                label="Date*"
                   
                   clearable
                    @change="$v.editedVaccination.date.$touch()"
@@ -361,7 +366,7 @@ import { required } from "vuelidate/lib/validators";
         headers: [
          
           
-          { text: 'Name', value: 'name' },
+          { text: 'Name', value: 'name'},
           { text: 'Amka', value: 'AMKA',sortable: false },
 
           { text: 'Date', value: 'date' },
@@ -488,7 +493,7 @@ import { required } from "vuelidate/lib/validators";
            let response = await this.$store.dispatch('transferVaccination',{username:this.$store.state.auth.hospital.username, transid: this.toTranferVaccination.transid, vaccination: data})
            if(response) {throw new Error()}
           
-           //this.initVaccinations();
+           
            this.loading=false;
            this.transferDialog = false;
          

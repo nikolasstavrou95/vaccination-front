@@ -1,13 +1,13 @@
 <template>
-  <v-container>
+  <v-container class="mt-12">
     
-    <div class="col-left">
+    <div class="ma-12 col-left">
       
       <div class="image">
         <v-img src="/logo2.png" />
       </div>
     </div>
-    <div class="col-right">
+    <div class="ma-12 col-right">
       <v-toolbar
       flat 
     >
@@ -26,7 +26,7 @@
         </v-icon>
       </v-btn>
     </v-toolbar>
-      <div class="hospital-form">
+      <div class="mb-12 hospital-form">
         <h2 class="title">Hospital Information</h2>
 
         <h4>Hospital Name</h4>
@@ -80,7 +80,7 @@
         <v-btn
           color="primary"
           small
-          outlined
+          
           rounded
           class="mt-4"
           @click="updateHospital"
@@ -281,7 +281,7 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  height: 100vh;
+  max-height: 100vh;
   box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
 }
 .col-left {
@@ -291,15 +291,14 @@ export default {
   flex-basis: 50%;
   justify-content: flex-end;
 }
+
 .image {
-  margin: 100px auto;
-}
-.image {
-  width: 210px;
-  height: 210px;
+ margin:15px auto;
+  width: 200px;
+  height: 200px;
 }
 .hospital-form {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 .hospital-form .title {
   margin-bottom: 30px;

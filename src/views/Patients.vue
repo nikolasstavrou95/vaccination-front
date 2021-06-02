@@ -1,10 +1,10 @@
 <template>
-  <v-container>
+  <v-container class="mt-12">
     <v-row justify="center">
       <v-col cols="12">
         <v-card color="#61ba9f">
           <v-toolbar color="#61ba9f" dark shaped>
-            <v-card left class="my-2 ml-2" flat color="#61ba9f">
+            <v-card left elevation="1" class="my-2 ml-2 pa-2" flat color="#69c2a7">
               <NewPatient />
             </v-card>
             <v-spacer></v-spacer>
@@ -41,7 +41,7 @@
             <template v-slot:item.actions="{ item }">
               <v-btn
                 small
-                rounded
+               
                 outlined
                 fab
                 
@@ -53,10 +53,11 @@
               </v-btn>
               <v-btn
                 small
-                rounded
+                
                 outlined
+               
                 fab
-                class="mr-2"
+                class="mr-4"
                 color="#e17b58"
                 @click="showDeletePatient(item)"
               >
@@ -373,9 +374,9 @@ export default {
  methods: {
  
     getColor(status) {
-      if (status == "2/2") return "#9ce690";
+      if (status == "2/2") return "primary";
       
-      else if (status == "0/2") return "red lighten-2";
+      else if (status == "0/2") return "error";
       else return "#e6cd4e";
     },
     showDeletePatient(item) {

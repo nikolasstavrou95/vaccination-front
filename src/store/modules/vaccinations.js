@@ -31,10 +31,13 @@ export const  mutations= {
         });
        
       },
-      DELETE_VACCINATION(state, vaccination) {
-        state.vaccinations.forEach(v => {
-          if (v.transid==vaccination.transid){v=vaccination.v}
-        });
+      DELETE_VACCINATION(state, transid) {
+        for(var i=0; i<state.vaccinations.length; i++){
+          if(state.vaccinations[i].transid===transid){
+            state.vaccinations.splice(i,1);
+          }
+
+        }
        
       },
       
@@ -98,7 +101,7 @@ export const  mutations= {
         let response = await vaccinationsService.transferVaccination(payload.username,payload.transid,payload.vaccination)
         if(response.status==='500') throw new Error("Server not responding")
         if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
-        commit('DELETE_VACCINATION', payload.vaccination)
+        commit('DELETE_VACCINATION', payload.transid)
         
      } catch(error){
        console.log("something went wrong here store",error)

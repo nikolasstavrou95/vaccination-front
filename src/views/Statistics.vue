@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="statistics">
+  <v-container fluid class="mt-12">
    
    <v-card
    :loading=loading>
@@ -150,7 +150,7 @@ export default {
      const response = await StatisticsDataService.getMetadata(this.$store.state.auth.hospital.username);
      if(response.status==="500") throw new Error();
 
-     
+
      var data=[];
      var metadata=[];
      var months=[];
