@@ -30,28 +30,28 @@ export const mutations = {
     },
     
 }
- export const getters={
+//  export const getters={
    
-    availableVaccinesByBrand(state){
-        const availableVaccines = state.hospitalData.vaccines.length ? state.hospitalData.vaccines : [];
-        const collection = [];
-        let temp = availableVaccines.reduce((r, a) => {
+//     availableVaccinesByBrand(state){
+//         const availableVaccines = state.vaccines.length ? state.vaccines : [];
+//         const collection = [];
+//         let temp = availableVaccines.reduce((r, a) => {
   
-            r[a["brand"]] = [...r[a["brand"]] || [], a];
-            return r;
-           }, {});
-           let objectArray = Object.entries(temp);
-           objectArray.forEach(([key, value]) => {
-            if(key!='undefined')  
-             collection.push({label: key, totals:value.length})
+//             r[a["brand"]] = [...r[a["brand"]] || [], a];
+//             return r;
+//            }, {});
+//            let objectArray = Object.entries(temp);
+//            objectArray.forEach(([key, value]) => {
+//             if(key!='undefined')  
+//              collection.push({label: key, totals:value.length})
              
-         });
+//          });
 
         
-        return collection;
+//         return collection;
 
-    }
-}
+//     }
+// }
 
 export const actions = {
     async loadHospital({ commit }, username) {
