@@ -321,7 +321,7 @@ export default {
       }
    },
       resetFields() {
-      //this.$refs.form.reset()
+       this.$v.$reset()
        this.patient.name="",
        this.patient.age="",
        this.patient.symptoms="",
