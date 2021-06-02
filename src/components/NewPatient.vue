@@ -210,13 +210,7 @@ export default {
     loading:false,
   
      patient:{
-     // name:"",
-      //age:0,
-      //symptoms:"",
-     // sex:"",
-     // status:"",
-     // amka:"",
-      //address:""
+     
      }
     
     }
@@ -290,8 +284,16 @@ export default {
         this.errorMessage = "All the fields are required";
       }else { 
         try{
+          var data = {
+            address: this.patient.address,
+            age:this.patient.age,
+            amka:this.patient.amka,
+            name:this.patient.name,
+            sex:this.patient.sex
+          }
       this.loading = true
-    let response= await this.$store.dispatch('addPatient',{username: this.$store.state.auth.hospital.username, patient:this.patient})
+    let response= await this.$store.dispatch('addPatient',{username: this.$store.state.auth.hospital.username, patient:data})
+
     
        this.loading = false
        this.dialog=false  
@@ -324,9 +326,9 @@ export default {
        this.$v.$reset()
        this.patient.name="",
        this.patient.age="",
-       this.patient.symptoms="",
+       
        this.patient.sex="",
-       this.patient.status="",
+       
        this.patient.amka="",
        this.patient.address=""
     },
