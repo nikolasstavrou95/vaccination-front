@@ -5,6 +5,7 @@
       <v-stepper-step
        
         step="1"
+        editable
         
       >
         Add Patient
@@ -15,6 +16,7 @@
       <v-stepper-step
         
         step="2"
+        editable
         
       >
        Create / Update Appointment
