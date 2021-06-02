@@ -1,11 +1,14 @@
 <template>
 <v-container>
-  <v-stepper   v-model="e1">
+  <v-stepper  non-linear class="mt-12" v-model="e1">
     <v-stepper-header>
       <v-stepper-step
-       
-        step="1"
+        complete
         editable
+       
+        
+        step="1"
+        edit-icon="mdi-account-multiple-plus-outline"
         
       >
         Add Patient
@@ -14,16 +17,17 @@
       <v-divider></v-divider>
 
       <v-stepper-step
-        
-        step="2"
         editable
+        complete
+        edit-icon="mdi-calendar-plus"
+        step="2"
+        
         
       >
        Create / Update Appointment
       </v-stepper-step>
 
-      <v-divider></v-divider>
-
+     
       
     </v-stepper-header>
 
@@ -32,16 +36,7 @@
       
         <patients/>
 
-        <v-btn
-        class="mr-2"
-         rounded
-        outlined
-          color="#61ba9f"
-          @click="e1=2"
-        >
-          Continue
-        </v-btn>
-
+       
        
       </v-stepper-content>
 
@@ -49,16 +44,7 @@
       
         <vaccinations/>
 
-        <v-btn
-         class="mr-2"
-         rounded
-        outlined
-          color="#61ba9f"
-          @click="e1=1"
-        >
-         Back
-        </v-btn>
-
+  
        
       </v-stepper-content>
 
