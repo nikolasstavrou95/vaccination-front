@@ -210,7 +210,8 @@ export default {
    
      ...mapState({ hospital: (state) => state.auth.hospital.username, 
                   unvaccinatedPatients:(state) => state.patients.unvaccinated,
-                   vaccineList: (state)=>state.vaccinations.patientVaccinesList
+                   vaccineList: (state)=>state.vaccinations.patientVaccinesList,
+                   patients:(state) => state.patients.patients
                   }),
     
   
@@ -272,6 +273,17 @@ export default {
       
         date: this.vaccination.date,
         brand: this.vaccination.brand
+   }
+   var patient={}
+   this.patients.forEach(p=> {if(p.id===this.vaccination.id)
+   patient= p})
+  
+   var fullData ={
+   name:patient.name,
+   date:this.vaccination.date,
+   status:'PENDING',
+   AMKA: patient.amka,
+   brand:this.vaccination.brand
  }
  
     this.$v.$touch();
@@ -281,7 +293,7 @@ export default {
     try{
       this.loading = true
     
-    let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
+    let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data, fullData:fullData})
        this.loading = false
        this.dialog=false  
         if(response){
