@@ -2,11 +2,11 @@
   <v-container class="d-flex">
     <v-row class="align-center">
       <img class="side_wave" src="wave.png" />
-      <v-col class="d-none d-md-flex justify-center align-center">
+      <v-col class="d-none d-lg-flex justify-center align-center">
         <!-- <div class="container"> -->
         <div class="img"><img src="bg-image.svg" /></div>
       </v-col>
-      <v-col>
+      <v-col class="d-flex justify-center">
         <div class="signup">
           <form>
             <img src="logo2.png" />
@@ -276,12 +276,17 @@ export default {
 
 .img img {
   width: 500px;
+}.signup {
+  max-width: 580px;
 }
 
+.signup form  {
 
-.signup form {
-  max-width: 780px;
   padding: 10px;
+  /* justify-content: flex-end;
+    align-items: center; */
+    text-align: center;
+   
 }
 .signup img {
   height: 150px;
