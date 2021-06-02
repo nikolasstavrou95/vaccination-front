@@ -75,7 +75,7 @@
          <v-container>
                 <v-row justify="center">
           <v-list-item
-             
+            
           
             :to="hospital.to"
             @click="currentView = hospital.title"
@@ -93,7 +93,6 @@
            <v-list-item
             
            
-
            
             @click.prevent="logOut"
           >
@@ -121,7 +120,54 @@
         <v-toolbar-title v-if="!currentUser">Vaccination-app</v-toolbar-title>
         <v-toolbar-title v-else>{{ currentRouteName }}</v-toolbar-title>
 
-    
+        <div v-if="!currentUser" class="navbar-nav ml-auto">
+          <li class="nav-item mr-2">
+            <router-link
+              to="register"
+              active-class="active"
+              exact
+              class="nav-link"
+            >
+              <font-awesome-icon icon="user-plus" style="color: #0f7452" />Sign
+              Up
+            </router-link>
+          </li>
+          <li class="nav-item mr-1">
+            <router-link
+              to="login"
+              active-class="active"
+              exact
+              class="nav-link"
+            >
+              <font-awesome-icon
+                icon="sign-in-alt"
+                style="color: #0f7452"
+              />Login
+            </router-link>
+          </li>
+        </div>
+
+        <!-- <div v-if="currentUser" class="navbar-nav ml-auto">
+          <li class="nav-item mr-4">
+            <router-link
+              to="/user/profile"
+              active-class="active"
+              exact
+              class="nav-link"
+            >
+              <font-awesome-icon icon="user" style="color: #0f7452" />
+              {{ currentUser.username }}
+            </router-link>
+          </li>
+          <li class="nav-item mr-1">
+            <a class="nav-link" href @click.prevent="logOut">
+              <font-awesome-icon
+                icon="sign-out-alt"
+                style="color: #0f7452"
+              />LogOut
+            </a>
+          </li>
+        </div> -->
       </v-app-bar>
     </nav>
   </header>
