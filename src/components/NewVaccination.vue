@@ -67,7 +67,7 @@
                   clearable
                    @change="$v.vaccination.date.$touch()"
                    :error-messages="dateErrors"
-                  type="date">
+                   type="date">
                     </v-text-field>
               </v-col>
                <v-col
@@ -246,7 +246,23 @@ export default {
      },
   
    methods: {
-   
+   async initVaccinations (){
+        try{
+        this.loading=true
+         let response = await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
+         if(response) throw new Error(response)
+         console.log(response);
+        
+         this.loading=false
+        } catch(error){
+           this.color2="#e17b58";
+           this.message=`Couldn't load vaccination. ${error}`
+           this.snackbar2 = true;
+           
+           this.loading=false
+       
+        }
+      },
 
    async saveVaccination() {
  
@@ -273,9 +289,12 @@ export default {
         
         
         this.resetFields()
+        this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
+      
        
-       setTimeout(()=> { this.$store.dispatch('loadVaccinations',this.hospital)
-       console.log("refresh") }, 2000);
+
+       
+        
        
         this.snackbar=true
        this.text="Vaccination Added Successfully"
@@ -289,9 +308,7 @@ export default {
       }
    },
       resetFields() {
-      //this.$refs.form.reset()
-      
-       
+       this.$v.$reset()
        this.vaccination.id="",
        this.vaccination.hosp="",
        this.vaccination.brand=""
@@ -319,8 +336,7 @@ export default {
         console.log("something went wrong here",err)
         }
       }
-     
-   
+      
    }
      
      
