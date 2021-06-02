@@ -21,8 +21,8 @@ export const  mutations= {
        },
      
       ADD_VACCINATION(state, vaccination) {
-        let vaccinations=state.vaccinations.concat(vaccination)
-        state.vaccinations=vaccinations 
+       
+        state.vaccinations.push(vaccination)
       },
       
       EDIT_VACCINATION(state, vaccination) {
@@ -72,8 +72,8 @@ export const  mutations= {
        
         if(response.status==='500') throw new Error("Server not responding")
         if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
-        
-        commit('ADD_VACCINATION', response.data.data)
+       
+        commit('ADD_VACCINATION', payload.vaccination)
         
      } catch(error){
        console.log("something went wrong here store",error)
