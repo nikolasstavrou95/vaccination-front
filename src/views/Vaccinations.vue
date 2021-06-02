@@ -15,8 +15,21 @@
      class="my-2 ml-2"
      flat
      color="#61ba9f">
+     
       <NewVaccination/>
+      
+      
       </v-card>
+      <v-spacer></v-spacer>
+      <v-btn
+      @click="initVaccinations"
+      left
+     class="my-2 ml-2"
+     
+     color="#61ba9f"
+
+       > Refresh
+      </v-btn>
       <v-spacer></v-spacer>
        <v-text-field
        class="mt-6 mb-2" 
@@ -35,6 +48,7 @@
       :headers="headers"
       :items="vaccinations"
       :search="search"
+     
      >
        <template v-slot:top>
          <v-progress-linear
@@ -106,10 +120,10 @@
         </v-toolbar>
 
         <v-container>
-          <v-row justify="center">
+          <v-row class="pa-6" justify="center">
             <v-card-title>
               <h4>
-                Are you sure you want to tranfer this vaccination?
+                Do you want to tranfer this vaccination?
               </h4></v-card-title
             >
             <v-card-text>
@@ -473,8 +487,8 @@ import { required } from "vuelidate/lib/validators";
            this.loading = true;
            let response = await this.$store.dispatch('transferVaccination',{username:this.$store.state.auth.hospital.username, transid: this.toTranferVaccination.transid, vaccination: data})
            if(response) {throw new Error()}
-           console.log(this.vaccinations)
-           setTimeout(function(){ this.initVaccinations() }, 2000);
+          
+           //this.initVaccinations();
            this.loading=false;
            this.transferDialog = false;
          
@@ -531,7 +545,7 @@ import { required } from "vuelidate/lib/validators";
              this.$store.dispatch('loadVaccines',this.$store.state.auth.hospital.username
       );
           }
-           setTimeout(function(){ this.initVaccinations() }, 2000);
+           
 
           
           }catch(err){
