@@ -57,7 +57,7 @@ export const  mutations= {
          )
         
       });
-      console.log(merged)
+     
       commit('SET_VACCINATIONS', merged)
         }catch(error){
           console.log(`Couldn't load vaccinations ${error}`)
