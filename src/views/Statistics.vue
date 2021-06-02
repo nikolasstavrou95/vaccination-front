@@ -1,5 +1,8 @@
 <template>
   <v-container fluid class="statistics">
+   
+   <v-card
+   :loading=loading>
    <v-carousel :continuous="false"
       
       color="primary"
@@ -26,6 +29,23 @@
     
    
    </v-carousel>
+   </v-card>
+   <v-snackbar
+      v-model="snackbar2"
+      :timeout="timeout2"
+      :color="color2"
+      rounded="pill"
+      top
+      
+     
+      
+    >
+      {{ message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -73,6 +93,11 @@ export default {
             ],
         pointBorderColor: "#2554FF",
       },
+      loading:false,
+      snackbar2: false,
+      timeout2: 5000,
+      message: "",
+      color2:"",
       citiesChartData:[],
       countriesChartData:[],
       agesChartData:[],
@@ -120,7 +145,11 @@ export default {
   },
   methods:{
      async getData(){
+       this.loading= true;
+    try{
      const response = await StatisticsDataService.getMetadata(this.$store.state.auth.hospital.username);
+     if(response.status==="500") throw new Error();
+
      
      var data=[];
      var metadata=[];
@@ -171,7 +200,15 @@ export default {
      this.createTables(metadata,this.countriesChartData,"hospital-country");
      this.createTables(data,this.agesChartData,"age");
      this.createTables(months,this.monthsChartData,"month");
-   
+     this.loading= false;
+    } catch(error){
+      this.color2="#e17b58";
+      this.message=`Couldn't load vaccinations. ${error}`
+      this.snackbar2 = true;
+      this.loading=false
+    
+
+    }
     },
     createTables(data,chart,groupby){
       let collection = data.reduce((r, a) => {
