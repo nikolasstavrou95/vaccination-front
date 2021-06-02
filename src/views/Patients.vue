@@ -374,10 +374,10 @@ export default {
  methods: {
  
     getColor(status) {
-      if (status == "2/2") return "primary";
+      if (status == "2/2") return "#1e90ff";
       
-      else if (status == "0/2") return "error";
-      else return "#e6cd4e";
+      else if (status == "0/2") return "#c2e0fc";
+      else return "#60aff7";
     },
     showDeletePatient(item) {
       console.log(item);
