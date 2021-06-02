@@ -277,6 +277,7 @@ mixins: [validationMixin],
       addVaccinesDialog:false,
       listVaccinesDialog:false,
       loading:false,
+      list:[],
       headers: [
          
           { text: 'Brand', value: 'label',sortable: false },
