@@ -449,7 +449,7 @@ import { required } from "vuelidate/lib/validators";
         this.loading=true
          let response = await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
          if(response) throw new Error(response)
-         console.log(response);
+        
         
          this.loading=false
         } catch(error){

@@ -67,13 +67,13 @@ export const  mutations= {
      }  ,
     async addVaccination({commit},payload)
      { try{
-       console.log(payload.username,payload.vaccination)
+       console.log(payload.username,payload.fullData)
         let response = await vaccinationsService.addVaccination(payload.username, payload.vaccination)
        
         if(response.status==='500') throw new Error("Server not responding")
         if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
        
-        commit('ADD_VACCINATION', payload.vaccination)
+        commit('ADD_VACCINATION', payload.fullData)
         
      } catch(error){
        console.log("something went wrong here store",error)
