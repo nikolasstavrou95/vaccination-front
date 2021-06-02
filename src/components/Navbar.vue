@@ -26,10 +26,8 @@
          <v-list-item>
           <v-list-item-content class="justify-center">
             <v-container>
-               
               <v-row justify="center">
               <h5>{{ currentUser.username }} </h5>
-             
               </v-row>
               </v-container>
             </v-list-item-content>
@@ -110,7 +108,7 @@
         </div>
 
         <div v-if="currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item mr-1">
+          <li class="nav-item mr-4">
             <router-link
               to="/user/profile"
               active-class="active"
@@ -152,13 +150,14 @@ export default {
         icon: "mdi-clipboard-edit-outline",
         to: "/user/vaccinations",
       },
-     
+      
       {
         title: "Statistics",
         icon: "mdi-chart-areaspline",
         to: "/user/statistics",
       },
-       { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" }    
+       { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" },
+      { title: "Help", icon: "mdi-help-box", to: "/user/help" }
       
     ],
   }),
