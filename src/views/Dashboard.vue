@@ -411,6 +411,7 @@ mixins: [validationMixin],
         this.getAvailableVaccines();
         this.getAvailableVaccinesByBrand();
         this.countAvailableVaccinesByBrand();
+        this.initVaccinations();
         this.clear();
        }).catch(err =>{
         this.color2="#e17b58";
@@ -438,6 +439,7 @@ mixins: [validationMixin],
      countAvailableVaccinesByBrand(){
         
        this.list=[];
+
         let temp = this.availableVaccinesByBrand.reduce((r, a) => {
   
             r[a["brand"]] = [...r[a["brand"]] || [], a];
@@ -451,6 +453,24 @@ mixins: [validationMixin],
          });   
        
     },
+     async initVaccinations (){
+        try{
+        this.loading=true
+         let response = await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
+         if(response) throw new Error(response)
+        
+        
+         this.loading=false
+        } catch(error){
+           this.color2="#e17b58";
+           this.message=`Couldn't load vaccination. ${error}`
+           this.snackbar2 = true;
+           
+           this.loading=false
+       
+        }
+      },
+      
     
    
   },
