@@ -39,11 +39,11 @@
           >
           </v-text-field>
 
-          <v-btn rounded color="primary" @click="handleLogin" dark>
+          <v-btn  class="mt-2" rounded color="primary" @click="handleLogin" dark>
             Login
           </v-btn>
-          <div>
-            <h3>Not registered yet?</h3>
+          <div class="mt-6">
+            <h6>if you are not registered yet</h6>
             <router-link class="left" to="/register"
               >click here to sign up 🔑</router-link
             >
@@ -198,7 +198,7 @@ export default {
   text-transform: uppercase;
   font-size: 2.9rem;
 }
-.login h3 {
+.login h6 {
   color: rgb(66, 66, 66);
   text-decoration: underline;
   font-size: 1rem;
