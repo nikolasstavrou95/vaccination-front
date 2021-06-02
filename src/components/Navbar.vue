@@ -52,24 +52,64 @@
            <v-container>
                 <v-row justify="center">
           <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            :to="item.to"
-            @click="currentView = item.title"
+            v-for="fitem in firstItems"
+            :key="fitem.title"
+            :to="fitem.to"
+            @click="currentView = fitem.title"
           >
          
-         
+        
             <v-list-item-icon>
-              <v-icon class="pl-6">{{ item.icon }}</v-icon>
+              <v-icon class="pl-6">{{ fitem.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ fitem.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           </v-row>
           </v-container>
         </v-list>
+         <v-divider></v-divider>
+         <v-list dense nav>
+         <v-container>
+                <v-row justify="center">
+          <v-list-item
+            
+          
+            :to="hospital.to"
+            @click="currentView = hospital.title"
+          >
+         
+         
+            <v-list-item-icon>
+              <v-icon class="pl-6">{{ hospital.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ hospital.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+           <v-list-item
+            
+           
+           
+            @click.prevent="logOut"
+          >
+         
+         
+            <v-list-item-icon>
+              <v-icon class="pl-6">{{logout.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ logout.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          </v-row>
+          </v-container>
+        </v-list>
+
       </v-navigation-drawer>
 
       <v-app-bar app flat  color="#d7eae5">
@@ -80,7 +120,7 @@
         <v-toolbar-title v-if="!currentUser">Vaccination-app</v-toolbar-title>
         <v-toolbar-title v-else>{{ currentRouteName }}</v-toolbar-title>
 
-        <div v-if="!currentUser" class="navbar-nav ml-auto">
+        <!-- <div v-if="!currentUser" class="navbar-nav ml-auto">
           <li class="nav-item mr-2">
             <router-link
               to="register"
@@ -105,9 +145,9 @@
               />Login
             </router-link>
           </li>
-        </div>
+        </div> -->
 
-        <div v-if="currentUser" class="navbar-nav ml-auto">
+        <!-- <div v-if="currentUser" class="navbar-nav ml-auto">
           <li class="nav-item mr-4">
             <router-link
               to="/user/profile"
@@ -127,7 +167,7 @@
               />LogOut
             </a>
           </li>
-        </div>
+        </div> -->
       </v-app-bar>
     </nav>
   </header>
@@ -141,8 +181,8 @@ export default {
     drawer: null,
     currentView: "Dashboard",
     selectItem: null,
-    hospital: "",
-    items: [
+    //hospital: "",
+    firstItems: [
       { title: "Dashboard", icon: "mdi-view-dashboard", to: "/user/dashboard" },
       { title: "Patients", icon: "mdi-account-multiple", to: "/user/patients" },
       {
@@ -156,10 +196,16 @@ export default {
         icon: "mdi-chart-areaspline",
         to: "/user/statistics",
       },
-       { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" },
-      { title: "Help", icon: "mdi-help-box", to: "/user/help" }
+      
+    
       
     ],
+   hospital:
+      { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" },
+   logout:
+      { title:"Log out", icon:"mdi-logout" }
+
+    
   }),
   computed: {
     currentUser() {
