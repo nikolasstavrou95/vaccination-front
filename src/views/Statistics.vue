@@ -5,18 +5,23 @@
       color="primary"
       hide-delimiter-background
       delimiter-icon="mdi-minus"
-      height="980"
+      height="1080"
+     
       ><v-carousel-item
+     
+      
       > 
-        <bar-chart class="mt-6 pa-4" v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
-        <pie-chart class="chart mt-12 pa-12" v-if="pieChartData.length>0" :chart-data="pieChartData" :chartColors="colors" :options="pie.options" label="Vacinations" :labels="labels"></pie-chart>
+       <div class="pa-12" > <bar-chart class="mt-6 pa-sm-4 pa-lg-12" max-width="780" v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
+        <pie-chart class=" mt-6 pa-sm-4 pa-lg-12" v-if="pieChartData.length>0" :chart-data="pieChartData" :chartColors="colors" :options="pie.options" label="Vacinations" :labels="labels"> </pie-chart></div>
         </v-carousel-item>
    <v-carousel-item>
-       <bar-chart class="mt-6 pa-4" v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart> 
-      <line-chart class="mt-6 pa-4" v-if="monthsChartData.length>0" :chart-data="monthsChartData" :chartColors="colors" :options="options" label="Vaccinations per Month"></line-chart></v-carousel-item>
+      <div class="pa-12" >
+       <bar-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart> 
+      <line-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="monthsChartData.length>0" :chart-data="monthsChartData" :chartColors="colors" :options="options" label="Vaccinations per Month"></line-chart></div></v-carousel-item>
   <v-carousel-item> 
-      <bar-chart class="mt-6 pa-4" v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
-      <line-chart class="mt-6 pa-4" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></line-chart></v-carousel-item>
+     <div class="pa-12" >
+      <bar-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
+      <line-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></line-chart> </div></v-carousel-item>
     
     
    
