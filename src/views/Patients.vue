@@ -5,8 +5,8 @@
        
           <v-toolbar color="#61ba9f" dark >
             <v-toolbar-item class="ml-4">
-          <NewPatient/>
-              </v-toolbar-item>
+             <NewPatient/>
+            </v-toolbar-item>
             
             <v-spacer></v-spacer>
             
@@ -375,7 +375,7 @@ export default {
     getColor(status) {
       if (status == "2/2") return "#1e90ff";
       
-      else if (status == "0/2") return "#c2e0fc";
+      else if (status == "0/2") return "#89c4fa";
       else return "#60aff7";
     },
     showDeletePatient(item) {
