@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-12">
+  <v-container>
     <v-row justify="center">
       <v-col cols="12">
         <v-card color="#61ba9f">

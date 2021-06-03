@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-12">
+  <v-container>
     
     <div class="ma-12 col-left">
       

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="mt-12">
+  <v-container fluid >
    
    <v-card
    :loading=loading>
@@ -11,7 +11,7 @@
       height="1080"
      
       ><v-carousel-item
-     
+       
       
       > 
        <div class="pa-12" > <bar-chart class="mt-6 pa-sm-4 pa-lg-12" max-width="780" v-if="citiesChartData.length>0" :chart-data="citiesChartData" :chartColors="colors" :options="options" label="Vaccinations per City"></bar-chart>
@@ -20,11 +20,11 @@
    <v-carousel-item>
       <div class="pa-12" >
        <bar-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="hospitalsChartData.length>0" :chart-data="hospitalsChartData" :chartColors="colors" :options="options" label="Vaccinations per Hospitals"></bar-chart> 
-      <line-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="monthsChartData.length>0" :chart-data="monthsChartData" :chartColors="colors" :options="options" label="Vaccinations per Month"></line-chart></div></v-carousel-item>
+      <line-chart class="mt-6  mb-6 pa-sm-4 pa-lg-12" v-if="monthsChartData.length>0" :chart-data="monthsChartData" :chartColors="colors" :options="options" label="Vaccinations per Month"></line-chart></div></v-carousel-item>
   <v-carousel-item> 
      <div class="pa-12" >
       <bar-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="countriesChartData.length>0" :chart-data="countriesChartData" :chartColors="colors" :options="options" label="Vaccinations per Country"></bar-chart>
-      <line-chart class="mt-6 pa-sm-4 pa-lg-12" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></line-chart> </div></v-carousel-item>
+      <line-chart class="mt-6 mb-6 pa-sm-4 pa-lg-12" v-if="agesChartData.length>0" :chart-data="agesChartData" :chartColors="colors" :options="options" label="Vaccinations per Age"></line-chart> </div></v-carousel-item>
     
     
    
