@@ -261,7 +261,7 @@ export default {
       !this.$v.patient.amka.maxLength &&
         errors.push("Amka should be 11 numbers");
       !this.$v.patient.amka.required &&
-        errors.push("Amka is required");
+        errors.push("Amka required and should be unique");
       return errors;
     },
     addressErrors() {
@@ -294,10 +294,12 @@ export default {
           }
       this.loading = true
     let response= await this.$store.dispatch('addPatient',{username: this.$store.state.auth.hospital.username, patient:data})
-
-    
-       this.loading = false
-       this.dialog=false  
+      this.loading = false
+      if(response){
+          throw new Error()
+        }
+       
+      
        this.resetFields()
        this.$store.dispatch('loadPatients',this.$store.state.auth.hospital.username) 
        this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
@@ -305,20 +307,16 @@ export default {
     
         
         this.snackbar=true
-      this.text="Patient Added Successfully"
-      this.color="#9ce690"
-      if(response){
-          throw new Error('error')
-        }
+       this.text="Patient Added Successfully"
+       this.color="#9ce690"
+        this.dialog=false;
        }
-      
-        
-      
        catch(error){
-       this.snackbar=true
+       this.snackbar=true;
        this.color="#e17b58"
-       this.text="Couldn't add patient. Please check your internet connection"
-        console.log("something went wrong here",error)
+       
+       this.message="Couldn't add patient. This amka already exists."
+       this.patient.amka = "";
         
       }
       }

@@ -54,14 +54,16 @@ export const actions = {
   async addPatient({ commit }, payload) {
     try {
       let response = await patientsService.addPatient(payload.username,payload.patient)
-      console.log(payload.patient)
+      
       commit('ADD_PATIENT', response.data.data)
 
     } catch (error) {
       console.log("something went wrong here store", error)
-      console.log(payload.patient)
-    }
-  },
+      return (error)
+        
+      
+  }
+},
   async deletePatient({ commit }, payload) {
     try {
       let response = await patientsService.deletePatient(payload.username, payload.patient)
