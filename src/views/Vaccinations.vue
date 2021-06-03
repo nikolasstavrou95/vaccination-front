@@ -2,47 +2,38 @@
 <v-container>
   <v-row justify="center" >
     <v-col cols='12'  >
-       <v-card color="#61ba9f">
+     
        <v-toolbar
        
       color="#61ba9f"
       dark
-    shaped
     >
-     <v-card
-     elevation="1"
-     left
-     class="my-2 ml-2 pa-2"
-     flat
-     color="#69c2a7">
-     
-      <NewVaccination/>
-      
-      
-      </v-card>
-      <v-spacer></v-spacer>
-      <v-btn
-      @click="initVaccinations"
-      left
-     class="my-2 ml-2"
-     
-     color="#69c2a7"
 
-       > Refresh
-      </v-btn>
+      <v-toolbar-item class="ml-4 my-2">
+       <NewVaccination/>
+   
+      </v-toolbar-item >
       <v-spacer></v-spacer>
        <v-text-field
-       class="mt-6 mb-2" 
+       class="mt-8 mb-2" 
         v-model="search"
         append-icon="mdi-magnify"
         label="Search"
         single-line
+        
       ></v-text-field>
-     
-     
+      <v-toolbar-item class="ml-4">
+     <v-btn
+      
+      elevation="0"
+        color="primary"
+        @click="initVaccinations"
+       > <v-icon>mdi-refresh</v-icon>
+      </v-btn>
+     </v-toolbar-item>
    
       </v-toolbar>
-     </v-card>
+    
   <v-card class="mt-2">
        <v-data-table
       :headers="headers"

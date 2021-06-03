@@ -10,8 +10,7 @@
       >
         <v-list-item>
           <v-list-item-content class="pa-6 justify-center">
-            <!-- <v-list-item-title> Vaccinations </v-list-item-title> -->
-            <v-list-item-subtitle>
+          
               <v-img
                 src="/logo2.png"
                 max-width="120"
@@ -19,7 +18,7 @@
                 class="m-auto"
                
               />
-            </v-list-item-subtitle>
+        
             
           </v-list-item-content>
         </v-list-item>
@@ -27,25 +26,13 @@
           <v-list-item-content class="justify-center">
             <v-container>
               <v-row justify="center">
-              <h5>{{ currentUser.username }} </h5>
+              <h4>{{ currentUser.username }} </h4>
               </v-row>
               </v-container>
             </v-list-item-content>
          </v-list-item>
-         <v-list-item>
-          <v-list-item-content class="justify-center">
-            <v-container>
-              <v-row justify="center">
-                 <v-list-item-title class="ml-15">
-                 Transfer Status
-                  </v-list-item-title>
-              <Available/>
-             
-              </v-row>
-               
-              </v-container>
-            </v-list-item-content>
-         </v-list-item>
+         
+         
         <v-divider></v-divider>
 
         <v-list dense nav>
@@ -60,11 +47,11 @@
          
         
             <v-list-item-icon>
-              <v-icon class="pl-6">{{ fitem.icon }}</v-icon>
+              <v-icon class="pl-8 pb-2">{{ fitem.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ fitem.title }}</v-list-item-title>
+              <v-list-item-title><h6>{{ fitem.title }}</h6></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           </v-row>
@@ -74,8 +61,9 @@
          <v-list dense nav>
          <v-container>
                 <v-row justify="center">
+                 
           <v-list-item
-            
+             
           
             :to="hospital.to"
             @click="currentView = hospital.title"
@@ -83,27 +71,28 @@
          
          
             <v-list-item-icon>
-              <v-icon class="pl-6">{{ hospital.icon }}</v-icon>
+              <v-icon class="pl-6 pb-2">{{ hospital.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ hospital.title }}</v-list-item-title>
+              <v-list-item-title><h6>{{ hospital.title }}</h6></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
            <v-list-item
             
            
+
            
             @click.prevent="logOut"
           >
          
          
             <v-list-item-icon>
-              <v-icon class="pl-6">{{logout.icon }}</v-icon>
+              <v-icon class="pl-6 pb-2">{{logout.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ logout.title }}</v-list-item-title>
+              <v-list-item-title><h6>{{ logout.title }}</h6></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           </v-row>
@@ -120,62 +109,15 @@
         <v-toolbar-title v-if="!currentUser">Vaccination-app</v-toolbar-title>
         <v-toolbar-title v-else>{{ currentRouteName }}</v-toolbar-title>
 
-        <div v-if="!currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item mr-2">
-            <router-link
-              to="register"
-              active-class="active"
-              exact
-              class="nav-link"
-            >
-              <font-awesome-icon icon="user-plus" style="color: #0f7452" />Sign
-              Up
-            </router-link>
-          </li>
-          <li class="nav-item mr-1">
-            <router-link
-              to="login"
-              active-class="active"
-              exact
-              class="nav-link"
-            >
-              <font-awesome-icon
-                icon="sign-in-alt"
-                style="color: #0f7452"
-              />Login
-            </router-link>
-          </li>
-        </div>
-
-        <!-- <div v-if="currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item mr-4">
-            <router-link
-              to="/user/profile"
-              active-class="active"
-              exact
-              class="nav-link"
-            >
-              <font-awesome-icon icon="user" style="color: #0f7452" />
-              {{ currentUser.username }}
-            </router-link>
-          </li>
-          <li class="nav-item mr-1">
-            <a class="nav-link" href @click.prevent="logOut">
-              <font-awesome-icon
-                icon="sign-out-alt"
-                style="color: #0f7452"
-              />LogOut
-            </a>
-          </li>
-        </div> -->
+    
       </v-app-bar>
     </nav>
   </header>
 </template>
 <script>
-import Available from '@/components/Available.vue';
+
 export default {
-  components:{Available},
+ 
   data: () => ({
     name: "Navbar",
     drawer: null,
@@ -201,7 +143,7 @@ export default {
       
     ],
    hospital:
-      { title: "Hospital Profile", icon: "mdi-account-circle", to: "/user/profile" },
+      { title: "Profile", icon: "mdi-account-circle", to: "/user/profile" },
    logout:
       { title:"Log out", icon:"mdi-logout" }
 
