@@ -99,9 +99,11 @@
               ></v-text-field>
               <v-btn
                 rounded
+                class="mt-2"
                 color="primary"
                 v-if="!submitted"
                 @click="handleRegister"
+                
                 dark
               >
                 Register
@@ -111,7 +113,7 @@
           </form>
         </div>
       </v-col>
-      <!-- </div> -->
+ 
     </v-row>
   </v-container>
 </template>
@@ -132,7 +134,7 @@ export default {
       address: { required, containNumbers },
       city: { required },
       country: { required },
-      // available_doses: { required, minValue: minValue(0), integer },
+      
       phone_number: { required },
       username: { required },
       email: { required, email },
@@ -262,7 +264,7 @@ export default {
 
 <style scoped>
 .error {
-  color: indianred;
+  color: white;
   font-size: large;
 }
 .side_wave {
