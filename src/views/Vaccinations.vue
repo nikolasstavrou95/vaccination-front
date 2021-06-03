@@ -43,7 +43,7 @@
      >
        <template v-slot:top>
          <v-progress-linear
-        :active="loading"
+        :active="loadingTable"
         :indeterminate="loading"
         absolute
         top
@@ -375,6 +375,7 @@ import { required } from "vuelidate/lib/validators";
         timeout2: 5000,
         message: "",
         color2:"",
+        loadingTable:false
 
 
       
@@ -437,18 +438,18 @@ import { required } from "vuelidate/lib/validators";
    methods: {
       async initVaccinations (){
         try{
-        this.loading=true
+        this.loadingTable=true
          let response = await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
          if(response) throw new Error(response)
         
         
-         this.loading=false
+         this.loadingTable=false
         } catch(error){
            this.color2="#e17b58";
            this.message=`Couldn't load vaccination. ${error}`
            this.snackbar2 = true;
            
-           this.loading=false
+           this.loadingTable=false
        
         }
       },
@@ -457,12 +458,13 @@ import { required } from "vuelidate/lib/validators";
         this.transferDialog = true;
         this.toTranferVaccination= item;
          this.getHospitals();
+         
          console.log(this.hospitals);
 
       },
       async tranferVaccination(){
 
-       
+      
          var data = {
           date: this.toTranferVaccination.date,
           brand: this.toTranferVaccination.brand,
@@ -505,8 +507,10 @@ import { required } from "vuelidate/lib/validators";
 
         this.editDialog = true;
         this.editedVaccination= item;
+        
       },
       async editVaccination(){
+       
         var data = {
           date: this.editedVaccination.date,
           brand: this.editedVaccination.brand,

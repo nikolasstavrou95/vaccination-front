@@ -73,7 +73,7 @@ export const  mutations= {
         if(response.status==='500') throw new Error("Server not responding")
         if(response.status==='400') throw new Error("Something is wrong with your data, try again!")
        
-        commit('ADD_VACCINATION', payload.fullData)
+        commit('ADD_VACCINATION', response.data.data)
         
      } catch(error){
        console.log("something went wrong here store",error)
