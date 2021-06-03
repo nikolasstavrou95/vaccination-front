@@ -206,7 +206,7 @@ export default {
       ),
       this.$store.dispatch("loadPatients", this.$store.state.auth.hospital.username)
       this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
-       this.getAvailableVaccinesByBrand();
+      this.getAvailableVaccinesByBrand();
   },
    computed:{
    
@@ -278,27 +278,8 @@ export default {
         date: this.vaccination.date,
         brand: this.vaccination.brand
    }
-   var patient={}
-   this.patients.forEach(p=> {if(p.id===this.vaccination.id)
-   patient= p})
-   var checkAvailability=[];
+   
   
-   this.availableVaccines.forEach((v)=> {
-     if(v.brand===this.vaccination.brand && (v.status==="AVAILABLE" || v.status==="RESERVED")){
-             checkAvailability.push(v);
-     }
-   }
-   )
-
-   var fullData ={
-   name:patient.name,
-   date:this.vaccination.date,
-   status:'PENDING',
-   AMKA: patient.amka,
-   brand:this.vaccination.brand,
-   transferable:checkAvailability.length ? true : false
- }
- 
     this.$v.$touch();
       if (this.$v.$invalid) {
         this.errorMessage = "All the fields are required";
@@ -306,23 +287,18 @@ export default {
     try{
       this.loading = true
     
-    let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data, fullData:fullData})
+    let response = await this.$store.dispatch('addVaccination', {username: this.hospital, vaccination: data})
        this.loading = false
        this.dialog=false  
         if(response){
         throw new Error(response)}
         
-        
-        this.resetFields()
+        this.resetFields();
         this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
+        this.initVaccinations();
       
-       
-
-       
-        
-       
         this.snackbar=true
-       this.text="Vaccination Added Successfully"
+       this.text="Vaccination Added Successfully Please Refresh this table "
        this.color="#9ce690"
       }catch(error){
        this.snackbar=true
@@ -360,9 +336,9 @@ export default {
        this.text="Couldn't load vaccines for current patient. Please check your internet connection"
         console.log("something went wrong here",err)
         }
-      }
+      },
       
-   },
+  
    async getAvailableVaccinesByBrand() {
       
       try{
@@ -384,7 +360,7 @@ export default {
       }
     },
      
-     
+   }, 
        
    
 }
