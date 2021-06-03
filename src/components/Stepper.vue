@@ -72,8 +72,6 @@ export default {
   
 </script>
 <style scoped>
-.v-stepper__header{
-  background:#d7eae5
-}
+
 
 </style>
