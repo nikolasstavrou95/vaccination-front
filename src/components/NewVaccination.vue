@@ -206,13 +206,15 @@ export default {
       ),
       this.$store.dispatch("loadPatients", this.$store.state.auth.hospital.username)
       this.$store.dispatch("loadUnPatients", this.$store.state.auth.hospital.username)
+       this.getAvailableVaccinesByBrand();
   },
    computed:{
    
      ...mapState({ hospital: (state) => state.auth.hospital.username, 
                   unvaccinatedPatients:(state) => state.patients.unvaccinated,
                    vaccineList: (state)=>state.vaccinations.patientVaccinesList,
-                   patients:(state) => state.patients.patients
+                   patients:(state) => state.patients.patients,
+                   availableVaccines:(state)=> state.hospital.vaccines
                   }),
     
   
@@ -268,6 +270,7 @@ export default {
 
    async saveVaccination() {
  
+ 
   var data = {
         id: this.vaccination.id,
         hosp:this.hospital,
@@ -278,13 +281,22 @@ export default {
    var patient={}
    this.patients.forEach(p=> {if(p.id===this.vaccination.id)
    patient= p})
+   var checkAvailability=[];
   
+   this.availableVaccines.forEach((v)=> {
+     if(v.brand===this.vaccination.brand && (v.status==="AVAILABLE" || v.status==="RESERVED")){
+             checkAvailability.push(v);
+     }
+   }
+   )
+
    var fullData ={
    name:patient.name,
    date:this.vaccination.date,
    status:'PENDING',
    AMKA: patient.amka,
-   brand:this.vaccination.brand
+   brand:this.vaccination.brand,
+   transferable:checkAvailability.length ? true : false
  }
  
     this.$v.$touch();
@@ -350,7 +362,27 @@ export default {
         }
       }
       
-   }
+   },
+   async getAvailableVaccinesByBrand() {
+      
+      try{
+       let response = await this.$store.dispatch(
+      'loadVaccinesByBrand',
+        this.$store.state.auth.hospital.username
+      );
+      
+      if(response){
+        throw new Error()}
+
+     
+
+      }catch(err){
+        this.color2="#e17b58";
+        this.message=`Couldn't load hospital vaccines. An error occured during request (${err})`
+        this.snackbar2 = true;
+       
+      }
+    },
      
      
        
