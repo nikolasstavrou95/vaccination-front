@@ -538,8 +538,8 @@ import { required } from "vuelidate/lib/validators";
          
           
           if(this.editedVaccination.status==='DONE'){
-             this.$store.dispatch('loadVaccines',this.$store.state.auth.hospital.username
-      );
+             this.$store.dispatch('loadVaccines',this.$store.state.auth.hospital.username);  
+             this.$store.dispatch('loadPatients',this.$store.state.auth.hospital.username)
           }
            
 
