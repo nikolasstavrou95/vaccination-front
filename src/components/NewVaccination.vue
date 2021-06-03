@@ -8,11 +8,12 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           large
-          text
+        elevation="0"
+        color="primary"
           v-bind="attrs"
           v-on="on"
         >
-        <v-icon class="mr-2">mdi-clipboard-plus</v-icon>
+        <v-icon class="mr-2">mdi-calendar-plus</v-icon>
           New Vaccination
         </v-btn>
       </template>

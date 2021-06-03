@@ -2,21 +2,24 @@
   <v-container class="mt-12">
     <v-row justify="center">
       <v-col cols="12">
-        <v-card color="#61ba9f">
-          <v-toolbar color="#61ba9f" dark shaped>
-            <v-card left elevation="1" class="my-2 ml-2 pa-2" flat color="#69c2a7">
-              <NewPatient />
-            </v-card>
+       
+          <v-toolbar color="#61ba9f" dark >
+            <v-toolbar-item class="ml-4">
+          <NewPatient/>
+              </v-toolbar-item>
+            
             <v-spacer></v-spacer>
+            
             <v-text-field
-              class="mt-6 mb-2"
+              class="mt-6 mb-2 mr-2"
               v-model="search"
               append-icon="mdi-magnify"
               label="Search"
               single-line
             ></v-text-field>
+            
           </v-toolbar>
-        </v-card>
+      
         <v-card class="mt-2">
           <v-data-table
             :headers="headers"
@@ -41,10 +44,8 @@
             <template v-slot:item.actions="{ item }">
               <v-btn
                 small
-               
                 outlined
                 fab
-                
                 class="mr-2"
                 color="#03A9F4"
                 @click="showEditPatient(item)"
@@ -53,10 +54,8 @@
               </v-btn>
               <v-btn
                 small
-                
-                outlined
-               
-                fab
+               outlined
+               fab
                 class="mr-4"
                 color="#e17b58"
                 @click="showDeletePatient(item)"

@@ -1,51 +1,233 @@
 <template>
-  <v-container>
-    <v-row justify="center" class="mt-8" >
-      <v-col cols="12" md="4" >
-        <AvailableVaccines/>
-      </v-col>
-      <v-col cols="12" md="4">
-     <CancelledCard/>
-        
-      </v-col>
-      <v-col cols="12" md="4" >
-        <Transferable/>
-      </v-col>
-    </v-row>
-   
-    <v-row justify="center" class="mt-8">
-      <v-col cols="12">
-     <Stepper class="mt-4"> </Stepper>
-      </v-col>
-    </v-row>
-   
-   
-        
-               
-        
+  <v-div>
+    
+    
+      
+       <v-card class="mx-auto" height="100%">
+         
+             <v-card-title class="pa-5">
+            <h3
+              class="title blue-grey--text text--darken-2 font-weight-regular"
+            >
+           {{vaccinesCard.title}}
+            </h3>
+             </v-card-title>
+             <v-card-subtitle>
+           <h6 class="subtitle-2 font-weight-light ml-1">at this local hospital</h6>
+             </v-card-subtitle>
+             <v-card-text>
+            <v-container>
+             <v-row justify="center">
+               <v-col cols="6" >
+                  <v-img
+                    :src="vaccinesCard.image"
+                    width="80"
+                    class="ml-16"
+                  /> 
+           </v-col>
+               <v-col cols="6" >
+              <h3 class="font-weight-regular align-self-center mt-9 ml-2">{{availableVaccines}}</h3>
+
+              </v-col>
+             </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+            color="primary"
+             class="ml-2 mb-2 mt-8"
+            small
+           outlined
+            rounded
+            @click="showAddVaccines(true)"
+            
+          
+            >{{vaccinesCard.btnLabel}}</v-btn
+            >
+            <v-spacer> </v-spacer>
+            <v-btn
+            color="primary"
+            class="mr-2 mb-2 mt-8"
+            small
+            outlined
+            rounded
+            @click="showListVaccines(true)"
+            
+          
+            >{{vaccinesCard.btnLabel2}}</v-btn
+            >
+          </v-card-actions>
+        </v-card>
        
+    
+   
+    <v-snackbar
+      v-model="snackbar2"
+      :timeout="timeout2"
+      :color="color2"
+      rounded="pill"
+      top
+      
+     
+      
+    >
+      {{ message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar2 = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
+  <v-dialog v-model="listVaccinesDialog" persistent max-width="800px">
+      <v-card>
+        <v-toolbar color="#61ba9f" dark rounded>
+          <v-toolbar-title class="mx-4">Analytic List of available vaccines </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-icon class="mx-4" @click="showListVaccines(false)">mdi-close</v-icon>
+        </v-toolbar>
+
+        <v-container>
+          <v-row justify="center">
+           
+            <v-card-text>
+              <v-row justify="center">
+                <v-col cols="12" md="9">
+                 <v-data-table
+                 :headers="headers"
+                 :items="list"
+     
+      
+                 hide-default-footer
+               >
+       <template v-slot:top>
+         <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        top
+        color="#2d8c92"
+      ></v-progress-linear>
+       </template>
+                 </v-data-table>
+                </v-col>
+              </v-row>
+             
+            </v-card-text>
+          </v-row>
+        </v-container>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            :loading="loading"
+            class="mx-3 mb-6"
+            color="#61ba9f"
+            outlined
+            rounded
+            @click="showAddVaccines('true')"
+          >
+            ADD MORE
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-dialog v-model="addVaccinesDialog" persistent max-width="800px">
+      <v-card>
+        <v-toolbar color="#61ba9f" dark rounded>
+          <v-toolbar-title class="mx-4">Do you have more Vaccines available? (Select brand and quantity)</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-icon class="mx-4" @click="showAddVaccines(false)">mdi-close</v-icon>
+        </v-toolbar>
+
+        <v-container>
+          <v-row justify="center">
+           
+            <v-card-text>
+              
+              <v-row justify="center">
+                <v-col cols="12" class="mt-2" md="6">
+                 <v-select
+                 class="mx-4"
+                 v-model="vaccine.brand"
+                 :error-messages="vaccineErrors"
+                  :items="['PFIZER','ASTRAZENECA','NOVAVAX','MODERNA','JOHNSON']"
+                  label="Vaccine Brand*"
+                  required
+                  rounded
+                  background-color="#d7eae5"
+                  @change="$v.vaccine.brand.$touch()"
+                ></v-select>
+               
+                </v-col>
+                <v-col cols="12" class="mt-2" md="4">
+                  <v-text-field
+                   v-model="vaccine.number"
+                   :error-messages="numberErrors"
+                   prepend-inner-icon="mdi-needle"
+                   required
+                   @change="$v.vaccine.number.$touch()"
+                   type="number"
+                   label="Number*"
+                  
+                 ></v-text-field>
+               
+                </v-col>
+                 
+              </v-row>
+              
+                  
+             
+            </v-card-text>
+          </v-row>
+        </v-container>
+
+        <v-card-actions>
+            
+          <v-spacer></v-spacer>
+          <small class="mr-10">*indicates required field</small>
+          <v-btn
+            class="mb-6"
+            color="#e17b58"
+            outlined
+            rounded
+            
+            @click="showAddVaccines(false)"
+          >
+            Cancel
+          </v-btn>
+
+          <v-btn
+         :loading="loading"
+            class="mx-3 mb-6"
+            color="#61ba9f"
+            outlined
+            rounded
+            @click="addVaccines"
+          >
+            ADD
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
 
-  </v-container>
+  </v-div>
 </template>
+
 
 <script>
 
 import { validationMixin } from "vuelidate";
 import { required, minValue } from "vuelidate/lib/validators";
 import HospitalDataService from "@/services/user.service.js";
-import Stepper from '@/components/Stepper.vue';
-import CancelledCard from '@/components/CancelledCard.vue';
-import Transferable from '@/components/Transferable.vue';
-import AvailableVaccines from '@/components/AvailableVaccines.vue';
+
 export default {
   name: "Dashboard",
 components: {
 
- Stepper,
- CancelledCard,
- Transferable,
-AvailableVaccines
+ 
+ 
+
 },
 mixins: [validationMixin],
   validations: {
@@ -278,4 +460,5 @@ mixins: [validationMixin],
   }
 };
 </script>
+
 
