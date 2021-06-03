@@ -32,18 +32,22 @@
              </v-row>
             </v-container>
           </v-card-text>
+         
           <v-card-actions>
+          
+           
             <v-btn
             color="primary"
              class="ml-2 mb-2 mt-8"
             small
-           outlined
+           
             rounded
             @click="showAddVaccines(true)"
             
           
             >{{vaccinesCard.btnLabel}}</v-btn
             >
+            
             <v-spacer> </v-spacer>
             <v-btn
             color="primary"
@@ -56,6 +60,7 @@
           
             >{{vaccinesCard.btnLabel2}}</v-btn
             >
+            
           </v-card-actions>
         </v-card>
        
@@ -180,7 +185,7 @@
             </v-card-text>
           </v-row>
         </v-container>
-
+      
         <v-card-actions>
             
           <v-spacer></v-spacer>
@@ -207,6 +212,7 @@
             ADD
           </v-btn>
         </v-card-actions>
+      
       </v-card>
     </v-dialog>
 
@@ -462,3 +468,8 @@ mixins: [validationMixin],
 </script>
 
 
+<style scoped>
+.footer{
+  background-color: black;
+}
+</style>

@@ -56,7 +56,7 @@
             class="ml-2 mt-2 mb-2"
             small
             :loading="loading"
-            outlined
+           
             rounded
             @click="changeAvailability"
             >
@@ -92,7 +92,6 @@ import { mapState } from "vuex";
       return this.$store.state.vaccinations.vaccinationsCancelled
     },
     availability(){
-      
       if (this.$store.state.hospital.hospitalData.iamAvailable){
           return "Available"
       } else {
