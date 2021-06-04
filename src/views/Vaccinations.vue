@@ -243,7 +243,7 @@
                 <v-autocomplete
                 class="mx-4"
                 v-model="editedVaccination.symptoms"
-                  :items="['Headache', 'Nausea', 'Fatigue', 'Fever', 'Muscle Pain', 'Blood Clots', 'Chest Pain','Normal']"
+                  :items="['Headache', 'Nausea', 'Fatigue', 'Fever', 'Muscle Pain', 'Blood Clots', 'Chest Pain','Others']"
                   label="Symptoms"
                    multiple
                    
