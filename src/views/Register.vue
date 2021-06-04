@@ -93,6 +93,7 @@
                 :error-messages="passwordErrors"
                 label="Password"
                 required
+                type="password"
                 prepend-inner-icon="fas fa-lock"
                 @input="$v.hospital.password.$touch()"
                 @blur="$v.hospital.password.$touch()"
