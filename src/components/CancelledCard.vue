@@ -42,7 +42,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-         <h5 class="font-weight-regular align-self-center ml-2">{{ availability }} to Receive</h5>
+         <h5 class="font-weight-regular align-self-center ml-2">{{ availability}} to Receive</h5>
         </v-list-item-content>
          </v-list-item>
          </v-list>
@@ -56,7 +56,7 @@
             class="ml-2 mt-2 mb-2"
             small
             :loading="loading"
-           
+            outlined
             rounded
             @click="changeAvailability"
             >
@@ -73,7 +73,7 @@
 
 <script>
 import vaccinationsService from "@/services/vaccinationsService.js";
-import { mapState } from "vuex";
+
   export default {
     data () {
       return {
@@ -87,12 +87,13 @@ import { mapState } from "vuex";
  
  },
     computed:{ 
-      ...mapState({ status: (state) => state.hospital.hospitalData.iAmAvailable}),
+     
       vaccinations(){
       return this.$store.state.vaccinations.vaccinationsCancelled
     },
     availability(){
-      if (this.$store.state.hospital.hospitalData.iamAvailable){
+    
+      if (this.$store.state.hospital.hospitalData?.iamAvailable){
           return "Available"
       } else {
         return "Unavailable"
@@ -100,6 +101,8 @@ import { mapState } from "vuex";
       }
      
     }
+   
+
    
     },
     methods:{
