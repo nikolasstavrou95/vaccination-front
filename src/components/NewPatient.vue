@@ -159,7 +159,7 @@
       :timeout="timeout"
       :color="color"
       rounded="pill"
-      bottom
+      top
     >
        {{text}}
 

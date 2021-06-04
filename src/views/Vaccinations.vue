@@ -272,7 +272,7 @@
           <v-spacer></v-spacer>
           <v-btn
             class="mb-6"
-            color="#e17b58"
+            color="primary"
             outlined
             rounded
             @click="editDialog = false"
@@ -283,8 +283,8 @@
           <v-btn
             :loading="loading"
             class="mx-3 mb-6"
-            color="#61ba9f"
-            outlined
+            color="primary"
+           
             rounded
             @click="editVaccination"
           >
