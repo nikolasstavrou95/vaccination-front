@@ -45,6 +45,31 @@ components: {
  Transferable,
 AvailableVaccines
 },
-}
+
+mounted(){
+this.initVaccinations();
+},
+
+methods:{
+async initVaccinations (){
+        try{
+        this.loadingTable=true
+         let response = await this.$store.dispatch('loadVaccinations',this.$store.state.auth.hospital.username)
+         if(response) throw new Error(response)
+        
+        
+         this.loadingTable=false
+        } catch(error){
+           this.color2="#e17b58";
+           this.message=`Couldn't load vaccination. ${error}`
+           this.snackbar2 = true;
+           
+           this.loadingTable=false
+       
+        }
+      }
+} 
+}  
 </script>
+
 

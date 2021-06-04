@@ -30,28 +30,7 @@ export const mutations = {
     },
     
 }
-//  export const getters={
-   
-//     availableVaccinesByBrand(state){
-//         const availableVaccines = state.vaccines.length ? state.vaccines : [];
-//         const collection = [];
-//         let temp = availableVaccines.reduce((r, a) => {
-  
-//             r[a["brand"]] = [...r[a["brand"]] || [], a];
-//             return r;
-//            }, {});
-//            let objectArray = Object.entries(temp);
-//            objectArray.forEach(([key, value]) => {
-//             if(key!='undefined')  
-//              collection.push({label: key, totals:value.length})
-             
-//          });
 
-        
-//         return collection;
-
-//     }
-// }
 
 export const actions = {
     async loadHospital({ commit }, username) {
@@ -66,7 +45,7 @@ export const actions = {
     
     async editHospital({ commit }, payload) {
         try {
-            console.log(payload.username, payload.data)
+           
             let response = await HospitalDataService.editHospitalData(payload.username,payload.data)
             commit('EDIT_HOSPITAL', response.data.data)
         } catch (error) {
@@ -79,9 +58,9 @@ export const actions = {
     },
      async loadVaccines({ commit }, username) {
         try {
-            console.log(username)
+            
             let response = await HospitalDataService.loadavailableVaccines(username)
-            console.log(response)
+          
             commit('SET_VACCINES', response.data)
         } catch (error) {
             console.log("Couldn't load Vaccines")

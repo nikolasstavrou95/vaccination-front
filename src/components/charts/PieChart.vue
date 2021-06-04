@@ -22,7 +22,7 @@ export default {
     }
   },
    mounted() {
-    console.log(this.chartData)
+   
     const {
       borderColor,
       pointBorderColor,

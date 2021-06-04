@@ -18,7 +18,7 @@ class HospitalDataService {
 
     }
     addVaccines(data){
-        console.log(authHeader())
+       
         return axios.post(API_URL + `${data.username}/vaccine/add/${data.brand}/${data.quantity}/`, [], { headers: authHeader() });
     }
     loadavailableVaccines(username){
