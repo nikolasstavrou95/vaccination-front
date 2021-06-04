@@ -106,11 +106,11 @@
           v-if="currentUser"
           @click="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <v-toolbar-title v-if="!currentUser">Vaccination-app</v-toolbar-title>
+        <v-toolbar-title v-if="!currentUser">VAXISnet</v-toolbar-title>
         <v-toolbar-title v-else>{{ currentRouteName }}</v-toolbar-title>
 
         <div v-if="!currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item mr-2">
+          <li class="nav-item mr-5">
             <router-link
               to="register"
               active-class="active"
@@ -135,28 +135,6 @@
             </router-link>
           </li>
         </div>
-
-        <!-- <div v-if="currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item mr-4">
-            <router-link
-              to="/user/profile"
-              active-class="active"
-              exact
-              class="nav-link"
-            >
-              <font-awesome-icon icon="user" style="color: #0f7452" />
-              {{ currentUser.username }}
-            </router-link>
-          </li>
-          <li class="nav-item mr-1">
-            <a class="nav-link" href @click.prevent="logOut">
-              <font-awesome-icon
-                icon="sign-out-alt"
-                style="color: #0f7452"
-              />LogOut
-            </a>
-          </li>
-        </div> -->
       </v-app-bar>
     </nav>
   </header>
