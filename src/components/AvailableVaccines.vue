@@ -271,6 +271,7 @@ mixins: [validationMixin],
      
     },
     vaccinesList:[],
+    list:[],
     snackbar2: false,
       timeout2: 2000,
       message: "",
@@ -399,10 +400,10 @@ mixins: [validationMixin],
        quantity: this.vaccine.number,
        username: this.$store.state.auth.hospital.username
      }
-     console.log(data)
+    
      
-       HospitalDataService.addVaccines(data).then((response)=>{
-         console.log(response.data)
+       HospitalDataService.addVaccines(data).then(()=>{
+        
         
         this.color2 = "#2d9277"; 
         this.message=`New Vaccines added successfully`
@@ -461,8 +462,7 @@ mixins: [validationMixin],
     this.getAvailableVaccinesByBrand();
     this.$store.dispatch('loadVaccinations', this.$store.state.auth.hospital.username)
     
-    console.log(this.availableVaccines)
-    console.log(this.availableVaccinesByBrand);
+    
   }
 };
 </script>
